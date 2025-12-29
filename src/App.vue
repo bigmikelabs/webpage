@@ -139,7 +139,7 @@
             </button>
           </div>
           <button
-            @click="navigateToEnterIT"
+            @click="navigateToStartIT"
             class="w-full mt-2 bg-primary-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-primary-700 transition-colors"
           >
             {{ $t('nav.getStarted') }}
