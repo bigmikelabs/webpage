@@ -84,7 +84,7 @@
             </div>
 
             <button
-              @click="navigateToEnterIT"
+              @click="navigateToStartIT"
               class="bg-primary-400 text-slate-900 px-6 py-2 rounded-lg font-medium hover:bg-primary-500 transition-colors"
             >
               {{ $t('nav.getStarted') }}
@@ -288,7 +288,7 @@ const changeLanguage = (lang: string) => {
   languageMenuOpen.value = false
 }
 
-const navigateToEnterIT = () => {
+const navigateToStartIT = () => {
   router.push('/enterit')
 }
 

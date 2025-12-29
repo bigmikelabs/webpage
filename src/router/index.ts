@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
-import EnterIT from '../views/EnterIT.vue'
+import StartIT from '../views/StartIT.vue'
 import About from '../views/About.vue'
 import Instructors from '../views/Instructors.vue'
 import AIFundamentals from '../views/AIFundamentals.vue'
@@ -13,8 +13,8 @@ const routes = [
   },
   {
     path: '/enterit',
-    name: 'EnterIT',
-    component: EnterIT,
+    name: 'StartIT',
+    component: StartIT,
   },
   {
     path: '/about',
