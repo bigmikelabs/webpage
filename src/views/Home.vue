@@ -113,8 +113,8 @@
                         />
                       </svg>
                     </div>
-                    <h3 class="font-semibold text-gray-900 mb-1">{{ $t('courseCards.webDev') }}</h3>
-                    <p class="text-sm text-gray-600">{{ $t('courseCards.webDevDescription') }}</p>
+                    <h3 class="font-semibold text-gray-900 mb-1">{{ $t('courseCards.os') }}</h3>
+                    <p class="text-sm text-gray-600">{{ $t('courseCards.osDescription') }}</p>
                   </div>
                   <div class="bg-white rounded-lg p-4 shadow-md">
                     <div

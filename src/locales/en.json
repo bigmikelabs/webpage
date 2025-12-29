@@ -95,8 +95,8 @@
     "aiDescription": "Learn AI fundamentals and how to use it in practice.",
     "programming": "Programming thinking",
     "programmingDescription": "Learn to solve problems and build logical solutions.",
-    "webDev": "How IT systems are created",
-    "webDevDescription": "Learn the basics of system design and dependencies between their elements.",
+    "os": "How IT systems are created",
+    "osDescription": "Learn the basics of system design and dependencies between their elements.",
     "itSkills": "IT Skills",
     "itDescription": "Understand the tools, processes, and way of thinking needed to work with technology."
   },
