@@ -7,9 +7,9 @@
     "getStarted": "Get Started"
   },
   "hero": {
-    "title": "Unlock Your",
-    "titleHighlight": "Tech Potential",
-    "subtitle": "Master AI and IT fundamentals with our beginner-friendly courses. Start your journey into technology with expert guidance and hands-on learning.",
+    "title": "Pragmatically about ",
+    "titleHighlight": "technology, AI and programming.",
+    "subtitle": "Learn with us — practically, consciously and based on real experience.",
     "startLearning": "Start Learning Today",
     "viewCourses": "View Courses",
     "students": "500+ Students",
@@ -92,13 +92,13 @@
   },
   "courseCards": {
     "aiBasics": "AI Basics",
-    "aiDescription": "Learn AI fundamentals",
-    "programming": "Programming",
-    "programmingDescription": "Code from scratch",
-    "webDev": "Web Dev",
-    "webDevDescription": "Build websites",
+    "aiDescription": "Learn AI fundamentals and how to use it in practice.",
+    "programming": "Programming thinking",
+    "programmingDescription": "Learn to solve problems and build logical solutions.",
+    "webDev": "How IT systems are created",
+    "webDevDescription": "Learn the basics of system design and dependencies between their elements.",
     "itSkills": "IT Skills",
-    "itDescription": "Tech essentials"
+    "itDescription": "Understand the tools, processes, and way of thinking needed to work with technology."
   },
   "enterit": {
     "badge": "Free Webinar",

@@ -7,9 +7,9 @@
     "getStarted": "Rozpocznij"
   },
   "hero": {
-    "title": "Odblokuj Swój",
-    "titleHighlight": "Potencjał Technologiczny",
-    "subtitle": "Opanuj podstawy AI i IT dzięki naszym kursom dla początkujących. Rozpocznij swoją podróż w technologie z fachowym przewodnictwem i praktyczną nauką.",
+    "title": "Pragmatycznie o ",
+    "titleHighlight": "technologii, AI i programowaniu.",
+    "subtitle": "Ucz się z nami — praktycznie, świadomie i na bazie realnego doświadczenia.",
     "startLearning": "Rozpocznij Naukę Dziś",
     "viewCourses": "Zobacz Kursy",
     "students": "500+ Uczniów",
@@ -92,13 +92,13 @@
   },
   "courseCards": {
     "aiBasics": "Podstawy AI",
-    "aiDescription": "Naucz się podstaw AI",
-    "programming": "Programowanie",
-    "programmingDescription": "Kodowanie od podstaw",
-    "webDev": "Rozwój Web",
-    "webDevDescription": "Buduj strony internetowe",
+    "aiDescription": "Naucz się podstaw AI i jak wykorzystać ją w praktyce.",
+    "programming": "Myślenie programistyczne",
+    "programmingDescription": "Naucz się rozwiązywać problemy i budować logiczne rozwiązania.",
+    "webDev": "Jak powstają systemy informatyczne",
+    "webDevDescription": "Poznaj podstawy projektowania systemów i zależności między ich elementami.",
     "itSkills": "Umiejętności IT",
-    "itDescription": "Podstawy technologii"
+    "itDescription": "Zrozum narzędzia, procesy i sposób myślenia potrzebny do pracy z technologią."
   },
   "enterit": {
     "badge": "Darmowy Webinar",
