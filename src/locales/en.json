@@ -35,15 +35,15 @@
   },
   "courses": {
     "title": "Popular Courses",
-    "subtitle": "Start your journey with our most loved courses",
+    "subtitle": "Start your journey with our top-rated courses",
     "aiFundamentals": {
       "title": "AI Fundamentals",
       "description": "Learn the basics of artificial intelligence, machine learning concepts, and practical applications.",
       "duration": "8 weeks"
     },
     "codingBasics": {
-      "title": "Web Development",
-      "description": "Build modern websites with HTML, CSS, JavaScript, and popular frameworks.",
+      "title": "Programming in Practice",
+      "description": "Build your first applications, learning the basics of backend and frontend, using AI-powered tools.",
       "duration": "12 weeks"
     },
     "status": {
