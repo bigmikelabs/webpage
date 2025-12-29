@@ -100,10 +100,10 @@
     "itSkills": "IT Skills",
     "itDescription": "Understand the tools, processes, and way of thinking needed to work with technology."
   },
-  "enterit": {
-    "badge": "Free Webinar",
-    "title": "EnterIT",
-    "subtitle": "Your complete guide to breaking into the IT industry. Learn essential strategies for job searching, interview preparation, networking with recruiters, and leveraging AI for accelerated learning.",
+  "startit": {
+    "badge": "StartIT - free webinar",
+    "title": "Start in IT with AI",
+    "subtitle": "First steps in IT and AI – practically, step by step, with tools supporting your development",
     "date": {
       "title": "Date"
     },
@@ -126,37 +126,37 @@
     "freeEvent": "100% Free Event - Limited Seats Available",
     "whatYoullLearn": {
       "title": "What You'll Learn",
-      "subtitle": "Get practical, actionable strategies to kickstart your IT career"
+      "subtitle": "Get practical, actionable strategies to start your IT career"
     },
     "modules": {
       "jobSearch": {
-        "title": "How to Start Looking for a Job in IT",
-        "point1": "Identify the best entry-level positions for your background",
-        "point2": "Create a compelling portfolio even without experience",
-        "point3": "Navigate job boards and company websites effectively"
-      },
-      "interview": {
-        "title": "How to Prepare for Interviews",
-        "point1": "Master common technical and behavioral interview questions",
-        "point2": "Demonstrate your skills through practical examples",
-        "point3": "Handle salary negotiations and follow-up communications"
+        "title": "How to Start in IT",
+        "point1": "Learn where to start learning and what paths are available",
+        "point2": "Check if IT is for you and if it's not too late to start",
+        "point3": "Set development goals and monitor your progress"
       },
       "recruiters": {
-        "title": "How to Find Recruiters",
-        "point1": "Build a professional network on LinkedIn and other platforms",
-        "point2": "Connect with IT recruiters in your target companies",
-        "point3": "Maintain relationships and get referrals"
+        "title": "Building Profile and Network",
+        "point1": "Create a portfolio and profile supported by AI tools",
+        "point2": "Connect with recruiters and grow your network",
+        "point3": "Learn how to stand out among beginners in the market"
+      },
+      "tooling": {
+        "title": "How to Search for Jobs",
+        "point1": "Identify positions best suited to your goals",
+        "point2": "Prepare your CV and portfolio with AI assistance",
+        "point3": "Understand expectations and current trends in the job market"
       },
       "aiLearning": {
-        "title": "How to Learn with AI",
-        "point1": "Use AI tools to accelerate your learning process",
-        "point2": "Get personalized learning paths and practice exercises",
-        "point3": "Stay updated with the latest technologies and trends"
+        "title": "How to Use AI for Learning",
+        "point1": "Use AI tools to absorb knowledge faster",
+        "point2": "Create personalized learning plans and mini-projects",
+        "point3": "Apply AI to practical exercises and projects to gain experience faster"
       }
     },
     "finalCta": {
-      "title": "Ready to Launch Your IT Career?",
-      "subtitle": "Subscribe today and receive a free gift after the webinar.",
+      "title": "Ready to Start Your IT Career?",
+      "subtitle": "Subscribe today and receive a gift after the webinar.",
       "emailPlaceholder": "Enter your email address",
       "subscribeButton": "Subscribe Now",
       "subscribingButton": "Subscribing...",

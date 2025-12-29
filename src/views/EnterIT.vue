@@ -9,13 +9,13 @@
           <span
             class="inline-block bg-primary-200 text-slate-900 text-sm font-semibold px-4 py-2 rounded-full mb-4"
           >
-            🎯 {{ $t('enterit.badge') }}
+            🎯 {{ $t('startit.badge') }}
           </span>
           <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 leading-tight mb-6">
-            {{ $t('enterit.title') }}
+            {{ $t('startit.title') }}
           </h1>
           <p class="text-xl text-slate-700 mb-8 max-w-3xl mx-auto leading-relaxed">
-            {{ $t('enterit.subtitle') }}
+            {{ $t('startit.subtitle') }}
           </p>
         </div>
 
@@ -24,7 +24,7 @@
           <!-- Countdown Timer -->
           <div class="text-center mb-8">
             <h3 class="text-lg font-semibold text-gray-900 mb-4">
-              {{ $t('enterit.countdown.title') }}
+              {{ $t('startit.countdown.title') }}
             </h3>
             <div class="grid grid-cols-4 gap-4 max-w-md mx-auto">
               <div
@@ -32,7 +32,7 @@
               >
                 <div class="text-2xl font-bold">{{ timeLeft.days }}</div>
                 <div class="text-xs uppercase tracking-wide">
-                  {{ $t('enterit.countdown.days') }}
+                  {{ $t('startit.countdown.days') }}
                 </div>
               </div>
               <div
@@ -40,7 +40,7 @@
               >
                 <div class="text-2xl font-bold">{{ timeLeft.hours }}</div>
                 <div class="text-xs uppercase tracking-wide">
-                  {{ $t('enterit.countdown.hours') }}
+                  {{ $t('startit.countdown.hours') }}
                 </div>
               </div>
               <div
@@ -48,7 +48,7 @@
               >
                 <div class="text-2xl font-bold">{{ timeLeft.minutes }}</div>
                 <div class="text-xs uppercase tracking-wide">
-                  {{ $t('enterit.countdown.minutes') }}
+                  {{ $t('startit.countdown.minutes') }}
                 </div>
               </div>
               <div
@@ -56,13 +56,13 @@
               >
                 <div class="text-2xl font-bold">{{ timeLeft.seconds }}</div>
                 <div class="text-xs uppercase tracking-wide">
-                  {{ $t('enterit.countdown.seconds') }}
+                  {{ $t('startit.countdown.seconds') }}
                 </div>
               </div>
             </div>
             <div class="mt-6 p-4 bg-gray-50 rounded-lg border-l-4 border-primary-400">
               <h4 class="text-lg font-semibold text-gray-900 mb-1">
-                {{ $t('enterit.date.title') }}
+                {{ $t('startit.date.title') }}
               </h4>
               <p class="text-xl font-bold text-primary-500">{{ webinarDate }}</p>
             </div>
@@ -85,10 +85,10 @@
                 </div>
                 <div>
                   <h4 class="text-lg font-semibold text-gray-900 mb-1">
-                    {{ $t('enterit.duration.title') }}
+                    {{ $t('startit.duration.title') }}
                   </h4>
                   <p class="text-xl font-bold text-success-600">
-                    {{ $t('enterit.duration.value') }}
+                    {{ $t('startit.duration.value') }}
                   </p>
                 </div>
               </div>
@@ -108,9 +108,9 @@
                 </div>
                 <div>
                   <h4 class="text-lg font-semibold text-gray-900 mb-1">
-                    {{ $t('enterit.format.title') }}
+                    {{ $t('startit.format.title') }}
                   </h4>
-                  <p class="text-xl font-bold text-purple-600">{{ $t('enterit.format.value') }}</p>
+                  <p class="text-xl font-bold text-purple-600">{{ $t('startit.format.value') }}</p>
                 </div>
               </div>
             </div>
@@ -122,9 +122,9 @@
               @click="scrollToSubscription"
               class="bg-primary-400 text-slate-900 px-8 py-4 rounded-lg font-semibold hover:bg-primary-500 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-lg"
             >
-              {{ $t('enterit.registerButton') }}
+              {{ $t('startit.registerButton') }}
             </button>
-            <p class="text-sm text-gray-500 mt-3">{{ $t('enterit.freeEvent') }}</p>
+            <p class="text-sm text-gray-500 mt-3">{{ $t('startit.freeEvent') }}</p>
           </div>
         </div>
       </div>
@@ -135,10 +135,10 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
           <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-            {{ $t('enterit.whatYoullLearn.title') }}
+            {{ $t('startit.whatYoullLearn.title') }}
           </h2>
           <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-            {{ $t('enterit.whatYoullLearn.subtitle') }}
+            {{ $t('startit.whatYoullLearn.subtitle') }}
           </p>
         </div>
 
@@ -149,17 +149,11 @@
               <div
                 class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0"
               >
-                <svg class="w-6 h-6 text-primary-500" fill="currentColor" viewBox="0 0 20 20">
-                  <path
-                    fill-rule="evenodd"
-                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
+                <IconGear class="w-6 h-6 text-primary-500" />
               </div>
               <div>
                 <h3 class="text-xl font-semibold text-gray-900 mb-3">
-                  {{ $t('enterit.modules.jobSearch.title') }}
+                  {{ $t('startit.modules.jobSearch.title') }}
                 </h3>
                 <ul class="space-y-2 text-gray-600">
                   <li class="flex items-start space-x-2">
@@ -174,7 +168,7 @@
                         clip-rule="evenodd"
                       />
                     </svg>
-                    <span>{{ $t('enterit.modules.jobSearch.point1') }}</span>
+                    <span>{{ $t('startit.modules.jobSearch.point1') }}</span>
                   </li>
                   <li class="flex items-start space-x-2">
                     <svg
@@ -188,7 +182,7 @@
                         clip-rule="evenodd"
                       />
                     </svg>
-                    <span>{{ $t('enterit.modules.jobSearch.point2') }}</span>
+                    <span>{{ $t('startit.modules.jobSearch.point2') }}</span>
                   </li>
                   <li class="flex items-start space-x-2">
                     <svg
@@ -202,30 +196,24 @@
                         clip-rule="evenodd"
                       />
                     </svg>
-                    <span>{{ $t('enterit.modules.jobSearch.point3') }}</span>
+                    <span>{{ $t('startit.modules.jobSearch.point3') }}</span>
                   </li>
                 </ul>
               </div>
             </div>
           </div>
 
-          <!-- Interview Preparation Module -->
+          <!-- Recruites Module -->
           <div class="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow">
             <div class="flex items-start space-x-4">
               <div
                 class="w-12 h-12 bg-success-100 rounded-lg flex items-center justify-center flex-shrink-0"
               >
-                <svg class="w-6 h-6 text-success-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path
-                    fill-rule="evenodd"
-                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
+                <IconPerson class="w-6 h-6 text-success-600" />
               </div>
               <div>
                 <h3 class="text-xl font-semibold text-gray-900 mb-3">
-                  {{ $t('enterit.modules.interview.title') }}
+                  {{ $t('startit.modules.recruiters.title') }}
                 </h3>
                 <ul class="space-y-2 text-gray-600">
                   <li class="flex items-start space-x-2">
@@ -240,7 +228,7 @@
                         clip-rule="evenodd"
                       />
                     </svg>
-                    <span>{{ $t('enterit.modules.interview.point1') }}</span>
+                    <span>{{ $t('startit.modules.recruiters.point1') }}</span>
                   </li>
                   <li class="flex items-start space-x-2">
                     <svg
@@ -254,7 +242,7 @@
                         clip-rule="evenodd"
                       />
                     </svg>
-                    <span>{{ $t('enterit.modules.interview.point2') }}</span>
+                    <span>{{ $t('startit.modules.recruiters.point2') }}</span>
                   </li>
                   <li class="flex items-start space-x-2">
                     <svg
@@ -268,28 +256,24 @@
                         clip-rule="evenodd"
                       />
                     </svg>
-                    <span>{{ $t('enterit.modules.interview.point3') }}</span>
+                    <span>{{ $t('startit.modules.recruiters.point3') }}</span>
                   </li>
                 </ul>
               </div>
             </div>
           </div>
 
-          <!-- Recruiters Module -->
+          <!-- Tooling Module -->
           <div class="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow">
             <div class="flex items-start space-x-4">
               <div
                 class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0"
               >
-                <svg class="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path
-                    d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"
-                  />
-                </svg>
+                <IconTooling class="w-6 h-6 text-purple-600" />
               </div>
               <div>
                 <h3 class="text-xl font-semibold text-gray-900 mb-3">
-                  {{ $t('enterit.modules.recruiters.title') }}
+                  {{ $t('startit.modules.tooling.title') }}
                 </h3>
                 <ul class="space-y-2 text-gray-600">
                   <li class="flex items-start space-x-2">
@@ -304,7 +288,7 @@
                         clip-rule="evenodd"
                       />
                     </svg>
-                    <span>{{ $t('enterit.modules.recruiters.point1') }}</span>
+                    <span>{{ $t('startit.modules.tooling.point1') }}</span>
                   </li>
                   <li class="flex items-start space-x-2">
                     <svg
@@ -318,7 +302,7 @@
                         clip-rule="evenodd"
                       />
                     </svg>
-                    <span>{{ $t('enterit.modules.recruiters.point2') }}</span>
+                    <span>{{ $t('startit.modules.tooling.point2') }}</span>
                   </li>
                   <li class="flex items-start space-x-2">
                     <svg
@@ -332,7 +316,7 @@
                         clip-rule="evenodd"
                       />
                     </svg>
-                    <span>{{ $t('enterit.modules.recruiters.point3') }}</span>
+                    <span>{{ $t('startit.modules.tooling.point3') }}</span>
                   </li>
                 </ul>
               </div>
@@ -345,13 +329,11 @@
               <div
                 class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0"
               >
-                <svg class="w-6 h-6 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
+                <IconAI class="w-6 h-6 text-orange-600" />
               </div>
               <div>
                 <h3 class="text-xl font-semibold text-gray-900 mb-3">
-                  {{ $t('enterit.modules.aiLearning.title') }}
+                  {{ $t('startit.modules.aiLearning.title') }}
                 </h3>
                 <ul class="space-y-2 text-gray-600">
                   <li class="flex items-start space-x-2">
@@ -366,7 +348,7 @@
                         clip-rule="evenodd"
                       />
                     </svg>
-                    <span>{{ $t('enterit.modules.aiLearning.point1') }}</span>
+                    <span>{{ $t('startit.modules.aiLearning.point1') }}</span>
                   </li>
                   <li class="flex items-start space-x-2">
                     <svg
@@ -380,7 +362,7 @@
                         clip-rule="evenodd"
                       />
                     </svg>
-                    <span>{{ $t('enterit.modules.aiLearning.point2') }}</span>
+                    <span>{{ $t('startit.modules.aiLearning.point2') }}</span>
                   </li>
                   <li class="flex items-start space-x-2">
                     <svg
@@ -394,7 +376,7 @@
                         clip-rule="evenodd"
                       />
                     </svg>
-                    <span>{{ $t('enterit.modules.aiLearning.point3') }}</span>
+                    <span>{{ $t('startit.modules.aiLearning.point3') }}</span>
                   </li>
                 </ul>
               </div>
@@ -411,10 +393,10 @@
     <section class="py-16 bg-gradient-to-br from-primary-50 to-primary-200">
       <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
         <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
-          {{ $t('enterit.finalCta.title') }}
+          {{ $t('startit.finalCta.title') }}
         </h2>
         <p class="text-xl text-slate-700 mb-8">
-          {{ $t('enterit.finalCta.subtitle') }}
+          {{ $t('startit.finalCta.subtitle') }}
         </p>
         <!-- MailerLite Subscription Button -->
         <div class="max-w-md mx-auto" id="subscription-form">
@@ -422,7 +404,7 @@
             class="ml-onclick-form bg-white text-primary-500 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg text-lg w-full"
             @click="goToMailerPage"
           >
-            {{ $t('enterit.finalCta.subscribeButton') }}
+            {{ $t('startit.finalCta.subscribeButton') }}
           </button>
         </div>
       </div>
@@ -435,6 +417,10 @@ import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import config from '../config'
 import SpeakerProfile from '@/components/SpeakerProfile.vue'
+import IconTooling from '@/components/icons/IconTooling.vue'
+import IconPerson from '@/components/icons/IconPerson.vue'
+import IconGear from '@/components/icons/IconGear.vue'
+import IconAI from '@/components/icons/IconAI.vue'
 
 const { t, locale } = useI18n()
 

@@ -66,7 +66,7 @@
         "videoTitle": "Apple Memory Integrity Enforcmenet (MIE): Jak iPhone chroni pamięć przed atakami",
         "videoDescription": "Rodzaje błędów związanych z pamięcią i jak Apple chroni urządzenia przed atakami.",
         "videoLink": "https://www.youtube.com/watch?v=zyOrLgHEE6I"
-      }, 
+      },
       {
         "videoTitle": "Modern DevOps with Kubernetes",
         "videoDescription": "Podstawy Kubernetes i DevOps dla mikroserwisów",
@@ -100,10 +100,10 @@
     "itSkills": "Umiejętności IT",
     "itDescription": "Zrozum narzędzia, procesy i sposób myślenia potrzebny do pracy z technologią."
   },
-  "enterit": {
-    "badge": "Darmowy Webinar",
-    "title": "EnterIT",
-    "subtitle": "Twój kompletny przewodnik po wejściu do branży IT. Poznaj kluczowe strategie poszukiwania pracy, przygotowania do rozmów kwalifikacyjnych, nawiązywania kontaktów z rekruterami i wykorzystania AI do przyspieszonej nauki.",
+  "startit": {
+    "badge": "StartIT - darmowy webinar",
+    "title": "Start w IT z AI",
+    "subtitle": "Pierwsze kroki w IT i AI – praktycznie, krok po kroku, z narzędziami wspierającymi Twój rozwój",
     "date": {
       "title": "Data"
     },
@@ -130,28 +130,28 @@
     },
     "modules": {
       "jobSearch": {
-        "title": "Jak Zacząć Szukać Pracy w IT",
-        "point1": "Zidentyfikuj najlepsze stanowiska dla początkujących dla Twojego doświadczenia",
-        "point2": "Stwórz przekonujące portfolio nawet bez doświadczenia",
-        "point3": "Skutecznie nawiguj po portalach pracy i stronach firm"
-      },
-      "interview": {
-        "title": "Jak Przygotować Się do Rozmów Kwalifikacyjnych",
-        "point1": "Opanuj typowe pytania techniczne i behawioralne",
-        "point2": "Zaprezentuj swoje umiejętności przez praktyczne przykłady",
-        "point3": "Radź sobie z negocjacjami płacy i komunikacją następczą"
+        "title": "Jak zacząć w IT",
+        "point1": "Dowiedz się, od czego rozpocząć naukę i jakie ścieżki są dostępne",
+        "point2": "Sprawdź, czy IT jest dla Ciebie i czy nie jest za późno na start",
+        "point3": "Ustal cele rozwoju i monitoruj swoje postępy"
       },
       "recruiters": {
-        "title": "Jak Znaleźć Rekruterów",
-        "point1": "Zbuduj profesjonalną sieć na LinkedIn i innych platformach",
-        "point2": "Nawiąż kontakt z rekruterami IT w docelowych firmach",
-        "point3": "Utrzymuj relacje i otrzymuj rekomendacje"
+        "title": "Budowanie profilu i sieci kontaktów",
+        "point1": "Twórz portfolio i profil wspierany narzędziami AI",
+        "point2": "Nawiązuj kontakty z rekruterami i rozwijaj swoją sieć",
+        "point3": "Dowiedz się, jak wyróżnić się wśród początkujących na rynku"
+      },
+      "tooling": {
+        "title": "Jak szukać pracy",
+        "point1": "Identyfikuj stanowiska najlepiej dopasowane do Twoich celów",
+        "point2": "Przygotuj CV i portfolio z pomocą AI",
+        "point3": "Zrozum oczekiwania i aktualne trendy na rynku pracy"
       },
       "aiLearning": {
-        "title": "Jak Uczyć Się z AI",
-        "point1": "Używaj narzędzi AI do przyspieszenia procesu nauki",
-        "point2": "Otrzymaj spersonalizowane ścieżki nauki i ćwiczenia praktyczne",
-        "point3": "Bądź na bieżąco z najnowszymi technologiami i trendami"
+        "title": "Jak wykorzystać AI do nauki",
+        "point1": "Wykorzystaj narzędzia AI, aby szybciej przyswajać wiedzę",
+        "point2": "Twórz spersonalizowane plany nauki i mini-projekty",
+        "point3": "Stosuj AI do praktycznych ćwiczeń i projektów, aby szybciej zdobywać doświadczenie"
       }
     },
     "finalCta": {
