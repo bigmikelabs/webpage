@@ -1,0 +1,356 @@
+{
+  "nav": {
+    "courses": "Kursy",
+    "enterit": "EnterIT",
+    "about": "O nas",
+    "contact": "Kontakt",
+    "getStarted": "Rozpocznij"
+  },
+  "hero": {
+    "title": "Odblokuj Swój",
+    "titleHighlight": "Potencjał Technologiczny",
+    "subtitle": "Opanuj podstawy AI i IT dzięki naszym kursom dla początkujących. Rozpocznij swoją podróż w technologie z fachowym przewodnictwem i praktyczną nauką.",
+    "startLearning": "Rozpocznij Naukę Dziś",
+    "viewCourses": "Zobacz Kursy",
+    "students": "500+ Uczniów",
+    "instructors": "Doświadczeni Instruktorzy",
+    "jobReady": "Umiejętności Gotowe do Pracy",
+    "satisfaction": "100% satysfakcji"
+  },
+  "features": {
+    "title": "Dlaczego wybrać BigMikeLabs?",
+    "subtitle": "Sprawiamy, że złożona technologia staje się prosta i dostępna dla każdego, niezależnie od pochodzenia.",
+    "beginnerFriendly": {
+      "title": "Dla Początkujących",
+      "description": "Zacznij od zera dzięki naszemu starannie zaprojektowanemu programowi nauczania, który dzieli złożone koncepcje na przystępne lekcje."
+    },
+    "handsOn": {
+      "title": "Praktyczna Nauka",
+      "description": "Buduj prawdziwe projekty i zdobywaj praktyczne doświadczenie dzięki interaktywnym ćwiczeniom programistycznym i rzeczywistym aplikacjom."
+    },
+    "expertSupport": {
+      "title": "Wsparcie Ekspertów",
+      "description": "Otrzymaj wskazówki od profesjonalistów z branży z wieloletnim doświadczeniem w AI, programowaniu i IT."
+    }
+  },
+  "courses": {
+    "title": "Popularne Kursy",
+    "subtitle": "Rozpocznij swoją podróż od naszych najlepiej ocenianych kursów",
+    "aiFundamentals": {
+      "title": "Podstawy AI",
+      "description": "Poznaj podstawy sztucznej inteligencji, koncepcje uczenia maszynowego i praktyczne zastosowania.",
+      "duration": "8 tygodni"
+    },
+    "codingBasics": {
+      "title": "Podstawy programowania",
+      "description": "Programowanie na backend i frontend od zera.",
+      "duration": "12 tygodni"
+    },
+    "status": {
+      "inPreparation": "W przygotowaniu",
+      "comingSoon": "Zapisy wkrótce!",
+      "tba": "",
+      "notifyButton": "Informuj mnie kiedy kurs będzie dostępny"
+    }
+  },
+  "prelectures": {
+    "title": "Prelekcje",
+    "subtitle": "Bezpłatne wykłady i porady od naszych ekspertów",
+    "movies": [
+      {
+        "videoTitle": "Rewolucja AI już trwa. Czy naprawdę musisz bać się o pracę?",
+        "videoDescription": "Próba trzeźwego spojrzenia na obecny rozwój AI i cały hype, który ją otacza. Czy AI zabierze nam pracę? Nikt nie zna dziś jednoznacznej odpowiedzi — ale jedno jest pewne: to nie stanie się jutro. Zobacz film i przekonaj się dlaczego.",
+        "videoLink": "https://youtu.be/SOOdUbEYkKw?si=_iHFsyt_Dwo32Qp7"
+      },
+      {
+        "videoTitle": "Apple Memory Integrity Enforcmenet (MIE): Jak iPhone chroni pamięć przed atakami",
+        "videoDescription": "Rodzaje błędów związanych z pamięcią i jak Apple chroni urządzenia przed atakami.",
+        "videoLink": "https://www.youtube.com/watch?v=zyOrLgHEE6I"
+      }, 
+      {
+        "videoTitle": "Modern DevOps with Kubernetes",
+        "videoDescription": "Podstawy Kubernetes i DevOps dla mikroserwisów",
+        "videoLink": "https://youtu.be/-ffKVQzri-s?si=v6BD_Ei3jiigV63q"
+      }
+    ]
+  },
+  "cta": {
+    "title": "Gotowy na Rozpoczęcie Swojej Przygody z Technologią?",
+    "subtitle": "Dołącz do setek uczniów, którzy już przekształcili swoje kariery dzięki BigMikeLabs.",
+    "browseAll": "Przeglądaj Wszystkie Kursy",
+    "talkAdvisor": "Porozmawiaj z Doradcą"
+  },
+  "footer": {
+    "description": "Wspieramy początkujących w opanowaniu AI i wiedzy niezbędnej do pracy w IT poprzez szkolenia prowadzone przez ekspertów i praktyczne doświadczenia edukacyjne.",
+    "courses": "Kursy",
+    "company": "Firma",
+    "aboutUs": "O nas",
+    "instructors": "Instruktorzy",
+    "careers": "Kariera",
+    "programmingBasics": "Podstawy Programowania",
+    "copyright": "2025 BigMikeLabs. Wszelkie prawa zastrzeżone."
+  },
+  "courseCards": {
+    "aiBasics": "Podstawy AI",
+    "aiDescription": "Naucz się podstaw AI",
+    "programming": "Programowanie",
+    "programmingDescription": "Kodowanie od podstaw",
+    "webDev": "Rozwój Web",
+    "webDevDescription": "Buduj strony internetowe",
+    "itSkills": "Umiejętności IT",
+    "itDescription": "Podstawy technologii"
+  },
+  "enterit": {
+    "badge": "Darmowy Webinar",
+    "title": "EnterIT",
+    "subtitle": "Twój kompletny przewodnik po wejściu do branży IT. Poznaj kluczowe strategie poszukiwania pracy, przygotowania do rozmów kwalifikacyjnych, nawiązywania kontaktów z rekruterami i wykorzystania AI do przyspieszonej nauki.",
+    "date": {
+      "title": "Data"
+    },
+    "countdown": {
+      "title": "Czas do Webinaru",
+      "days": "Dni",
+      "hours": "Godzin",
+      "minutes": "Minut",
+      "seconds": "Sekund"
+    },
+    "duration": {
+      "title": "Czas trwania",
+      "value": "90 minut"
+    },
+    "format": {
+      "title": "Format",
+      "value": "Na żywo online"
+    },
+    "registerButton": "Zarezerwuj Miejsce",
+    "freeEvent": "100% Darmowe Wydarzenie - Ograniczona Liczba Miejsc",
+    "whatYoullLearn": {
+      "title": "Czego Się Nauczysz",
+      "subtitle": "Otrzymaj praktyczne, wykonalne strategie do rozpoczęcia kariery w IT"
+    },
+    "modules": {
+      "jobSearch": {
+        "title": "Jak Zacząć Szukać Pracy w IT",
+        "point1": "Zidentyfikuj najlepsze stanowiska dla początkujących dla Twojego doświadczenia",
+        "point2": "Stwórz przekonujące portfolio nawet bez doświadczenia",
+        "point3": "Skutecznie nawiguj po portalach pracy i stronach firm"
+      },
+      "interview": {
+        "title": "Jak Przygotować Się do Rozmów Kwalifikacyjnych",
+        "point1": "Opanuj typowe pytania techniczne i behawioralne",
+        "point2": "Zaprezentuj swoje umiejętności przez praktyczne przykłady",
+        "point3": "Radź sobie z negocjacjami płacy i komunikacją następczą"
+      },
+      "recruiters": {
+        "title": "Jak Znaleźć Rekruterów",
+        "point1": "Zbuduj profesjonalną sieć na LinkedIn i innych platformach",
+        "point2": "Nawiąż kontakt z rekruterami IT w docelowych firmach",
+        "point3": "Utrzymuj relacje i otrzymuj rekomendacje"
+      },
+      "aiLearning": {
+        "title": "Jak Uczyć Się z AI",
+        "point1": "Używaj narzędzi AI do przyspieszenia procesu nauki",
+        "point2": "Otrzymaj spersonalizowane ścieżki nauki i ćwiczenia praktyczne",
+        "point3": "Bądź na bieżąco z najnowszymi technologiami i trendami"
+      }
+    },
+    "finalCta": {
+      "title": "Gotowy na Rozpoczęcie Kariery w IT?",
+      "subtitle": "Zapisz się na już dziś i otrzymaj prezent po webinarze.",
+      "emailPlaceholder": "Wprowadź swój adres e-mail",
+      "subscribeButton": "Zapisz się teraz",
+      "subscribingButton": "Zapisywanie...",
+      "successMessage": "Dziękujemy za zapisanie się! Będziesz informować Cię na bieżąco.",
+      "errorMessage": "Coś poszło nie tak. Spróbuj ponownie.",
+      "clickToSubscribe": "Kliknij, aby otworzyć formularz subskrypcji"
+    }
+  },
+  "about": {
+    "hero": {
+      "title": "O BigMikeLabs",
+      "subtitle": "Z pasją udostępniamy edukację AI i IT każdemu. Naszą misją jest wyposażenie początkujących w wiedzę i umiejętności potrzebne do sukcesu w branży technologicznej."
+    },
+    "mission": {
+      "title": "Nasza Misja",
+      "description1": "W BigMikeLabs wierzymy, że technologia powinna być dostępna dla każdego, niezależnie od pochodzenia czy poziomu doświadczenia. Poświęcamy się zrywaniu barier, które uniemożliwiają ludziom wejście do ekscytującego świata AI i IT.",
+      "description2": "Poprzez nasze starannie opracowane kursy, fachową instrukcję i wspierającą społeczność, pomagamy początkującym budować pewność siebie i rozwijać praktyczne umiejętności, które przekładają się bezpośrednio na sukces w prawdziwym świecie."
+    },
+    "stats": {
+      "students": "Zadowolonych Studentów",
+      "satisfaction": "Wskaźnik Satysfakcji",
+      "companies": "Firmy Partnerskie",
+      "years": "Lat Doświadczenia"
+    },
+    "values": {
+      "title": "Nasze Wartości",
+      "subtitle": "Zasady, które kierują wszystkim, co robimy",
+      "quality": {
+        "title": "Jakościowa Edukacja",
+        "description": "Utrzymujemy najwyższe standardy w naszym programie nauczania, zapewniając, że każda lekcja jest kompleksowa, aktualna i istotna dla branży."
+      },
+      "community": {
+        "title": "Wspierająca Społeczność",
+        "description": "Uczymy się lepiej razem. Tworzymy przyjazne środowisko, w którym studenci mogą uczyć się od siebie nawzajem i rozwijać się wspólnie."
+      },
+      "innovation": {
+        "title": "Ciągła Innowacja",
+        "description": "Technologia rozwija się szybko, a my razem z nią. Stale aktualizujemy nasze treści i metody, aby wyprzedzać trendy branżowe."
+      }
+    },
+    "team": {
+      "title": "Nasz Zespół",
+      "subtitle": "Poznaj ekspertów za BigMikeLabs",
+      "expert": {
+        "name": "Michał Wroński",
+        "role": "Senior Developer & Założyciel BigMikeLabs",
+        "bio": "15+ lat doświadczenia w branży IT - tysiące linii kodu produkcyjnego, tuziny projektów i setka praktykantów. Michał podzieli się wiedzą z pierwszej ręki i sprawdzonymi strategiami, które działają na dzisiejszym konkurencyjnym rynku. Jako doświadczony profesjonalista, rozumie wyzwania związane z wejściem do branży IT i zapewni praktyczne i realne porady.",
+        "experience": "15+ lat doświadczenia",
+        "expertise1": "Backend Developer",
+        "expertise2": "AI",
+        "viewProfile": "Zobacz Profil LinkedIn"
+      }
+    },
+    "story": {
+      "title": "Nasza Historia",
+      "subtitle": "Odkryj kluczowe momenty w rozwoju BigMikeLabs"
+    },
+    "timeline": {
+      "event1": {
+        "year": "2011",
+        "title": "Zaczynamy uczyć",
+        "description": "Zaczynamy uczyć pierwszych studentów i praktykantów."
+      },
+      "event2": {
+        "year": "2017",
+        "title": "Pierwsze konferencje",
+        "description": "Zaczynamy pojawiać się na pierwszych konferencjach i meetupach."
+      },
+      "event3": {
+        "year": "2025",
+        "title": "BigMikeLabs",
+        "description": "Startujemy oficialnie jako BigMikeLabs."
+      }
+    },
+    "cta": {
+      "title": "Gotowy na Rozpoczęcie Swojej Podróży?",
+      "subtitle": "Dołącz do naszej społeczności uczących się i zrób pierwszy krok w kierunku swojej kariery w technologii.",
+      "viewCourses": "Zobacz Nasze Kursy",
+      "meetInstructors": "Poznaj Naszych Instruktorów"
+    }
+  },
+  "instructors": {
+    "hero": {
+      "title": "Poznaj Naszych Instruktorów",
+      "subtitle": "Ucz się od ekspertów branżowych, którzy są pasjonatami nauczania i oddani Twojemu sukcesowi."
+    },
+    "michal": {
+      "role": "Główny Instruktor i Założyciel",
+      "bio1": "Z ponad 15-letnim doświadczeniem w branży IT, Michał pracował nad projektami od startupowych MVP po systemy na skalę przedsiębiorstwa. Jego pasja do nauczania i mentoringu pomogła wielu studentom z powodzeniem rozpoczać karierię w IT.",
+      "bio2": "Michał wierzy w praktyczną naukę połączoną z solidnymi podstawami teoretycznymi. Jego filozofia nauczania koncentruje się na udostępnianiu złożonych koncepcji i natychmiastowym zastosowaniu ich w scenariuszach z prawdziwego świata.",
+      "expertise": {
+        "ai": "Sztuczna Inteligencja",
+        "programming": "Rozwój Oprogramowania",
+        "management": "Zarządzanie Projektami",
+        "mentoring": "Mentoring Kariery"
+      },
+      "stats": {
+        "years": "Lat Doświadczenia",
+        "students": "Studentów"
+      }
+    },
+    "philosophy": {
+      "title": "Nasza Filozofia Nauczania",
+      "practical": {
+        "title": "Praktyczna Nauka",
+        "description": "Każda koncepcja jest nauczana na praktycznych przykładach i projektach."
+      },
+      "personalized": {
+        "title": "Podejście Spersonalizowane",
+        "description": "Uznajemy, że każdy student uczy się inaczej i dostosowujemy nasze metody nauczania do indywidualnych potrzeb i stylów uczenia się."
+      },
+      "industry": {
+        "title": "Istotne dla Branży",
+        "description": "Nasz program nauczania jest stale aktualizowany, aby odzwierciedlać bieżące trendy branżowe i umiejętności, których faktycznie szukają pracodawcy."
+      }
+    },
+    "joinTeam": {
+      "title": "Gotowy Uczyć się od Najlepszych?",
+      "subtitle": "Dołącz do naszej społeczności i zacznij uczyć się od doświadczonych profesjonalistów, którym zależy na Twoim sukcesie.",
+      "viewCourses": "Zobacz Nasze Kursy",
+      "joinWebinar": "Dołącz do Darmowego Webinaru"
+    }
+  },
+  "aiFundamentals": {
+    "badge": "8-Tygodniowy Kurs",
+    "hero": {
+      "title": "Podstawy AI",
+      "subtitle": "Opanuj podstawy Sztucznej Inteligencji i Uczenia Maszynowego. Idealny dla początkujących, którzy chcą zrozumieć AI i zacząć budować swoje pierwsze projekty AI.",
+      "enrollButton": "Zapisz się Teraz",
+      "learnMoreButton": "Pobierz Program"
+    },
+    "stats": {
+      "weeks": "Tygodni",
+      "lessons": "Lekcji",
+      "projects": "Projektów",
+      "access": "Dostęp Dożywotni"
+    },
+    "overview": {
+      "title": "Czego się Nauczysz",
+      "description": "Ten kompleksowy kurs obejmuje wszystko, co musisz wiedzieć, aby zacząć z AI i uczeniem maszynowym."
+    },
+    "features": {
+      "foundation": {
+        "title": "Solidne Podstawy",
+        "description": "Zbuduj solidne zrozumienie koncepcji AI, terminologii i podstaw matematycznych."
+      },
+      "practical": {
+        "title": "Praktyczne Projekty",
+        "description": "Zastosuj swoją wiedzę poprzez prowadzone projekty wykorzystujące prawdziwe zbiory danych i narzędzia branżowe."
+      },
+      "mentorship": {
+        "title": "Mentoring Ekspertów",
+        "description": "Otrzymaj wskazówki od doświadczonych profesjonalistów AI przez całą swoją podróż edukacyjną."
+      }
+    },
+    "curriculum": {
+      "title": "Program Kursu",
+      "subtitle": "8 tygodni ustrukturyzowanej nauki z praktycznymi projektami"
+    },
+    "modules": {
+      "module1": {
+        "title": "Wprowadzenie do AI i Uczenia Maszynowego",
+        "description": "Zrozumienie czym jest AI, jego zastosowań i różnych typów uczenia maszynowego.",
+        "lesson1": "Czym jest Sztuczna Inteligencja?",
+        "lesson2": "Rodzaje Uczenia Maszynowego",
+        "lesson3": "AI w Codziennym Życiu"
+      },
+      "module2": {
+        "title": "Dane i Algorytmy",
+        "description": "Naucz się przygotowania danych, podstawowych algorytmów i jak maszyny uczą się z danych.",
+        "lesson1": "Zrozumienie Danych",
+        "lesson2": "Podstawowe Algorytmy Uczenia Maszynowego",
+        "lesson3": "Trenowanie Twojego Pierwszego Modelu"
+      },
+      "module3": {
+        "title": "Praktyczne Zastosowania AI",
+        "description": "Buduj prawdziwe projekty AI i zrozum, jak wdrażać i używa�� AI w praktycznych scenariuszach.",
+        "lesson1": "Projekt Rozpoznawania Obrazów",
+        "lesson2": "Przetwarzanie Języka Naturalnego",
+        "lesson3": "Budowanie Chatbota"
+      }
+    },
+    "instructor": {
+      "title": "Twój Instruktor",
+      "role": "Ekspert AI i Główny Instruktor",
+      "bio": "Michał wnosi 15+ lat doświadczenia w rozwoju oprogramowania i implementacji AI. Pracował ze startupami i firmami Fortune 500 nad implementacją rozwiązań AI.",
+      "learnMore": "Dowiedz się więcej o Michale"
+    },
+    "enrollment": {
+      "title": "Gotowy na Rozpoczęcie Swojej Podróży z AI?",
+      "subtitle": "Dołącz do setek studentów, którzy z powodzeniem nauczyli się podstaw AI z nami.",
+      "enrollButton": "Zapisz się na Kurs",
+      "webinarButton": "Weź Udział w Darmowym Webinarze",
+      "note": "30-dniowa gwarancja zwrotu pieniędzy • Dostęp dożywotni • Certyfikat ukończenia"
+    }
+  }
+}
