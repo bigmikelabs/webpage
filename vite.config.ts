@@ -1,5 +1,7 @@
 import { createRequire } from 'node:module'
 import { fileURLToPath, URL } from 'node:url'
+import { copyFileSync } from 'node:fs'
+import { resolve } from 'node:path'
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
@@ -32,7 +34,28 @@ export default defineConfig(({ command, mode }) => {
   }
   
   return {
-    plugins,
+    plugins: [
+      ...plugins,
+      // Plugin to copy mailer.html to dist (CSS injection handled by Cloudflare Worker)
+      {
+        name: 'copy-mailer-html',
+        closeBundle() {
+          if (command === 'build') {
+            const rootDir = fileURLToPath(new URL('./', import.meta.url))
+            const sourceFile = resolve(rootDir, 'mailer.html')
+            const destFile = resolve(rootDir, 'dist', 'mailer.html')
+            
+            try {
+              // Just copy the file - CSS injection will be handled by Cloudflare Worker
+              copyFileSync(sourceFile, destFile)
+              console.log('✓ Copied mailer.html to dist (CSS will be injected by Cloudflare Worker)')
+            } catch (error) {
+              console.error('Failed to copy mailer.html:', error)
+            }
+          }
+        },
+      },
+    ],
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url))
