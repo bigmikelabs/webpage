@@ -20,7 +20,7 @@
             </p>
             <div class="flex flex-col sm:flex-row gap-4 animate-slide-up">
               <button
-                @click="$router.push('/enterit')"
+                @click="$router.push('/startit')"
                 class="bg-primary-400 text-slate-900 px-8 py-4 rounded-lg font-semibold hover:bg-primary-500 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-1"
               >
                 {{ $t('hero.startLearning') }}

@@ -12,7 +12,7 @@ const routes = [
     component: Home,
   },
   {
-    path: '/enterit',
+    path: '/startit',
     name: 'StartIT',
     component: StartIT,
   },

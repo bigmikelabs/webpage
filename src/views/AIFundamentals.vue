@@ -383,7 +383,7 @@
             {{ $t('aiFundamentals.enrollment.enrollButton') }}
           </button>
           <router-link
-            to="/enterit"
+            to="/startit"
             class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-primary-500 transition-colors"
           >
             {{ $t('aiFundamentals.enrollment.webinarButton') }}

@@ -211,7 +211,7 @@
             {{ $t('instructors.joinTeam.viewCourses') }}
           </router-link>
           <router-link
-            to="/enterit"
+            to="/startit"
             class="border border-gray-300 text-gray-700 px-8 py-4 rounded-lg font-semibold hover:border-primary-500 hover:text-primary-500 transition-colors"
           >
             {{ $t('instructors.joinTeam.joinWebinar') }}
