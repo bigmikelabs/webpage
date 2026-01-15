@@ -58,6 +58,11 @@
     "subtitle": "Free lectures and tips from our expert instructors",
     "movies": [
       {
+        "videoTitle": "How does AI understand text?",
+        "videoDescription": "Does a computer really understand what you write to it? In this video, I show step by step how AI processes text — from raw sentences, through tokens and embeddings, to encoders in the Transformer architecture.",
+        "videoLink": "https://youtu.be/Ea5GGLnf-O8?si=YjTAJSBuA7DeeBTN"
+      },
+      {
         "videoTitle": "The AI Revolution is already here. Do you really need to fear for your job?",
         "videoDescription": "An attempt at a sober look at the current development of AI and all the hype surrounding it. Will AI take our jobs? No one has a definitive answer today — but one thing is certain: it won't happen tomorrow. Watch the video and find out why.",
         "videoLink": "https://youtu.be/SOOdUbEYkKw?si=_iHFsyt_Dwo32Qp7"

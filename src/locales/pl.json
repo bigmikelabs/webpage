@@ -58,6 +58,11 @@
     "subtitle": "Bezpłatne wykłady i porady od naszych ekspertów",
     "movies": [
       {
+        "videoTitle": "Jak AI rozumie tekst?",
+        "videoDescription": "Czy komputer naprawdę rozumie, co do niego piszesz? W tym filmie krok po kroku pokazuję, jak AI przetwarza tekst — od surowego zdania, przez tokeny i embeddingi, aż po encodery w architekturze Transformer.",
+        "videoLink": "https://youtu.be/Ea5GGLnf-O8?si=YjTAJSBuA7DeeBTN"
+      },
+      {
         "videoTitle": "Rewolucja AI już trwa. Czy naprawdę musisz bać się o pracę?",
         "videoDescription": "Próba trzeźwego spojrzenia na obecny rozwój AI i cały hype, który ją otacza. Czy AI zabierze nam pracę? Nikt nie zna dziś jednoznacznej odpowiedzi — ale jedno jest pewne: to nie stanie się jutro. Zobacz film i przekonaj się dlaczego.",
         "videoLink": "https://youtu.be/SOOdUbEYkKw?si=_iHFsyt_Dwo32Qp7"
