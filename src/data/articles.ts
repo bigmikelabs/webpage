@@ -21,40 +21,12 @@ export interface Article {
   images?: ArticleImage[]
 }
 
+// Import individual articles
+import { welcomeToOurBlog } from './articles/welcome-to-our-blog'
+
 // Static articles array - shared across components
+// Add new articles by importing them above and adding them to this array
 export const articles: Article[] = [
-  {
-    id: 'welcome-to-our-blog',
-    title: {
-      en: 'Welcome to Our Blog',
-      pl: 'Witamy na Naszym Blogu',
-    },
-    date: new Date('2026-01-28'),
-    author: 'Michał Wroński',
-    content: {
-      en: [
-        'This is your first article. You can add more articles to this array.',
-        'Each article can contain multiple paragraphs of text and several images.',
-        'Simply add new objects to the articles array to publish more content.',
-      ],
-      pl: [
-        'To jest Twój pierwszy artykuł. Możesz dodać więcej artykułów do tej tablicy.',
-        'Każdy artykuł może zawierać wiele akapitów tekstu i kilka obrazów.',
-        'Po prostu dodaj nowe obiekty do tablicy artykułów, aby publikować więcej treści.',
-      ],
-    },
-    images: [
-      {
-        src: '/images/michal-wronski.jpg',
-        alt: {
-          en: 'Sample image',
-          pl: 'Przykładowy obraz',
-        },
-        caption: {
-          en: 'This is a sample image caption',
-          pl: 'To jest przykładowy podpis obrazu',
-        },
-      },
-    ],
-  },
+  welcomeToOurBlog,
+  // Add more articles here as you create them
 ]
