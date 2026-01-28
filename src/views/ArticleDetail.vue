@@ -15,7 +15,7 @@
             <h1 class="text-4xl sm:text-5xl font-bold mb-4">{{ article.title }}</h1>
             <div class="flex items-center text-sm text-white/90">
               <span v-if="article.date">{{ formatArticleDate(article.date) }}</span>
-              <span v-if="article.author" class="ml-4">By {{ article.author }}</span>
+              <span v-if="article.author" class="ml-4">{{ article.author }}</span>
             </div>
           </div>
         </div>
