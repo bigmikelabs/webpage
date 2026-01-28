@@ -6,13 +6,13 @@
       <div v-if="article.images && article.images.length > 0" class="relative h-96 overflow-hidden">
         <img
           :src="article.images[0].src"
-          :alt="article.images[0].alt || article.title"
+          :alt="translations.getImageAlt(article.images[0]) || translations.title.value"
           class="w-full h-full object-cover"
         />
         <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
         <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
           <div class="max-w-4xl mx-auto">
-            <h1 class="text-4xl sm:text-5xl font-bold mb-4">{{ article.title }}</h1>
+            <h1 class="text-4xl sm:text-5xl font-bold mb-4">{{ translations.title.value }}</h1>
             <div class="flex items-center text-sm text-white/90">
               <span v-if="article.date">{{ formatArticleDate(article.date) }}</span>
               <span v-if="article.author" class="ml-4">{{ article.author }}</span>
@@ -25,7 +25,7 @@
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
         <!-- Header (if no hero image) -->
         <div v-if="!article.images || article.images.length === 0" class="mb-8">
-          <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">{{ article.title }}</h1>
+          <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">{{ translations.title.value }}</h1>
           <div class="flex items-center text-sm text-gray-500">
             <span v-if="article.date">{{ formatArticleDate(article.date) }}</span>
             <span v-if="article.author" class="ml-4">By {{ article.author }}</span>
@@ -43,11 +43,11 @@
             >
               <img
                 :src="image.src"
-                :alt="image.alt || article.title"
+                :alt="translations.getImageAlt(image) || translations.title.value"
                 class="w-full rounded-lg shadow-md"
               />
               <p v-if="image.caption" class="mt-2 text-sm text-gray-600 text-center italic">
-                {{ image.caption }}
+                {{ translations.getImageCaption(image) }}
               </p>
             </div>
           </div>
@@ -55,7 +55,7 @@
           <!-- Article Text -->
           <div class="space-y-6">
             <div
-              v-for="(paragraph, pIndex) in article.content"
+              v-for="(paragraph, pIndex) in translations.content.value"
               :key="pIndex"
               class="text-gray-700 leading-relaxed text-lg"
             >
@@ -101,6 +101,7 @@ import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { articles, type Article } from '../data/articles'
 import { formatDate } from '../utils/dateFormatter'
+import { useArticleTranslations } from '../utils/articleTranslations'
 
 const route = useRoute()
 const { locale } = useI18n()
@@ -109,6 +110,16 @@ const { locale } = useI18n()
 const article = computed<Article | undefined>(() => {
   const articleId = route.params.id as string
   return articles.find((a) => a.id === articleId)
+})
+
+// Get translations for the article - use a dummy article if not found
+const dummyArticle: Article = {
+  id: '',
+  title: { en: '', pl: '' },
+  content: { en: [], pl: [] },
+}
+const translations = computed(() => {
+  return useArticleTranslations(article.value || dummyArticle)
 })
 
 // Format article date based on current locale

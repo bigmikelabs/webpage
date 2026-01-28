@@ -458,7 +458,7 @@
             <div v-if="article.images && article.images.length > 0" class="relative h-48 overflow-hidden">
               <img
                 :src="article.images[0].src"
-                :alt="article.images[0].alt || article.title"
+                :alt="getImageAlt(article.images[0]) || getArticleTitle(article)"
                 class="w-full h-full object-cover"
               />
             </div>
@@ -475,9 +475,9 @@
                 <span v-if="article.date">{{ formatArticleDate(article.date) }}</span>
                 <span v-if="article.author" class="ml-4">{{ article.author }}</span>
               </div>
-              <h3 class="text-xl font-bold text-gray-900 mb-3">{{ article.title }}</h3>
+              <h3 class="text-xl font-bold text-gray-900 mb-3">{{ getArticleTitle(article) }}</h3>
               <p class="text-gray-600 mb-4 flex-1 line-clamp-3">
-                {{ article.content[0] }}
+                {{ getArticleContent(article)[0] }}
               </p>
               <router-link
                 :to="`/articles/${article.id}`"
@@ -513,6 +513,7 @@ import en from '../locales/en.json'
 import pl from '../locales/pl.json'
 import { articles, type Article } from '../data/articles'
 import { formatDate } from '../utils/dateFormatter'
+import { getTranslatedText } from '../utils/articleTranslations'
 
 // Home page content - extracted from main App.vue
 
@@ -556,5 +557,21 @@ const featuredArticles = computed<Article[]>(() => {
 // Format article date based on current locale
 const formatArticleDate = (date: Date): string => {
   return formatDate(date, locale.value)
+}
+
+// Get translated article title
+const getArticleTitle = (article: Article): string => {
+  return getTranslatedText(article.title, locale.value)
+}
+
+// Get translated article content
+const getArticleContent = (article: Article): string[] => {
+  return locale.value === 'pl' ? article.content.pl : article.content.en
+}
+
+// Get translated image alt text
+const getImageAlt = (image: NonNullable<Article['images']>[0]): string | undefined => {
+  if (!image.alt) return undefined
+  return getTranslatedText(image.alt, locale.value)
 }
 </script>
