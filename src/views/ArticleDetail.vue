@@ -1,0 +1,118 @@
+<template>
+  <div class="min-h-screen bg-white">
+    <!-- Article Detail -->
+    <article v-if="article" class="pt-20 pb-16">
+      <!-- Hero Section with Image -->
+      <div v-if="article.images && article.images.length > 0" class="relative h-96 overflow-hidden">
+        <img
+          :src="article.images[0].src"
+          :alt="article.images[0].alt || article.title"
+          class="w-full h-full object-cover"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
+          <div class="max-w-4xl mx-auto">
+            <h1 class="text-4xl sm:text-5xl font-bold mb-4">{{ article.title }}</h1>
+            <div class="flex items-center text-sm text-white/90">
+              <span v-if="article.date">{{ formatArticleDate(article.date) }}</span>
+              <span v-if="article.author" class="ml-4">By {{ article.author }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Article Content -->
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
+        <!-- Header (if no hero image) -->
+        <div v-if="!article.images || article.images.length === 0" class="mb-8">
+          <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">{{ article.title }}</h1>
+          <div class="flex items-center text-sm text-gray-500">
+            <span v-if="article.date">{{ formatArticleDate(article.date) }}</span>
+            <span v-if="article.author" class="ml-4">By {{ article.author }}</span>
+          </div>
+        </div>
+
+        <!-- Article Body -->
+        <div class="prose prose-lg max-w-none">
+          <!-- Article Images (excluding first one if used as hero) -->
+          <div v-if="article.images && article.images.length > 1" class="mb-8">
+            <div
+              v-for="(image, imgIndex) in article.images.slice(1)"
+              :key="imgIndex"
+              class="mb-6 last:mb-0"
+            >
+              <img
+                :src="image.src"
+                :alt="image.alt || article.title"
+                class="w-full rounded-lg shadow-md"
+              />
+              <p v-if="image.caption" class="mt-2 text-sm text-gray-600 text-center italic">
+                {{ image.caption }}
+              </p>
+            </div>
+          </div>
+
+          <!-- Article Text -->
+          <div class="space-y-6">
+            <div
+              v-for="(paragraph, pIndex) in article.content"
+              :key="pIndex"
+              class="text-gray-700 leading-relaxed text-lg"
+            >
+              {{ paragraph }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Back to Articles Link -->
+        <div class="mt-12 pt-8 border-t border-gray-200">
+          <router-link
+            to="/articles"
+            class="inline-flex items-center text-primary-500 hover:text-primary-600 font-medium"
+          >
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            {{ $t('articles.backToArticles') }}
+          </router-link>
+        </div>
+      </div>
+    </article>
+
+    <!-- Article Not Found -->
+    <div v-else class="pt-20 pb-16">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl font-bold text-gray-900 mb-4">{{ $t('articles.notFound') }}</h1>
+        <p class="text-gray-600 mb-8">{{ $t('articles.notFoundDescription') }}</p>
+        <router-link
+          to="/articles"
+          class="inline-flex items-center bg-primary-400 text-slate-900 px-6 py-3 rounded-lg font-medium hover:bg-primary-500 transition-colors"
+        >
+          {{ $t('articles.backToArticles') }}
+        </router-link>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+import { articles, type Article } from '../data/articles'
+import { formatDate } from '../utils/dateFormatter'
+
+const route = useRoute()
+const { locale } = useI18n()
+
+// Find article by ID from route params
+const article = computed<Article | undefined>(() => {
+  const articleId = route.params.id as string
+  return articles.find((a) => a.id === articleId)
+})
+
+// Format article date based on current locale
+const formatArticleDate = (date: Date): string => {
+  return formatDate(date, locale.value)
+}
+</script>

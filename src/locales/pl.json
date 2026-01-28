@@ -3,6 +3,7 @@
     "courses": "Kursy",
     "startit": "StartIT",
     "about": "O nas",
+    "articles": "Artykuły",
     "contact": "Kontakt",
     "getStarted": "Rozpocznij"
   },
@@ -52,6 +53,16 @@
       "tba": "",
       "notifyButton": "Informuj mnie kiedy kurs będzie dostępny"
     }
+  },
+  "articles": {
+    "title": "Artykuły",
+    "subtitle": "Najnowsze newsy i publikacje",
+    "viewAll": "Zobacz Wszystkie Artykuły",
+    "readMore": "Czytaj więcej",
+    "backToArticles": "Powrót do Artykułów",
+    "notFound": "Artykuł Nie Znaleziony",
+    "notFoundDescription": "Artykuł, którego szukasz, nie istnieje lub został usunięty.",
+    "emptyState": "Brak dostępnych artykułów. Sprawdź ponownie wkrótce!"
   },
   "prelectures": {
     "title": "Prelekcje",

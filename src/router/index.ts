@@ -4,6 +4,8 @@ import StartIT from '../views/StartIT.vue'
 import About from '../views/About.vue'
 import Instructors from '../views/Instructors.vue'
 import AIFundamentals from '../views/AIFundamentals.vue'
+import Articles from '../views/Articles.vue'
+import ArticleDetail from '../views/ArticleDetail.vue'
 
 const routes = [
   {
@@ -25,6 +27,16 @@ const routes = [
     path: '/instructors',
     name: 'Instructors',
     component: Instructors,
+  },
+  {
+    path: '/articles',
+    name: 'Articles',
+    component: Articles,
+  },
+  {
+    path: '/articles/:id',
+    name: 'ArticleDetail',
+    component: ArticleDetail,
   }
   // {
   //   path: '/courses/ai-fundamentals',
