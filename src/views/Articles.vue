@@ -79,9 +79,10 @@ const getArticleTitle = (article: Article): string => {
   return getTranslatedText(article.title, locale.value)
 }
 
-// Get translated article content
+// Get translated article content (only text paragraphs for preview)
 const getArticleContent = (article: Article): string[] => {
-  return locale.value === 'pl' ? article.content.pl : article.content.en
+  const content = locale.value === 'pl' ? article.content.pl : article.content.en
+  return content.filter((item): item is string => typeof item === 'string')
 }
 
 // Get translated image alt text

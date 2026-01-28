@@ -52,15 +52,36 @@
             </div>
           </div>
 
-          <!-- Article Text -->
-          <div class="space-y-6">
-            <div
-              v-for="(paragraph, pIndex) in translations.content.value"
-              :key="pIndex"
-              class="text-gray-700 leading-relaxed text-lg"
-            >
-              {{ paragraph }}
-            </div>
+          <!-- Article Content (text and images) -->
+          <div class="space-y-8">
+            <template v-for="(item, itemIndex) in translations.content.value" :key="itemIndex">
+              <!-- Render Image -->
+              <div v-if="typeof item === 'object' && item.type === 'image'" class="my-8">
+                <img
+                  :src="item.src"
+                  :alt="translations.getImageAlt(item) || translations.title.value"
+                  class="w-full rounded-lg shadow-lg"
+                />
+                <div class="mt-4">
+                  <h3 class="text-2xl font-bold text-gray-900 mb-2">
+                    {{ translations.getImageTitle(item) }}
+                  </h3>
+                  <p class="text-gray-600 leading-relaxed text-lg mb-2">
+                    {{ translations.getImageDescription(item) }}
+                  </p>
+                  <p v-if="item.caption" class="text-sm text-gray-500 text-center italic mt-2">
+                    {{ translations.getImageCaption(item) }}
+                  </p>
+                </div>
+              </div>
+              <!-- Render Text Paragraph -->
+              <div
+                v-else
+                class="text-gray-700 leading-relaxed text-lg"
+              >
+                {{ item }}
+              </div>
+            </template>
           </div>
         </div>
 
@@ -116,7 +137,7 @@ const article = computed<Article | undefined>(() => {
 const dummyArticle: Article = {
   id: '',
   title: { en: '', pl: '' },
-  content: { en: [], pl: [] },
+  content: { en: [] as Article['content']['en'], pl: [] as Article['content']['pl'] },
 }
 const translations = computed(() => {
   return useArticleTranslations(article.value || dummyArticle)
