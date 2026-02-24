@@ -108,12 +108,17 @@ const getImageAlt = (image: NonNullable<ArticleMeta['images']>[number]): string 
 
 const formatArticleDate = (date: Date): string => formatDate(date, locale.value)
 
-async function loadMarkdown(id: string) {
+async function loadMarkdown(id: string, lang: string) {
   htmlContent.value = null
   loadError.value = false
   loading.value = true
   try {
-    const res = await fetch(`/articles/${id}.md`)
+    // Try locale-specific file first (e.g. grpc-takes-load-to-beat-http2.pl.md)
+    let res = await fetch(`/articles/${id}.${lang}.md`)
+    if (!res.ok && lang !== 'en') {
+      // Fallback to English
+      res = await fetch(`/articles/${id}.en.md`)
+    }
     if (!res.ok) throw new Error('Failed to load')
     const text = await res.text()
     htmlContent.value = marked.parse(text) as string
@@ -125,9 +130,9 @@ async function loadMarkdown(id: string) {
 }
 
 watch(
-  () => route.params.id,
-  (id) => {
-    if (id && article.value) loadMarkdown(id as string)
+  [() => route.params.id, () => locale.value],
+  ([id, lang]) => {
+    if (id && article.value && typeof lang === 'string') loadMarkdown(id as string, lang)
   },
   { immediate: true }
 )
