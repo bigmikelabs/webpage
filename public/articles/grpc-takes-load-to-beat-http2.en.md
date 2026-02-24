@@ -3,3 +3,4 @@
 Some paragraph text 1.
 
 ![Architecture diagram](/images/grpc-vs-http2/architecture.png)
+
