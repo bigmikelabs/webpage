@@ -477,7 +477,7 @@
               </div>
               <h3 class="text-xl font-bold text-gray-900 mb-3">{{ getArticleTitle(article) }}</h3>
               <p class="text-gray-600 mb-4 flex-1 line-clamp-3">
-                {{ getArticleContent(article)[0] }}
+                {{ getArticleSummary(article) }}
               </p>
               <router-link
                 :to="`/articles/${article.id}`"
@@ -511,7 +511,7 @@ import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import en from '../locales/en.json'
 import pl from '../locales/pl.json'
-import { articles, type Article } from '../data/articles'
+import { articles, type ArticleMeta } from '../data/articles'
 import { formatDate } from '../utils/dateFormatter'
 import { getTranslatedText } from '../utils/articleTranslations'
 
@@ -550,7 +550,7 @@ const getEmbedUrl = (videoLink: string): string => {
 }
 
 // Get first 3 articles for preview
-const featuredArticles = computed<Article[]>(() => {
+const featuredArticles = computed<ArticleMeta[]>(() => {
   return articles.slice(0, 3)
 })
 
@@ -560,18 +560,18 @@ const formatArticleDate = (date: Date): string => {
 }
 
 // Get translated article title
-const getArticleTitle = (article: Article): string => {
+const getArticleTitle = (article: ArticleMeta): string => {
   return getTranslatedText(article.title, locale.value)
 }
 
-// Get translated article content (only text paragraphs for preview)
-const getArticleContent = (article: Article): string[] => {
-  const content = locale.value === 'pl' ? article.content.pl : article.content.en
-  return content.filter((item): item is string => typeof item === 'string')
+// Get translated summary for card preview
+const getArticleSummary = (article: ArticleMeta): string => {
+  if (article.summary) return getTranslatedText(article.summary, locale.value)
+  return ''
 }
 
 // Get translated image alt text
-const getImageAlt = (image: NonNullable<Article['images']>[0]): string | undefined => {
+const getImageAlt = (image: NonNullable<ArticleMeta['images']>[number]): string | undefined => {
   if (!image.alt) return undefined
   return getTranslatedText(image.alt, locale.value)
 }

@@ -40,7 +40,7 @@
                 {{ getArticleTitle(article) }}
               </h3>
               <p class="text-gray-600 mb-4 flex-1 line-clamp-3">
-                {{ getArticleContent(article)[0] }}
+                {{ getArticleSummary(article) }}
               </p>
               <div class="text-primary-500 group-hover:text-primary-600 font-medium inline-flex items-center">
                 {{ $t('articles.readMore') }}
@@ -62,7 +62,7 @@
 </template>
 
 <script setup lang="ts">
-import { articles, type Article } from '../data/articles'
+import { articles, type ArticleMeta } from '../data/articles'
 import { useI18n } from 'vue-i18n'
 import { formatDate } from '../utils/dateFormatter'
 import { getTranslatedText } from '../utils/articleTranslations'
@@ -75,18 +75,18 @@ const formatArticleDate = (date: Date): string => {
 }
 
 // Get translated article title
-const getArticleTitle = (article: Article): string => {
+const getArticleTitle = (article: ArticleMeta): string => {
   return getTranslatedText(article.title, locale.value)
 }
 
-// Get translated article content (only text paragraphs for preview)
-const getArticleContent = (article: Article): string[] => {
-  const content = locale.value === 'pl' ? article.content.pl : article.content.en
-  return content.filter((item): item is string => typeof item === 'string')
+// Get translated summary for card preview
+const getArticleSummary = (article: ArticleMeta): string => {
+  if (article.summary) return getTranslatedText(article.summary, locale.value)
+  return ''
 }
 
 // Get translated image alt text
-const getImageAlt = (image: NonNullable<Article['images']>[0]): string | undefined => {
+const getImageAlt = (image: NonNullable<ArticleMeta['images']>[number]): string | undefined => {
   if (!image.alt) return undefined
   return getTranslatedText(image.alt, locale.value)
 }
