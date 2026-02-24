@@ -1,12 +1,12 @@
 import type { Article } from '../articles'
 
 export const welcomeToOurBlog: Article = {
-  id: 'welcome-to-our-blog',
+  id: 'grpc-takes-load-to-beat-http2',
   title: {
-    en: 'Welcome to Our Blog',
-    pl: 'Witamy na Naszym Blogu',
+    en: 'gRPC takes load to beat HTTP/2',
+    pl: 'gRPC potrzebuje ruchu, by pokazać swoją przewagę nad HTTP/2',
   },
-  date: new Date('2026-01-28'),
+  date: new Date('2026-02-24'),
   author: 'Michał Wroński',
   content: {
     en: [
@@ -62,7 +62,7 @@ export const welcomeToOurBlog: Article = {
   },
   images: [
     {
-      src: '/images/michal-wronski.jpg',
+      src: '/images/grpc-vs-http2/header.jpg',
       alt: {
         en: 'Sample image',
         pl: 'Przykładowy obraz',
