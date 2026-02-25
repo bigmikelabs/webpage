@@ -202,7 +202,7 @@ Oba rozwiązania korzystają z tych samych mechanizmów transportowych (HTTP/2, 
 Przy niewielkim ruchu różnice mogą być marginalne.
 Dopiero przy dużym RPS zaczyna działać amortyzacja kosztów per request, lepsze wypełnienie pipeline’u oraz efektywniejsze wykorzystanie warstwy transportowej.
 
-Czy to oznacza, że błędem było niewdrożenie *FCM* od razu z *klientem gRPC*? **Absolutnie nie.**
+Czy to oznacza, że błędem było niewdrożenie *FCM* od razu z *klientem gRPC*? Absolutnie **nie**.
 
 Architektura powinna rozwijać się iteracyjnie: *problem → mała zmiana → produkcja → obserwacja → usprawnienie*.
 
