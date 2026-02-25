@@ -1,7 +1,8 @@
 {
-    "name": "bigmikelabs",
-    "compatibility_date": "2024-12-14",
-    "assets": {
-      "directory": "./dist"
-    }
+  "name": "bigmikelabs",
+  "compatibility_date": "2024-12-14",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
   }
+}
