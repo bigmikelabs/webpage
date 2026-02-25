@@ -193,13 +193,21 @@ gRPC używa:
 
 ## Podsumowanie
 
-gRPC nie musi być zawsze od razu widocznie szybsze w porównaniu z HTTP/2. Czasem potrzeba czasu i sporego ruchu, aby dostrzec zalety róznych rozwiazań i podejsc.
+gRPC nie musi być od razu widocznie szybsze od HTTP/2.
+Oba rozwiązania korzystają z tych samych mechanizmów transportowych (HTTP/2, TLS, TCP), a realne różnice wynikają głównie z:
+- sposobu zarządzania połączeniami
+- poziomu równoległości
+- oraz formatu payloadu (Protobuf vs JSON)
 
-Czy to oznacza, ze zrobiłem błąd, nie wprowadzając *FCM* od razu z koniguracją gRPC? Absolutnie nie! Nawet jeśli dotyczyło to jedynie klienta. 
-Trzeba pamiętać o tym, ze kod nalezy rozwijać stopniowo i iteracyjnie. *Problem/Potrzeba -> mała zmiana -> produkcja -> obserwacja -> usprawnienie*.
-Serwis powinien być jak najprostszy, aby łatwiej i taniej mozna go utrzymac! 
-A kazda dodatkowo technologia (jak *gRPC*) wprowadza w projekcie pewne konsekwencje i dodatkowe skomplikowanie. 
-Jezeli mamy dobry design i trzymamy się reguły [KISS](https://en.wikipedia.org/wiki/KISS_principle), to wprowadzanie zmian zawsze będzie łatwe i przyjdzie na nie odpowiedni czas. 
-Brak *overengeineering* jest szczególnie wazny w czasach agentów AI, którzy generują kod na potęgę. 
-No *overengeineering* & [KISS](https://en.wikipedia.org/wiki/KISS_principle)! 
+Przy niewielkim ruchu różnice mogą być marginalne.
+Dopiero przy dużym RPS zaczyna działać amortyzacja kosztów per request, lepsze wypełnienie pipeline’u oraz efektywniejsze wykorzystanie warstwy transportowej.
 
+Czy to oznacza, że błędem było niewdrożenie *FCM* od razu z *klientem gRPC*? **Absolutnie nie.**
+
+Architektura powinna rozwijać się iteracyjnie: *problem → mała zmiana → produkcja → obserwacja → usprawnienie*.
+
+Serwis powinien być możliwie prosty — tak długo, jak spełnia wymagania wydajnościowe i biznesowe.
+Każda dodatkowa technologia (np. gRPC) wprowadza koszty: złożoność, operacyjność, monitoring, debugging.
+
+Jeśli trzymamy się zasady [KISS](https://en.wikipedia.org/wiki/KISS_principle) principle, zmiany są łatwe do wprowadzenia wtedy, gdy rzeczywiście stają się potrzebne.
+Brak overengineeringu nie oznacza braku ambicji, czy wiedzy technicznej — oznacza świadome podejmowanie decyzji w oparciu o realne potrzeby, a nie potencjalne scenariusze.
