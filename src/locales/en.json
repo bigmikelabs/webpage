@@ -1,4 +1,9 @@
 {
+  "page": {
+    "notFound": "Page Not Found",
+    "notFoundDescription": "The page you're looking for doesn't exist or has been moved.",
+    "backHome": "Back to Home"
+  },
   "nav": {
     "courses": "Courses",
     "startit": "StartIT",

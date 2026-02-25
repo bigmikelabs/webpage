@@ -36,6 +36,23 @@ export default defineConfig(({ command, mode }) => {
   return {
     plugins: [
       ...plugins,
+      // Copy index.html to 404.html so Cloudflare Pages serves SPA for direct/refresh on any route
+      {
+        name: 'spa-404',
+        closeBundle() {
+          if (command === 'build') {
+            const rootDir = fileURLToPath(new URL('./', import.meta.url))
+            const indexHtmlFile = resolve(rootDir, 'dist', 'index.html')
+            const notFoundHtmlFile = resolve(rootDir, 'dist', '404.html')
+            try {
+              copyFileSync(indexHtmlFile, notFoundHtmlFile)
+              console.log('✓ Copied index.html to 404.html for SPA fallback')
+            } catch (e) {
+              console.error('Failed to copy index.html to 404.html:', e)
+            }
+          }
+        },
+      },
       // Plugin to copy mailer.html to dist during build and fix CSS paths
       {
         name: 'copy-mailer-html',
