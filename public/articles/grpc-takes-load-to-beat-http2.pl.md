@@ -160,7 +160,7 @@ Mechanizm ten działa niezależnie od tego, czy używany jest REST (HTTP/1.1), H
 Mechanizmy opisane wcześniej (TCP coalescing, TLS batching, multiplexing HTTP/2) działają dla wszystkich protokołów korzystających z HTTP/2 i TLS.
 Różnica polega na tym, jak dany klient generuje ruch i zarządza połączeniami.
 
-1) Długotrwałe, współdzielone połączenia
+1) **Długotrwałe, współdzielone połączenia**
 
 Klient gRPC standardowo:
 - utrzymuje jedno lub kilka długotrwałych połączeń TCP/TLS
@@ -175,7 +175,7 @@ Dzięki temu:
 
 W praktyce oznacza to lepsze wykorzystanie transportu przy rosnącym concurrency.
 
-2) Naturalnie wysoki poziom równoległości
+2) **Naturalnie wysoki poziom równoległości**
 
 gRPC jest projektowany pod:
 - równoległe requesty
@@ -189,7 +189,7 @@ Przy wysokim RPS wiele streamów jednocześnie „wypełnia” jedno połączeni
 
 Dzięki temu pipeline jest bardziej równomiernie obciążony.
 
-3) Mniejszy narzut per request (framing + payload)
+3) **Mniejszy narzut per request (framing + payload)**
 
 gRPC używa Protobuf (binary) zamiast JSON (text), co zmniejsza payload i koszt serializacji.
 
