@@ -449,17 +449,18 @@
         </div>
 
         <div class="grid md:grid-cols-3 gap-8 mb-8">
-          <article
+          <router-link
             v-for="(article, index) in featuredArticles"
-            :key="index"
-            class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow flex flex-col"
+            :key="article.id"
+            :to="`/articles/${article.id}`"
+            class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow flex flex-col group"
           >
             <!-- Article Image -->
             <div v-if="article.images && article.images.length > 0" class="relative h-48 overflow-hidden">
               <img
                 :src="article.images[0].src"
                 :alt="getImageAlt(article.images[0]) || getArticleTitle(article)"
-                class="w-full h-full object-cover"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               />
             </div>
             <!-- Placeholder if no image -->
@@ -490,21 +491,18 @@
                   </span>
                 </template>
               </div>
-              <h3 class="text-xl font-bold text-gray-900 mb-3">{{ getArticleTitle(article) }}</h3>
+              <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary-500 transition-colors">{{ getArticleTitle(article) }}</h3>
               <p class="text-gray-600 mb-4 flex-1 line-clamp-3">
                 {{ getArticleSummary(article) }}
               </p>
-              <router-link
-                :to="`/articles/${article.id}`"
-                class="text-primary-500 hover:text-primary-600 font-medium inline-flex items-center"
-              >
+              <div class="text-primary-500 group-hover:text-primary-600 font-medium inline-flex items-center">
                 {{ $t('articles.readMore') }}
                 <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                 </svg>
-              </router-link>
+              </div>
             </div>
-          </article>
+          </router-link>
         </div>
 
         <!-- View All Articles Link -->
