@@ -6,6 +6,7 @@ import Instructors from '../views/Instructors.vue'
 import AIFundamentals from '../views/AIFundamentals.vue'
 import Articles from '../views/Articles.vue'
 import ArticleDetail from '../views/ArticleDetail.vue'
+import NotFound from '../views/NotFound.vue'
 
 const routes = [
   {
@@ -37,6 +38,11 @@ const routes = [
     path: '/articles/:id',
     name: 'ArticleDetail',
     component: ArticleDetail,
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: NotFound,
   }
   // {
   //   path: '/courses/ai-fundamentals',

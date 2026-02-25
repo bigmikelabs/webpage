@@ -1,4 +1,9 @@
 {
+  "page": {
+    "notFound": "Strona nie znaleziona",
+    "notFoundDescription": "Strona, której szukasz, nie istnieje lub została przeniesiona.",
+    "backHome": "Powrót na stronę główną"
+  },
   "nav": {
     "courses": "Kursy",
     "startit": "StartIT",
