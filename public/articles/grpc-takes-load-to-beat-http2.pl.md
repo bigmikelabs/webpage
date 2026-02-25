@@ -27,7 +27,7 @@ Po wdrożeniu na produkcję szybko natrafiłem na pierwsze problemy. Mimo iż po
 Co dziwniejsze czas ten występował niezależnie od ruchu, tj. mały ruch w nocy i godziny szczytu nie różniły się od siebie niczym.
 Gdybyśmy rozmawiali tutaj o API mniejszej firmy, to nic bym nie powiedział. Ale mamy do czynienia tutaj z Google! Coś musiało być więc na rzeczy.
 
-Inwestygację rozpocząłem od sprawdzenia configuracji klienta. Sprawdziłem oczywiście, czy mój klient negocjuje tutaj połączenie po *HTTP/2*.
+Inwestygację rozpocząłem od sprawdzenia konfiguracji klienta. Sprawdziłem oczywiście, czy mój klient negocjuje tutaj połączenie po *HTTP/2*.
 Wszystko wydawało się w porządku, ale w dokumentacji za wiele szczegółów nie znalazłem - w przypadku Google nie jest to zaskoczeniem! 
 Również analiza klienta na niewiele się zdała. Tutaj jedynie przyszło rozczarowanie, widząc, że [send multicast](https://github.com/firebase/firebase-admin-go/blob/v3.13.0/messaging/messaging_batch.go#L51) pod spodem tłumaczy *batch* na pojedyncze wiadomości i wysyła je jedną po drugiej. 
 
