@@ -62,7 +62,12 @@
     "backToArticles": "Powrót do Artykułów",
     "notFound": "Artykuł Nie Znaleziony",
     "notFoundDescription": "Artykuł, którego szukasz, nie istnieje lub został usunięty.",
-    "emptyState": "Brak dostępnych artykułów. Sprawdź ponownie wkrótce!"
+    "emptyState": "Brak dostępnych artykułów. Sprawdź ponownie wkrótce!",
+    "readingTime": "{n} min",
+    "level": "Poziom",
+    "levelBeginner": "Początkujący",
+    "levelMedium": "Średni",
+    "levelAdvanced": "Zaawansowany"
   },
   "prelectures": {
     "title": "Prelekcje",

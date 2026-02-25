@@ -471,9 +471,24 @@
 
             <!-- Article Content -->
             <div class="p-6 flex-1 flex flex-col">
-              <div class="flex items-center text-sm text-gray-500 mb-3">
+              <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-sm text-gray-500 mb-3">
                 <span v-if="article.date">{{ formatArticleDate(article.date) }}</span>
-                <span v-if="article.author" class="ml-4">{{ article.author }}</span>
+                <span v-if="article.author">{{ article.author }}</span>
+                <span v-if="article.readingDurationMinutes">
+                  {{ $t('articles.readingTime', { n: article.readingDurationMinutes }) }}
+                </span>
+                <span v-if="article.level" class="inline-flex items-center gap-1.5">
+                  {{ $t('articles.level') }} <ArticleLevelBar :level="article.level" />
+                </span>
+                <template v-if="article.tags && article.tags.length">
+                  <span
+                    v-for="tag in article.tags.slice(0, 4)"
+                    :key="tag"
+                    class="inline-block px-2 py-0.5 rounded text-xs font-medium bg-primary-100 text-primary-800"
+                  >
+                    {{ tag }}
+                  </span>
+                </template>
               </div>
               <h3 class="text-xl font-bold text-gray-900 mb-3">{{ getArticleTitle(article) }}</h3>
               <p class="text-gray-600 mb-4 flex-1 line-clamp-3">
@@ -513,6 +528,7 @@ import en from '../locales/en.json'
 import pl from '../locales/pl.json'
 import { articles, type ArticleMeta } from '../data/articles'
 import { formatDate } from '../utils/dateFormatter'
+import ArticleLevelBar from '../components/ArticleLevelBar.vue'
 import { getTranslatedText } from '../utils/articleTranslations'
 
 // Home page content - extracted from main App.vue

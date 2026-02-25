@@ -13,9 +13,24 @@
         <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
           <div class="max-w-4xl mx-auto">
             <h1 class="text-4xl sm:text-5xl font-bold mb-4">{{ getArticleTitle(article) }}</h1>
-            <div class="flex items-center text-sm text-white/90">
+            <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-white/90">
               <span v-if="article.date">{{ formatArticleDate(article.date) }}</span>
-              <span v-if="article.author" class="ml-4">{{ article.author }}</span>
+              <span v-if="article.author">{{ article.author }}</span>
+              <span v-if="article.readingDurationMinutes">
+                {{ $t('articles.readingTime', { n: article.readingDurationMinutes }) }}
+              </span>
+              <span v-if="article.level" class="inline-flex items-center gap-1.5">
+                {{ $t('articles.level') }}: <ArticleLevelBar :level="article.level" variant="light" />
+              </span>
+            </div>
+            <div v-if="article.tags && article.tags.length" class="flex flex-wrap gap-2 mt-3">
+              <span
+                v-for="tag in article.tags"
+                :key="tag"
+                class="inline-block px-2.5 py-0.5 rounded-full text-xs font-medium bg-white/20 text-white"
+              >
+                {{ tag }}
+              </span>
             </div>
           </div>
         </div>
@@ -26,9 +41,46 @@
         <!-- Header (if no hero image) -->
         <div v-if="!article.images || article.images.length === 0" class="mb-8">
           <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">{{ getArticleTitle(article) }}</h1>
-          <div class="flex items-center text-sm text-gray-500">
+          <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-500">
             <span v-if="article.date">{{ formatArticleDate(article.date) }}</span>
-            <span v-if="article.author" class="ml-4">By {{ article.author }}</span>
+            <span v-if="article.author">By {{ article.author }}</span>
+            <span v-if="article.readingDurationMinutes">
+              {{ $t('articles.readingTime', { n: article.readingDurationMinutes }) }}
+            </span>
+            <span v-if="article.level" class="inline-flex items-center gap-1.5">
+              {{ $t('articles.level') }}: <ArticleLevelBar :level="article.level" />
+            </span>
+          </div>
+          <div v-if="article.tags && article.tags.length" class="flex flex-wrap gap-2 mt-3">
+            <span
+              v-for="tag in article.tags"
+              :key="tag"
+              class="inline-block px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-200 text-gray-700"
+            >
+              {{ tag }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Article meta (when hero image exists): tags, duration, level below hero -->
+        <div
+          v-if="(article.images && article.images.length > 0) && (article.tags?.length || article.readingDurationMinutes || article.level)"
+          class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-500 mb-6"
+        >
+          <span v-if="article.readingDurationMinutes">
+            {{ $t('articles.readingTime', { n: article.readingDurationMinutes }) }}
+          </span>
+          <span v-if="article.level" class="inline-flex items-center gap-1.5">
+            {{ $t('articles.level') }}: <ArticleLevelBar :level="article.level" />
+          </span>
+          <div v-if="article.tags && article.tags.length" class="flex flex-wrap gap-2">
+            <span
+              v-for="tag in article.tags"
+              :key="tag"
+              class="inline-block px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-200 text-gray-700"
+            >
+              {{ tag }}
+            </span>
           </div>
         </div>
 
@@ -87,6 +139,7 @@ import { useI18n } from 'vue-i18n'
 import { marked } from 'marked'
 import { articles, type ArticleMeta } from '../data/articles'
 import { formatDate } from '../utils/dateFormatter'
+import ArticleLevelBar from '../components/ArticleLevelBar.vue'
 import { getTranslatedText } from '../utils/articleTranslations'
 
 const route = useRoute()

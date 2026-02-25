@@ -62,7 +62,12 @@
     "backToArticles": "Back to Articles",
     "notFound": "Article Not Found",
     "notFoundDescription": "The article you're looking for doesn't exist or has been removed.",
-    "emptyState": "No articles available yet. Check back soon!"
+    "emptyState": "No articles available yet. Check back soon!",
+    "readingTime": "{n} min",
+    "level": "Level",
+    "levelBeginner": "Beginner",
+    "levelMedium": "Medium",
+    "levelAdvanced": "Advanced"
   },
   "prelectures": {
     "title": "Prelectures",
