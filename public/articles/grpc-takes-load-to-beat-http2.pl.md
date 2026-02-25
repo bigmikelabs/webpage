@@ -27,7 +27,7 @@ Po wdrożeniu na produkcję szybko natrafiłem na pierwsze problemy. Mimo iż po
 Co dziwniejsze czas ten występował niezależnie od ruchu, tj. mały ruch w nocy i godziny szczytu nie różniły się od siebie niczym.
 Gdybyśmy rozmawiali tutaj o API mniejszej firmy, to nic bym nie powiedział. Ale mamy do czynienia tutaj z Google! Coś musiało być więc na rzeczy.
 
-Inwestygację rozpocząłem od sprawdzenia konfiguracji klienta. Sprawdziłem oczywiście, czy mój klient negocjuje tutaj połączenie po *HTTP/2*.
+Analizę rozpocząłem od sprawdzenia konfiguracji klienta. Sprawdziłem oczywiście, czy mój klient negocjuje tutaj połączenie po *HTTP/2*.
 Wszystko wydawało się w porządku, ale w dokumentacji za wiele szczegółów nie znalazłem - w przypadku Google nie jest to zaskoczeniem! 
 Również analiza klienta na niewiele się zdała. Tutaj jedynie przyszło rozczarowanie, widząc, że [send multicast](https://github.com/firebase/firebase-admin-go/blob/v3.13.0/messaging/messaging_batch.go#L51) pod spodem tłumaczy *batch* na pojedyncze wiadomości i wysyła je jedną po drugiej. 
 
@@ -103,7 +103,7 @@ Albo jeśli ktoś woli operować na heatmapie...
 <figcaption>Wykres 3: FCM - send notifications by status</figcaption>
 </figure>
 
-Jak widać na wykresach 1 i 3, większy ruch powoduje "dogrzewanie" połączenia. Czyli im więcej staramy się wysłać, tym szybciej i sprawniej to idzie. I byłoby to normalne, gdy były okresy, gdzie w ogóle nic nie wysyłamy i połączenie "stygnie".
+Jak widać na wykresach 1 i 3, większy ruch powoduje "dogrzewanie" połączenia. Czyli im więcej staramy się wysłać, tym szybciej i sprawniej to idzie. I byłoby to normalne, gdy były okresy, w których w ogóle nic nie wysyłamy i połączenie "stygnie".
 Ale tutaj klient cały czas coś wysyła, mniej lub więcej, ale jednak. Dlatego połączenie nie powinno przechodzić w status *idle*. 
 Różnica prawdopodobnie wynikała nie z samego protokołu HTTP/2, lecz z implementacji klienta i sposobu generowania ruchu. Protokół był ten sam. Inny był sposób jego wykorzystania.
 Nie lubię odchodzić od tematu, gdy nie rozumiem wszystkiego w najmniejszych szczegółach, więc trzeba było poszperać dalej.
@@ -143,7 +143,7 @@ gRPC korzysta z tego mechanizmu, ponieważ działa na HTTP/2.
 
 3) **TLS record batching (warstwa szyfrowania)**
 
-TLS pakuje dane aplikacyjne w tzw. TLS records (zwykle do ~16 KB). Przy większym loadzie dane szybciej trafiają do bufora TLS, co pozwala generować:
+TLS pakuje dane aplikacyjne w tzw. TLS records (zwykle do ~16 KB). Przy większym obciążeniu dane szybciej trafiają do bufora TLS, co pozwala generować:
 - większe rekordy
 - mniej małych fragmentów
 - mniej flushów socketu
@@ -177,7 +177,7 @@ W praktyce oznacza to lepsze wykorzystanie transportu przy rosnącym concurrency
 
 2) Naturalnie wysoki poziom równoległości
 
-gRPC jest projektowane pod:
+gRPC jest projektowany pod:
 - równoległe requesty
 - streaming (client/server/bidirectional)
 - asynchroniczny model wywołań
@@ -213,5 +213,5 @@ Architektura powinna rozwijać się iteracyjnie: *problem → mała zmiana → p
 Serwis powinien być możliwie prosty — tak długo, jak spełnia wymagania wydajnościowe i biznesowe.
 Każda dodatkowa technologia (np. gRPC) wprowadza koszty: złożoność, operacyjność, monitoring, debugging.
 
-Jeśli trzymamy się zasady [KISS](https://en.wikipedia.org/wiki/KISS_principle) principle, zmiany są łatwe do wprowadzenia wtedy, gdy rzeczywiście stają się potrzebne.
+Jeśli trzymamy się zasady [KISS](https://en.wikipedia.org/wiki/KISS_principle), zmiany są łatwe do wprowadzenia wtedy, gdy rzeczywiście stają się potrzebne.
 Brak overengineeringu nie oznacza braku ambicji, czy wiedzy technicznej — oznacza świadome podejmowanie decyzji w oparciu o realne potrzeby, a nie potencjalne scenariusze.
