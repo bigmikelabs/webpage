@@ -1,8 +1,8 @@
 ## Wstęp i oczekiwania
 
-Intuicyjnie można oczekiwać, że binarny protokół (gRPC + Protobuf) będzie szybszy niż tekstowy JSON po HTTP (zwlaszcza w starszej wersji 1.1). 
+Intuicyjnie można oczekiwać, że binarny protokół (gRPC + Protobuf) będzie szybszy niż tekstowy JSON po HTTP (zwłaszcza w starszej wersji 1.1). 
 
-Odpalajac serwis lokalnie, mozemy juz zauwazyc pierwsze roznice.
+Odpalając serwis lokalnie, możemy już zauważyć pierwsze różnice.
 
 ```
 $ go test -bench=. -benchmem  -benchtime=30s
@@ -16,20 +16,20 @@ BenchmarkHTTP1/http.GetFeature()-10        	   24290	     49005 ns/op
 PASS
 ```
 
-Tutaj benchmarki mierzą głównie niestety jedynie koszt runtime i serializacji, a nie zachowanie przy realnym obciązeniu i warstwie transportowej.
+Tutaj benchmarki mierzą głównie niestety jedynie koszt runtime i serializacji, a nie zachowanie przy realnym obciążeniu i warstwie transportowej.
 Dlatego wyniki lokalne nie muszą korelować z tym, co dzieje się pod dużym obciążeniem w produkcji.
 
-Ostatnio w jednym z projektów wprowadzalem po stronie backend'u [Google FCM](https://firebase.google.com/docs/cloud-messaging) dla push notyfikacji. 
-Uzywałem tam wiadomosci typu [multicast](https://firebase.google.com/docs/reference/admin/java/reference/com/google/firebase/messaging/MulticastMessage), aby moc dostarczyc jedna wiadomosc do wielu urzadzen tego samego uzytkownika jednoczesnie. W domyślnej konfiguracji FCM uzywa protokołu HTTP. 
+Ostatnio w jednym z projektów wprowadzałem po stronie backend'u [Google FCM](https://firebase.google.com/docs/cloud-messaging) dla push notyfikacji. 
+Używałem tam wiadomości typu [multicast](https://firebase.google.com/docs/reference/admin/java/reference/com/google/firebase/messaging/MulticastMessage), aby móc dostarczyć jedną wiadomość do wielu urządzeń tego samego użytkownika jednocześnie. W domyślnej konfiguracji FCM używa protokołu HTTP. 
 
-Po wdrozeniu na produkcje szybko natrafilem na pierwsze problemy. Mimo iz podczas fazy design i samego dewelopmentu przestrzegalismy [dobrych zasach zalecanych przez Google](https://firebase.google.com/docs/cloud-messaging/scale-fcm#use-fcm), serwis nie zachowywal sie tak, jakbysmy chcieli. 
-[Wysylanie multicast](https://pkg.go.dev/github.com/appleboy/go-fcm#Client.SendMulticast) trwalo niespodziewanie długo, bo metryki *p95* i *p99* pokazywały az *500ms*. 
-Co dziwniejsze czas ten występował niezaleznie od ruchu, tj. mały ruch w nocy i godziny szczytu nie rozniły się od siebie niczym.
-Gdybyśmy rozmawiali tutaj o API mniejszej firmy, to nic bym nie powiedział. Ale mamy doczynienia tutaj z Google! Cos musialo byc wiec na rzeczy. 
+Po wdrożeniu na produkcję szybko natrafiłem na pierwsze problemy. Mimo iż podczas fazy design i samego dewelopmentu przestrzegaliśmy [dobrych zasad zalecanych przez Google](https://firebase.google.com/docs/cloud-messaging/scale-fcm#use-fcm), serwis nie zachowywał się tak, jakbyśmy chcieli. 
+[Wysyłanie multicast](https://pkg.go.dev/github.com/appleboy/go-fcm#Client.SendMulticast) trwało niespodziewanie długo, bo metryki *p95* i *p99* pokazywały aż *500ms*.
+Co dziwniejsze czas ten występował niezależnie od ruchu, tj. mały ruch w nocy i godziny szczytu nie różniły się od siebie niczym.
+Gdybyśmy rozmawiali tutaj o API mniejszej firmy, to nic bym nie powiedział. Ale mamy do czynienia tutaj z Google! Coś musiało być więc na rzeczy.
 
 Inwestygację rozpocząłem od sprawdzenia configuracji klienta. Sprawdziłem oczywiście, czy mój klient negocjuje tutaj połączenie po *HTTP/2*.
-Wszystko wydawało się w porządku, ale w dokumentacji za wiele szczegłów nie znalazłem - w przypadku Google nie jest to zaskoczeniem! 
-Równiez analiza klienta na niewiele sie zdała. Tutaj jedynie przyszło rozczarowanie, widząc, ze [send multicast](https://github.com/firebase/firebase-admin-go/blob/v3.13.0/messaging/messaging_batch.go#L51) pod spodem tłumaczy *batch* na pojedyczne wiadomosci i wysyła je jedna po drugiej. 
+Wszystko wydawało się w porządku, ale w dokumentacji za wiele szczegółów nie znalazłem - w przypadku Google nie jest to zaskoczeniem! 
+Również analiza klienta na niewiele się zdała. Tutaj jedynie przyszło rozczarowanie, widząc, że [send multicast](https://github.com/firebase/firebase-admin-go/blob/v3.13.0/messaging/messaging_batch.go#L51) pod spodem tłumaczy *batch* na pojedyncze wiadomości i wysyła je jedną po drugiej. 
 
 ```go
 func (mm *MulticastMessage) toMessages() ([]*Message, error) {
@@ -62,7 +62,7 @@ Przyszedł więc czas, aby przejść z HTTP na gRPC...
 
 ## FCM i gRPC 
 
-Przełączenie FCM z *HTTP* na *gRPC* wiąze się jedynie z dodaniem paru opcji do konfiguracji klienta:
+Przełączenie FCM z *HTTP* na *gRPC* wiąże się jedynie z dodaniem paru opcji do konfiguracji klienta:
 
 ```
 	fb, err := firebase.NewApp(
@@ -82,9 +82,9 @@ Przełączenie FCM z *HTTP* na *gRPC* wiąze się jedynie z dodaniem paru opcji 
 	)
 ```
 
-I gotowe! W teorii, release na produkcje, przełączamy ruch i... Dalej te same wyniki. Okay, ciut lepsze, bo *p99* dla *send_mutlicast* zmalało z *500ms* do *400ms*/*450ms*, ale to dalej za wolno!
+I gotowe! W teorii, release na produkcję, przełączamy ruch i... Dalej te same wyniki. Okay, ciut lepsze, bo *p99* dla *send_multicast* zmalało z *500ms* do *400ms*/*450ms*, ale to dalej za wolno!
 Produkt wysyła miliony notyfikacji w godzinach szczytowych, które muszą być dostarczone jak najszybciej. Sprawdzam dalej, musiałem coś zrobić źle, o czymś zapomnieć.
-Az przychodzi pierwszy peak i.... eureka! Czasy *p99* zaczęły spadać z *400ms* -> *250ms*.
+Aż przychodzi pierwszy peak i.... eureka! Czasy *p99* zaczęły spadać z *400ms* -> *250ms*.
 
 <figure>
 <img src="/images/grpc-vs-http2/fcm-send-multicast.jpg" alt="FCM send multicast chart" />
@@ -103,8 +103,8 @@ Albo jeśli ktoś woli operować na heatmapie...
 <figcaption>Wykres 3: FCM - send notifications by status</figcaption>
 </figure>
 
-Jak widać na wykresach 1 i 3, większy ruch powoduje "dogrzewanie" połączenia. Czyli im więcej staramy sie wysłać, tym szybciej i sporawniej to idzie. I byłoby to normalne, gdy były okresy, gdzie w ogóle nic nie wysyłamy i połączenie "stygnie".
-Ale tutaj klient cały czas coś wysyła, mniej lub wiecęj, ale jednak. Dlatego połączenie nie powinno przechodzić w status *idle*. 
+Jak widać na wykresach 1 i 3, większy ruch powoduje "dogrzewanie" połączenia. Czyli im więcej staramy się wysłać, tym szybciej i sprawniej to idzie. I byłoby to normalne, gdy były okresy, gdzie w ogóle nic nie wysyłamy i połączenie "stygnie".
+Ale tutaj klient cały czas coś wysyła, mniej lub więcej, ale jednak. Dlatego połączenie nie powinno przechodzić w status *idle*. 
 Różnica prawdopodobnie wynikała nie z samego protokołu HTTP/2, lecz z implementacji klienta i sposobu generowania ruchu. Protokół był ten sam. Inny był sposób jego wykorzystania.
 Nie lubię odchodzić od tematu, gdy nie rozumiem wszystkiego w najmniejszych szczegółach, więc trzeba było poszperać dalej.
 
@@ -118,7 +118,7 @@ Przy dużym obciążeniu zarówno HTTP/2, jak i gRPC korzystają z mechanizmów 
 Przy intensywnym ruchu wiele małych operacji *write* może zostać połączonych w większe porcje danych zanim trafią do sieci. Dzięki temu:
 - zmniejsza się liczba *syscalli*
 - powstaje mniej małych segmentów TCP
-- lepiej wykorzystywany jest MSS (Maximum Segemt Size)
+- lepiej wykorzystywany jest MSS (Maximum Segment Size)
 - spada narzut nagłówków TCP/IP
 - obniża się koszt CPU per request
 
