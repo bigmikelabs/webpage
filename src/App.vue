@@ -32,6 +32,11 @@
               class="text-gray-600 hover:text-primary-500 font-medium transition-colors"
               >{{ $t('nav.about') }}</router-link
             >
+            <router-link
+              to="/articles"
+              class="text-gray-600 hover:text-primary-500 font-medium transition-colors"
+              >{{ $t('nav.articles') }}</router-link
+            >
             <a
               :href="`mailto:${config.contact.email}?subject=Contact from BigMikeLabs website`"
               class="text-gray-600 hover:text-primary-500 font-medium transition-colors cursor-pointer"
@@ -116,6 +121,11 @@
             to="/about"
             class="block px-3 py-2 text-gray-600 hover:text-primary-600 font-medium"
             >{{ $t('nav.about') }}</router-link
+          >
+          <router-link
+            to="/articles"
+            class="block px-3 py-2 text-gray-600 hover:text-primary-600 font-medium"
+            >{{ $t('nav.articles') }}</router-link
           >
           <a
             :href="`mailto:${config.contact.email}?subject=Contact from BigMikeLabs website`"

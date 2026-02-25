@@ -3,6 +3,7 @@
     "courses": "Courses",
     "startit": "StartIT",
     "about": "About",
+    "articles": "Articles",
     "contact": "Contact",
     "getStarted": "Get Started"
   },
@@ -52,6 +53,21 @@
       "tba": "",
       "notifyButton": "Notify me when course is available"
     }
+  },
+  "articles": {
+    "title": "Articles",
+    "subtitle": "Read latest news and publications",
+    "viewAll": "View All Articles",
+    "readMore": "Read more",
+    "backToArticles": "Back to Articles",
+    "notFound": "Article Not Found",
+    "notFoundDescription": "The article you're looking for doesn't exist or has been removed.",
+    "emptyState": "No articles available yet. Check back soon!",
+    "readingTime": "{n} min",
+    "level": "Level",
+    "levelBeginner": "Beginner",
+    "levelMedium": "Medium",
+    "levelAdvanced": "Advanced"
   },
   "prelectures": {
     "title": "Prelectures",
