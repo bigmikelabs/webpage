@@ -1,84 +1,205 @@
-<!-- ![gRPC vs HTTP/2 header](/images/grpc-vs-http2/header.jpg) -->
+## Wstęp i oczekiwania
 
-## 1️⃣ Wstęp i oczekiwania
+Uzywajac binarnego protokolu gRPC, oczekujemy, ze będzie on zawsze znacząco szybszy niz tekstowy protokół HTTP (zwlaszcza w starszej wersji 1.1). 
 
-Większość osób zakłada, że gRPC jest od razu szybsze od klasycznego HTTP/JSON. I rzeczywiście, przy pojedynczych requestach różnica jest minimalna, często niemierzalna.
+Odpalajac serwis lokalnie, mozemy juz zauwazyc pierwsze roznice.
 
-Jednak nasze testy na API FCM pokazują ciekawą obserwację:
+```
+$ go test -bench=. -benchmem=1  -benchtime=30s
+...
+BenchmarkGRPC/grpc.GetFeature()-10         	   19750	     56548 ns/op
+...
+BenchmarkHTTP/2/http.GetFeature()-10        	   16590	     72107 ns/op
+...
+BenchmarkHTTP1/http.GetFeature()-10        	   24290	     49005 ns/op
+...
+PASS
+```
 
-Ruch / Protokół	p99 latency
-HTTP 10k/min	500 ms
-HTTP 100k/min	500 ms
-gRPC 10k/min	500 ms
-gRPC 100k/min	200 ms
-Jak widać, prawdziwa przewaga gRPC ujawnia się dopiero przy wysokim natężeniu ruchu.
+Ostatnio w jednym z projektów wprowadzalem po stronie backend'u [Google FCM](https://firebase.google.com/docs/cloud-messaging) dla push notyfikacji. 
+Uzywałem tam wiadomosci typu [multicast](https://firebase.google.com/docs/reference/admin/java/reference/com/google/firebase/messaging/MulticastMessage), aby moc dostarczyc jedna wiadomosc do wielu urzadzen tego samego uzytkownika jednoczesnie. W domyślnej konfiguracji FCM uzywa protokołu HTTP. 
 
-To potwierdza też dokumentacja Microsoftu, gdzie wskazano, że gRPC skaluje lepiej pod dużym loadem i w scenariuszach wymagających niskiego p99 latency.
+Po wdrozeniu na produkcje szybko natrafilem na pierwsze problemy. Mimo iz podczas fazy design i samego dewelopmentu przestrzegalismy [dobrych zasach zalecanych przez Google](https://firebase.google.com/docs/cloud-messaging/scale-fcm#use-fcm), serwis nie zachowywal sie tak, jakbysmy chcieli. 
+[Wysylanie multicast](https://pkg.go.dev/github.com/appleboy/go-fcm#Client.SendMulticast) trwalo niespodziewanie długo, bo metryki *p95* i *p99* pokazywały az *500ms*. 
+Co dziwniejsze czas ten występował niezaleznie od ruchu, tj. mały ruch w nocy i godziny szczytu nie rozniły się od siebie niczym.
+Gdybyśmy rozmawiali tutaj o API mniejszej firmy, to nic bym nie powiedział. Ale mamy doczynienia tutaj z Google! Cos musialo byc wiec na rzeczy. 
 
-⸻
+Inwestygację rozpocząłem od sprawdzenia configuracji klienta. Sprawdziłem oczywiście, czy mój klient negocjuje tutaj połączenie po *HTTP/2*.
+Wszystko wydawało się w porządku, ale w dokumentacji za wiele szczegłów nie znalazłem - w przypadku Google nie jest to zaskoczeniem! 
+Równiez analiza klienta na niewiele sie zdała. Tutaj jedynie przyszło rozczarowanie, widząc, ze [send multicast](https://github.com/firebase/firebase-admin-go/blob/v3.13.0/messaging/messaging_batch.go#L51) pod spodem tłumaczy *batch* na pojedyczne wiadomosci i wysyła je jedna po drugiej. 
 
-2️⃣ Wspólne usprawnienia dla dużego ruchu (HTTP/2 i gRPC)
+```go
+func (mm *MulticastMessage) toMessages() ([]*Message, error) {
+	if len(mm.Tokens) == 0 {
+		return nil, errors.New("tokens must not be nil or empty")
+	}
+	if len(mm.Tokens) > maxMessages {
+		return nil, fmt.Errorf("tokens must not contain more than %d elements", maxMessages)
+	}
 
-Niektóre mechanizmy przyspieszające transport działają dla obu protokołów, gdy ruch jest duży:
-	•	TCP coalescing / write coalescing
-Kernel TCP łączy małe write’y w większe segmenty przed wysłaniem, zmniejszając liczbę syscalls i pakietów. Dzięki temu spada liczba logicznych RTT potrzebnych na przesłanie danych.
-Warto podkreślić: zarówno HTTP/2, jak i gRPC korzystają z tego mechanizmu. Różnica w efekcie widoczna w testach wynika głównie z tego, jak ruch jest generowany.
-	•	Multiplexing HTTP/2
-Pozwala przesyłać wiele równoległych streamów w jednym połączeniu TCP, co redukuje narzut otwierania nowych połączeń i TLS handshake.
-	•	TLS record batching
-Przy dużym loadzie TLS recordy mogą być większe i mniej flushowane, co poprawia efektywność transportu.
+	var messages []*Message
+	for _, token := range mm.Tokens {
+		temp := &Message{
+			Token:        token,
+			Data:         mm.Data,
+			Notification: mm.Notification,
+			Android:      mm.Android,
+			Webpush:      mm.Webpush,
+			APNS:         mm.APNS,
+			FCMOptions:   mm.FCMOptions,
+		}
+		messages = append(messages, temp)
+	}
 
-⸻
+	return messages, nil
+}
+```
 
-3️⃣ Jak gRPC zarządza połączeniami i dlaczego zyskuje więcej
+Przyszedł więc czas, aby przejść z HTTP na gRPC...  
 
-gRPC dodatkowo korzysta ze swojej architektury klienta:
-	•	Długie, multiplexowane połączenia
-Wszystkie requesty idą w jednym lub kilku stale otwartych połączeniach TCP/TLS, a każdy request w osobnym streamie.
-	•	Binarne framing + Protobuf
-Każdy message to [1B flag][4B length][payload], minimalny nagłówek i mniejszy payload niż JSON → mniej kopiowania w runtime i mniejsza fragmentacja pakietów.
+## FCM i gRPC 
 
-Schemat logiczny:
+Przełączenie FCM z *HTTP* na *gRPC* wiąze się jedynie z dodaniem paru opcji do konfiguracji klienta:
 
-gRPC przy niskim loadzie (10k RPS)
+```
+	fb, err := firebase.NewApp(
+		context.Background(),
+		&firebase.Config{
+			ProjectID: fcmProjectID,
+		},
+		firebaseoption.WithCredentialsJSON(credsJSON),
+		// GRPC settings
+		firebaseoption.WithGRPCDialOption(grpc.WithKeepaliveParams(keepalive.ClientParameters{
+			Time:                fcmGRPCTime,
+			Timeout:             fcmGRPCTimeout,
+			PermitWithoutStream: true, // for keep-alive
+		})),
+		firebaseoption.WithGRPCDialOption(grpc.WithDefaultServiceConfig(`{"loadBalancingConfig": [{"round_robin":{}}]}`)),
+		firebaseoption.WithGRPCDialOption(grpc.WithPerRPCCredentials(oauth.TokenSource{TokenSource: tokenSourceFromCredsJson})),
+	)
+```
 
-TCP/TLS Connection
-+—————————––+
-| Stream1  (active)             |
-| Stream2  (idle)               |
-| Stream3  (idle)               |
-+—————————––+
-Result: pipeline niepełny → p99 ~500ms
+I gotowe! W teorii, release na produkcje, przełączamy ruch i... Dalej te same wyniki. Okay, ciut lepsze, bo *p99* dla *send_mutlicast* zmalało z *500ms* do *400ms*/*450ms*, ale to dalej za wolno!
+Produkt wysyła miliony notyfikacji w godzinach szczytowych, które muszą być dostarczone jak najszybciej. Sprawdzam dalej, musiałem coś zrobić źle, o czymś zapomnieć.
+Az przychodzi pierwszy peak i.... eureka! Czasy *p99* zaczęły spadać z *400ms* -> *250ms*.
 
-gRPC przy wysokim loadzie (100k RPS)
+<figure>
+<img src="/images/grpc-vs-http2/fcm-send-multicast.jpg" alt="FCM send multicast chart" />
+<figcaption>Wykres 1: FCM - sendmulticast</figcaption>
+</figure>
 
-TCP/TLS Connection
-+––––––––––––––––––––––––––+
-| Stream1 | Stream2 | Stream3 | Stream4 | … StreamN |
-+––––––––––––––––––––––––––+
-Result: pipeline pełny, TLS coalescing → p99 ~200ms
+Albo jeśli ktoś woli operować na heatmapie...
 
-HTTP/JSON przy wysokim loadzie
+<figure>
+<img src="/images/grpc-vs-http2/fcm-send-multicast-heat.jpg" alt="FCM send multicast heatmap chart" />
+<figcaption>Wykres 2: FCM - sendmulticast heatmap</figcaption>
+</figure>
 
-TCP/TLS Connections (wiele)
-+——+   +——+   +——+
-| Req1 |   | Req2 |   | Req3 |
-+——+   +——+   +——+
-Result: wiele połączeń, JSON overhead nie amortyzowany → p99 ~500ms
+<figure>
+<img src="/images/grpc-vs-http2/fcm-load.jpg" alt="FCM - send notifications by status" />
+<figcaption>Wykres 3: FCM - send notifications by status</figcaption>
+</figure>
 
-W skrócie: przy wysokim RPS gRPC wykorzystuje pełen potencjał multiplexingu i pipeline w jednym connection, a binarny framing amortyzuje per-request overhead. HTTP/JSON nie korzysta w tym stopniu z multiplexingu, więc p99 pozostaje stabilne.
+Jak widać na wykresach 1 i 3, większy ruch powoduje "dogrzewanie" połączenia. Czyli im więcej staramy sie wysłać, tym szybciej i sporawniej to idzie. I byłoby to normalne, gdy były okresy, gdzie w ogóle nic nie wysyłamy i połączenie "stygnie".
+Ale tutaj klient cały czas coś wysyła, mniej lub wiecęj, ale jednak. Dlatego połączenie nie powinno przechodzić w status *idle*. Co więcej, czemu podobnego zjawiska nie dało się zaobserwować dla HTTP/2? 
+Nie lubię odchodzić od tematu, gdy nie rozumiem wszystkiego w najmniejszych szczegółach, więc trzeba było poszperać dalej.
 
-⸻
 
-4️⃣ Podsumowanie
-	•	gRPC nie zawsze jest od razu szybsze — przy niskim ruchu różnice mogą być minimalne.
-	•	Prawdziwe korzyści ujawniają się przy wysokim loadzie dzięki:
-	•	pipeline i multiplexing HTTP/2 w długich połączeniach
-	•	binarnemu framingowi i mniejszemu payloadowi Protobuf
-	•	efektowi TCP coalescing, który w połączeniu z gRPC jest bardziej efektywnie wykorzystywany
-	•	HTTP/JSON pozostaje stabilne, ale nie amortyzuje overheadu tak dobrze → p99 pozostaje na poziomie ~500 ms
-	•	Obserwacja ta jest zgodna z praktykami wskazanymi w dokumentacji Microsoftu dla ASP.NET Core gRPC
+## Wspólne usprawnienia dla dużego ruchu (HTTP/2 i gRPC)
 
-Kluczowy insight: większy ruch = pipeline pełny → gRPC w pełni wykorzystuje możliwości HTTP/2 → znacząca poprawa latency.
+Przy dużym obciążeniu zarówno HTTP/2, jak i gRPC korzystają z mechanizmów optymalizacyjnych działających poniżej warstwy aplikacyjnej — w TLS, TCP i kernelu systemu operacyjnego.
 
-⸻
+1) **TCP write coalescing (warstwa transportowa)**
+
+Przy intensywnym ruchu wiele małych operacji *write* może zostać połączonych w większe porcje danych zanim trafią do sieci. Dzięki temu:
+- zmniejsza się liczba *syscalli*
+- powstaje mniej małych segmentów TCP
+- lepiej wykorzystywany jest MSS (Maximum Segemt Size)
+- spada narzut nagłówków TCP/IP
+- obniża się koszt CPU per request
+
+Mechanizm ten może być wspierany przez:
+- buforowanie w kernelu
+- segmentację TCP
+- [algorytm Nagle’a](https://en.wikipedia.org/wiki/Nagle%27s_algorithm) (w zależności od konfiguracji)
+
+Efekt: zmniejszenie narzutu per request i lepsza przepustowość przy dużym concurrency.
+
+2) **Multiplexing HTTP/2**
+
+HTTP/2 umożliwia przesyłanie wielu równoległych streamów w jednym połączeniu TCP.
+
+Oznacza to:
+- brak konieczności otwierania nowych połączeń
+- mniej handshake TLS
+- lepsze wykorzystanie jednego „rozgrzanego” połączenia
+- większe porcje danych trafiające do stosu TCP/TLS
+
+gRPC korzysta z tego mechanizmu, ponieważ działa na HTTP/2.
+
+3) **TLS record batching (warstwa szyfrowania)**
+
+TLS pakuje dane aplikacyjne w tzw. TLS records (zwykle do ~16 KB). Przy większym loadzie dane szybciej trafiają do bufora TLS, co pozwala generować:
+- większe rekordy
+- mniej małych fragmentów
+- mniej flushów socketu
+
+To prowadzi do:
+- lepszej agregacji przez TCP
+- mniejszej liczby pakietów
+- niższego narzutu kryptograficznego per bajt
+
+Mechanizm ten działa niezależnie od tego, czy używany jest REST (HTTP/1.1), HTTP/2 czy gRPC — ponieważ znajduje się poniżej warstwy protokołu aplikacyjnego.
+
+## Dlaczego gRPC częściej zyskuje więcej przy dużym ruchu
+
+Mechanizmy opisane wcześniej (TCP coalescing, TLS batching, multiplexing HTTP/2) działają dla wszystkich protokołów korzystających z HTTP/2 i TLS.
+Różnica polega na tym, jak dany klient generuje ruch i zarządza połączeniami.
+
+1) Długotrwałe, współdzielone połączenia
+
+Klient gRPC standardowo:
+- utrzymuje jedno lub kilka długotrwałych połączeń TCP/TLS
+- wysyła wszystkie requesty jako osobne streamy HTTP/2
+- rzadko zamyka połączenie
+
+Dzięki temu:
+- połączenie jest „rozgrzane” (brak handshake przy każdym request)
+- bufor TCP/TLS jest stale wypełniony
+- łatwiej o efektywne write coalescing
+- TLS może generować większe rekordy
+
+W praktyce oznacza to lepsze wykorzystanie transportu przy rosnącym concurrency.
+
+2) Naturalnie wysoki poziom równoległości
+
+gRPC jest projektowane pod:
+- równoległe requesty
+- streaming (client/server/bidirectional)
+- asynchroniczny model wywołań
+
+Przy wysokim RPS wiele streamów jednocześnie „wypełnia” jedno połączenie TCP, co:
+- stabilizuje przepływ danych
+- zmniejsza liczbę małych flushów
+- poprawia agregację w TLS i TCP
+
+Dzięki temu pipeline jest bardziej równomiernie obciążony.
+
+3) Mniejszy narzut per request (framing + payload)
+
+gRPC używa:
+- binarnego framingu HTTP/2 (w HTTP/2 payload dalej jest tekstowy!)
+- Protobuf (binary) zamiast JSON (text)
+
+## Podsumowanie
+
+gRPC nie musi być zawsze od razu widocznie szybsze w porównaniu z HTTP/2. Czasem potrzeba czasu i sporego ruchu, aby dostrzec zalety róznych rozwiazań i podejsc.
+
+Czy to oznacza, ze zrobiłem błąd, nie wprowadzając *FCM* od razu z koniguracją gRPC? Absolutnie nie! Nawet jeśli dotyczyło to jedynie klienta. 
+Trzeba pamiętać o tym, ze kod nalezy rozwijać stopniowo i iteracyjnie. *Problem/Potrzeba -> mała zmiana -> produkcja -> obserwacja -> usprawnienie*.
+Serwis powinien być jak najprostszy, aby łatwiej i taniej mozna go utrzymac! 
+A kazda dodatkowo technologia (jak *gRPC*) wprowadza w projekcie pewne konsekwencje i dodatkowe skomplikowanie. 
+Jezeli mamy dobry design i trzymamy się reguły [KISS](https://en.wikipedia.org/wiki/KISS_principle), to wprowadzanie zmian zawsze będzie łatwe i przyjdzie na nie odpowiedni czas. 
+Brak *overengeineering* jest szczególnie wazny w czasach agentów AI, którzy generują kod na potęgę. 
+No *overengeineering* & [KISS](https://en.wikipedia.org/wiki/KISS_principle)! 
+
