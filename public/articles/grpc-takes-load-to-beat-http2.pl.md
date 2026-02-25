@@ -1,20 +1,23 @@
 ## Wstęp i oczekiwania
 
-Uzywajac binarnego protokolu gRPC, oczekujemy, ze będzie on zawsze znacząco szybszy niz tekstowy protokół HTTP (zwlaszcza w starszej wersji 1.1). 
+Intuicyjnie można oczekiwać, że binarny protokół (gRPC + Protobuf) będzie szybszy niż tekstowy JSON po HTTP (zwlaszcza w starszej wersji 1.1). 
 
 Odpalajac serwis lokalnie, mozemy juz zauwazyc pierwsze roznice.
 
 ```
-$ go test -bench=. -benchmem=1  -benchtime=30s
+$ go test -bench=. -benchmem  -benchtime=30s
 ...
 BenchmarkGRPC/grpc.GetFeature()-10         	   19750	     56548 ns/op
 ...
-BenchmarkHTTP/2/http.GetFeature()-10        	   16590	     72107 ns/op
+BenchmarkHTTP/2/http.GetFeature()-10           16590	     72107 ns/op
 ...
 BenchmarkHTTP1/http.GetFeature()-10        	   24290	     49005 ns/op
 ...
 PASS
 ```
+
+Tutaj benchmarki mierzą głównie niestety jedynie koszt runtime i serializacji, a nie zachowanie przy realnym obciązeniu i warstwie transportowej.
+Dlatego wyniki lokalne nie muszą korelować z tym, co dzieje się pod dużym obciążeniem w produkcji.
 
 Ostatnio w jednym z projektów wprowadzalem po stronie backend'u [Google FCM](https://firebase.google.com/docs/cloud-messaging) dla push notyfikacji. 
 Uzywałem tam wiadomosci typu [multicast](https://firebase.google.com/docs/reference/admin/java/reference/com/google/firebase/messaging/MulticastMessage), aby moc dostarczyc jedna wiadomosc do wielu urzadzen tego samego uzytkownika jednoczesnie. W domyślnej konfiguracji FCM uzywa protokołu HTTP. 
@@ -101,7 +104,8 @@ Albo jeśli ktoś woli operować na heatmapie...
 </figure>
 
 Jak widać na wykresach 1 i 3, większy ruch powoduje "dogrzewanie" połączenia. Czyli im więcej staramy sie wysłać, tym szybciej i sporawniej to idzie. I byłoby to normalne, gdy były okresy, gdzie w ogóle nic nie wysyłamy i połączenie "stygnie".
-Ale tutaj klient cały czas coś wysyła, mniej lub wiecęj, ale jednak. Dlatego połączenie nie powinno przechodzić w status *idle*. Co więcej, czemu podobnego zjawiska nie dało się zaobserwować dla HTTP/2? 
+Ale tutaj klient cały czas coś wysyła, mniej lub wiecęj, ale jednak. Dlatego połączenie nie powinno przechodzić w status *idle*. 
+Różnica prawdopodobnie wynikała nie z samego protokołu HTTP/2, lecz z implementacji klienta i sposobu generowania ruchu. Protokół był ten sam. Inny był sposób jego wykorzystania.
 Nie lubię odchodzić od tematu, gdy nie rozumiem wszystkiego w najmniejszych szczegółach, więc trzeba było poszperać dalej.
 
 
@@ -120,8 +124,8 @@ Przy intensywnym ruchu wiele małych operacji *write* może zostać połączonyc
 
 Mechanizm ten może być wspierany przez:
 - buforowanie w kernelu
-- segmentację TCP
-- [algorytm Nagle’a](https://en.wikipedia.org/wiki/Nagle%27s_algorithm) (w zależności od konfiguracji)
+- *TCP_CORK* (w niektórych implementacjach)
+- [algorytm Nagle’a](https://en.wikipedia.org/wiki/Nagle%27s_algorithm) (w zależności od konfiguracji, jeśli *TCP_NODELAY* nie jest ustawione)
 
 Efekt: zmniejszenie narzutu per request i lepsza przepustowość przy dużym concurrency.
 
@@ -187,9 +191,7 @@ Dzięki temu pipeline jest bardziej równomiernie obciążony.
 
 3) Mniejszy narzut per request (framing + payload)
 
-gRPC używa:
-- binarnego framingu HTTP/2 (w HTTP/2 payload dalej jest tekstowy!)
-- Protobuf (binary) zamiast JSON (text)
+gRPC używa Protobuf (binary) zamiast JSON (text), co zmniejsza payload i koszt serializacji.
 
 ## Podsumowanie
 
@@ -201,6 +203,8 @@ Oba rozwiązania korzystają z tych samych mechanizmów transportowych (HTTP/2, 
 
 Przy niewielkim ruchu różnice mogą być marginalne.
 Dopiero przy dużym RPS zaczyna działać amortyzacja kosztów per request, lepsze wypełnienie pipeline’u oraz efektywniejsze wykorzystanie warstwy transportowej.
+
+gRPC nie wygrywa dlatego, że jest „binarny”. Wygrywa wtedy, gdy architektura i obciążenie pozwalają w pełni wykorzystać warstwę transportową.
 
 Czy to oznacza, że błędem było niewdrożenie *FCM* od razu z *klientem gRPC*? Absolutnie **nie**.
 
