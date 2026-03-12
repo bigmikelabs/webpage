@@ -79,6 +79,11 @@
     "subtitle": "Free lectures and tips from our expert instructors",
     "movies": [
       {
+        "videoTitle": "Why are Apple M processors so fast?",
+        "videoDescription": "In this video we look inside Apple Silicon chips and see what really lies inside Apple M processors (Pro and Max).",
+        "videoLink": "https://youtu.be/unz9yZUFAYU?si=Az4LBQvKRcpBsqcQ"
+      },
+      {
         "videoTitle": "How does AI understand text?",
         "videoDescription": "Does a computer really understand what you write to it? In this video, I show step by step how AI processes text — from raw sentences, through tokens and embeddings, to encoders in the Transformer architecture.",
         "videoLink": "https://youtu.be/Ea5GGLnf-O8?si=YjTAJSBuA7DeeBTN"
