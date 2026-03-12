@@ -79,6 +79,11 @@
     "subtitle": "Bezpłatne wykłady i porady od naszych ekspertów",
     "movies": [
       {
+        "videoTitle": "Dlaczego procesory Apple M są tak szybkie?",
+        "videoDescription": "W tym filmie zaglądamy do środka układów z rodziny Apple Silicon i sprawdzamy, co naprawdę kryje się w procesorach Apple M (Pro i Max).",
+        "videoLink": "https://youtu.be/unz9yZUFAYU?si=Az4LBQvKRcpBsqcQ"
+      },
+      {
         "videoTitle": "Jak AI rozumie tekst?",
         "videoDescription": "Czy komputer naprawdę rozumie, co do niego piszesz? W tym filmie krok po kroku pokazuję, jak AI przetwarza tekst — od surowego zdania, przez tokeny i embeddingi, aż po encodery w architekturze Transformer.",
         "videoLink": "https://youtu.be/Ea5GGLnf-O8?si=YjTAJSBuA7DeeBTN"
