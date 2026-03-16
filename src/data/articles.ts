@@ -35,6 +35,35 @@ export interface ArticleMeta {
 // Article metadata index – add new entries here when you add a new .md file under public/articles/
 export const articles: ArticleMeta[] = [
   {
+    id: 'one_or_many_queues_operational_costs',
+    title: {
+      en: 'One Queue or Many? The Hidden Operational Costs of Event Topology',
+      pl: 'Jedna kolejka czy wiele? Ukryte koszty operacyjne topologii eventów',
+    },
+    date: new Date('2026-03-16'),
+    author: 'Michał Wroński',
+    summary: {
+      en: 'In event-driven systems, queues are often treated as simple transport mechanisms. In reality, their topology directly affects scaling behavior, observability, and the operational cost of the entire system.',
+      pl: 'W systemach event-driven kolejki często traktujemy jak prosty mechanizm transportu. W rzeczywistości jednak ich topologia ma bezpośredni wpływ na skalowanie, monitorowanie i koszty operacyjne całego systemu.',
+    },
+    tags: ['event-driven', 'cqrs', 'event-sourcing'],
+    readingDurationMinutes: 5,
+    level: 'advanced',
+    images: [
+      {
+        src: '/images/one_or_many_queues_operational_costs/header.jpg',
+        alt: {
+          en: 'queues topology',
+          pl: 'topologia kolejek',
+        },
+        caption: {
+          en: '',
+          pl: '',
+        },
+      },
+    ],
+  },
+  {
     id: 'grpc-takes-load-to-beat-http2',
     title: {
       en: 'gRPC takes load to beat HTTP/2',
