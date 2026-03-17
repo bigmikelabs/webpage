@@ -35,23 +35,23 @@ export interface ArticleMeta {
 // Article metadata index – add new entries here when you add a new .md file under public/articles/
 export const articles: ArticleMeta[] = [
   {
-    id: 'one_or_many_queues_operational_costs',
+    id: 'event-loops-inc',
     title: {
-      en: 'One Queue or Many? The Hidden Operational Costs of Event Topology',
-      pl: 'Jedna kolejka czy wiele? Ukryte koszty operacyjne topologii eventów',
+      en: 'Event-Driven feedback loops: the silent scalability killer',
+      pl: 'Event-Driven feedback loops: cichy zabójca skalowalności',
     },
     date: new Date('2026-03-16'),
     author: 'Michał Wroński',
     summary: {
-      en: 'In event-driven systems, queues are often treated as simple transport mechanisms. In reality, their topology directly affects scaling behavior, observability, and the operational cost of the entire system.',
-      pl: 'W systemach event-driven kolejki często traktujemy jak prosty mechanizm transportu. W rzeczywistości jednak ich topologia ma bezpośredni wpływ na skalowanie, monitorowanie i koszty operacyjne całego systemu.',
+      en: 'Discover how hidden feedback loops in event-driven systems can silently limit scalability, and learn practical strategies to prevent them.',
+      pl: 'Dowiedz się, jak feedback loops w systemach event-driven mogą potajemnie ograniczać skalowalność i poznaj praktyczne sposoby, by im zapobiegać.',
     },
     tags: ['event-driven', 'cqrs', 'event-sourcing'],
     readingDurationMinutes: 5,
     level: 'advanced',
     images: [
       {
-        src: '/images/one_or_many_queues_operational_costs/header.jpg',
+        src: '/images/event-loops-inc/header.jpg',
         alt: {
           en: 'queues topology',
           pl: 'topologia kolejek',

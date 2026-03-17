@@ -24,11 +24,11 @@ Tyle że:
 
 •	metryki infrastruktury wyglądały zdrowo:
 
-	•	baza danych: ~10 ms (p99)
+-	baza danych: ~10 ms (p99)
 
-	•	cache: ~5 ms (p99)
-	
-	•	przetwarzanie pojedynczej wiadomości: ~50 ms (p99)
+-	cache: ~5 ms (p99)
+
+-	przetwarzanie pojedynczej wiadomości: ~50 ms (p99)
 
 Czyli wszystko działało „zgodnie z planem”.
 A mimo to system nie był w stanie nadrobić zaległości.
@@ -37,7 +37,6 @@ Naturalne pytanie: skoro każdy element działa poprawnie, to dlaczego całość
 Odpowiedź nie leżała ani w infrastrukturze, ani w parametrach systemu.
 
 Trzeba było trochę głębiej pokopać.
-
 
 
 ## Opis problemu
