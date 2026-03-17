@@ -73,3 +73,58 @@ W moim przypadku zauważyłem, że trend ten potrafił utrzymywać się nawet po
 3.	Back to operational
 
 W końcowej fazie system wreszcie “odblokowuje się” i zaczyna nadrabiać zaległości – eventy są przetwarzane szybciej, a lag stopniowo maleje.
+
+## Analiza przyczyn problemu
+
+Aby zrozumieć, dlaczego autoskalowanie nie działało zgodnie z oczekiwaniami, musiałem przyjrzeć się bliżej logice systemu i kodowi obsługującemu eventy.
+
+Podczas analizy odkryłem, że niektóre eventy w kolejce generowały kolejne eventy, które trafiały z powrotem do tej samej kolejki lub do powiązanych kolejek. W moim przypadku eventy odzwierciedlały maszynę stanów dla pewnego procesu biznesowego. Przykładowe eventy były zdefiniowane w następujący sposób:
+
+•	UserOrderRaisedEvent
+
+•	UserOrderAcceptedEvent
+
+•	UserOrderWaitingForPaymentEvent
+
+•	UserOrderPaymentDoneEvent
+
+Nie dziwi fakt, że wszystkie te eventy trafiały do tej samej kolejki — były związane z tą samą domeną.
+
+Efekt był taki, że im bardziej system się skalował, tym więcej eventów przetwarzał, co uruchamiało kolejne transakcje biznesowe i generowało jeszcze więcej eventów. 
+Kolejka FIFO dodatkowo mogła wydłużać czas przetwarzania pojedynczej transakcji biznesowej, ponieważ najpierw musieliśmy obsłużyć wcześniejsze eventy (UserOrderRaisedEvent), zanim dotarliśmy do kolejnych etapów (UserOrderAcceptedEvent).
+
+To zjawisko mogło prowadzić do naruszenia *SLA* (service level agreement). W moim przypadku do złamania SLA nie doszło, co niestety wydłużyło analizę — alarm dotyczący zbyt długiej transakcji biznesowej mógłby szybciej naprowadzić mnie na sedno problemu.
+
+## Mechanizmy ukryte w systemach event-driven
+
+Analiza mojego przypadku ujawniła klasyczny *feedback loop*, ale to tylko jeden z wielu problemów, które mogą ukrywać się w systemach opartych na eventach. Warto znać inne mechanizmy, które mogą wpływać na skalowanie i stabilność:
+
+•	Feedback loops – eventy generują kolejne eventy w tej samej kolejce lub powiązanych kolejkach, podtrzymując lag i obciążenie systemu.
+
+•	Event amplification – pojedyncze zdarzenie wyzwala lawinę kolejnych eventów, co prowadzi do nieproporcjonalnego wzrostu obciążenia.
+
+•	Queue self-dependency – zależności kolejki od własnego stanu sprawiają, że backlog utrzymuje się mimo zwiększonych zasobów.
+
+Rozpoznanie tych mechanizmów jest kluczowe dla prawidłowego autoskalowania i monitorowania systemu. 
+
+## Lessons Learned: Jak unikać problemów z feedback loops
+
+Doświadczenie z mojej analizy pokazało, że nie zawsze większe zasoby lub agresywne autoskalowanie rozwiążą problem. 
+Kluczowe jest zrozumienie, co w ogóle trafia do kolejki i jak eventy wpływają na siebie nawzajem. Oto kilka lekcji, które warto mieć na uwadze:
+	
+1.	Świadomie projektuj topologię kolejek
+Jedna kolejka dla wszystkich eventów wygląda prosto i elegancko, ale w praktyce może wpaść w pułapkę feedback loop. Rozdzielanie eventów na kolejki wg domeny lub typów eventów pozwala lepiej kontrolować skalowanie i obciążenie. Dzięki temu auto-skalowanie reaguje na rzeczywiste potrzeby, a nie na echo generowane przez inne eventy.
+
+2.	Identyfikuj event amplification
+Jeśli jedno zdarzenie może wyzwalać kilka kolejnych, warto rozważyć ograniczenia lub dedykowane mechanizmy kontroli. Na przykład: batchowanie generowanych eventów, agregacja lub wprowadzenie throttlingu. Dzięki temu unikniesz lawiny eventów, która może „zalewać” system w godzinach szczytu.
+
+3.	Zwracaj uwagę na zależności kolejki od własnego stanu (queue self-dependency)
+Eventy, które trafiają z powrotem do tej samej kolejki lub powiązanej kolejki, mogą prowadzić do sytuacji, w której backlog utrzymuje się nawet przy dostępnych zasobach. W takich przypadkach warto przemyśleć mechanizm priorytetyzacji eventów lub wprowadzić separację krytycznych i mniej istotnych zdarzeń.
+
+4.	Monitoruj nie tylko liczby, ale też przepływy
+Metryki typu lag czy długość kolejki to za mało. Obserwuj też połączenia między eventami: które eventy wyzwalają kolejne i w jakim tempie. Wizualizacja przepływu eventów pomaga wychwycić potencjalne feedback loops i zapobiec problemom zanim staną się krytyczne.
+
+5.	Testuj scenariusze „co jeśli” w kontrolowanym środowisku
+Symulacja zwiększonego ruchu lub wprowadzenie testowych eventów pozwala zobaczyć, czy system wpada w pętle lub generuje nadmiarowe eventy. Dzięki temu można wcześniej zoptymalizować topologię kolejek i strategie skalowania.
+
+
