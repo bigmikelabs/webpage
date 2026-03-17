@@ -3,14 +3,20 @@
 Event-driven architecture jest dziś niezwykle popularna. Pytania o CQRS czy event sourcing pojawiają się niemal na każdej rozmowie rekrutacyjnej, 
 a wiele zespołów wskakuje w ten nurt już na samym początku projektu — często zanim dobrze zrozumieją domenę biznesową.
 
-Masz coś związanego z płatnościami? Event sourcing brzmi jak oczywisty wybór.
-Chcesz odporności na awarie? CQRS.
-Dodajmy do tego DDD i mamy „nowoczesną architekturę”.
+Masz coś związanego z płatnościami? *Event sourcing* brzmi jak oczywisty wybór.
+
+Chcesz odporności na awarie? *CQRS*.
+
+Dodajmy do tego *DDD* (domain-driven-design) i mamy „nowoczesną architekturę”.
 
 Brzmi dobrze. Na papierze wszystko się zgadza.
+
+---
+
 Problem zaczyna się później — na produkcji.
 
 Ostatnio trafiłem na dość ciekawy przypadek, który regularnie odpalał alarmy w godzinach szczytu.
+
 Dotyczył jednej z kolejek w systemie event-driven.
 
 Alert był prosty: **rośnie liczba wiadomości w kolejce (lag) i system nie nadąża z ich przetwarzaniem**.
@@ -29,6 +35,8 @@ Tyle że:
 -	cache: ~5 ms (p99)
 
 -	przetwarzanie pojedynczej wiadomości: ~50 ms (p99)
+
+---
 
 Czyli wszystko działało „zgodnie z planem”.
 A mimo to system nie był w stanie nadrobić zaległości.
