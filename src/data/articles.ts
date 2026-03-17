@@ -46,7 +46,7 @@ export const articles: ArticleMeta[] = [
       en: 'Discover how hidden feedback loops in event-driven systems can silently limit scalability, and learn practical strategies to prevent them.',
       pl: 'Dowiedz się, jak feedback loops w systemach event-driven mogą potajemnie ograniczać skalowalność i poznaj praktyczne sposoby, by im zapobiegać.',
     },
-    tags: ['event-driven', 'cqrs', 'event-sourcing'],
+    tags: ['event-driven', 'cqrs', 'event-sourcing', 'post-mortem'],
     readingDurationMinutes: 5,
     level: 'advanced',
     images: [
