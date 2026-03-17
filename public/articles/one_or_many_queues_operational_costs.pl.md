@@ -1,24 +1,107 @@
 ## Wstęp 
 
-Event-driven architecture jest dziś niezwykle popularna. Pytania o CQRS czy event sourcing pojawiają się niemal na każdej rozmowie rekrutacyjnej w projektach IT.
-Wiele zespołów ochoczo wskakuje w ten nurt od samego początku projektu, gdzie nic jeszcze nie wiadomo o samym "biznesie", czy domenie. 
+Event-driven architecture jest dziś niezwykle popularna. Pytania o CQRS czy event sourcing pojawiają się niemal na każdej rozmowie rekrutacyjnej, 
+a wiele zespołów wskakuje w ten nurt już na samym początku projektu — często zanim dobrze zrozumieją domenę biznesową.
 
-Masz coś związanego z płatnościami? Event sourcing wydaje się niezbędny.
-Musisz zapewnić, że requesty będą przetwarzane niezależnie od awarii? CQRS to naturalny wybór.
-Wpakujmy w to jeszcze DDD (domain-driven-design) i mamy nowoczesny serwis, a jeszcze lepiej mikroserwis!
+Masz coś związanego z płatnościami? Event sourcing brzmi jak oczywisty wybór.
+Chcesz odporności na awarie? CQRS.
+Dodajmy do tego DDD i mamy „nowoczesną architekturę”.
 
-Problem w tym, że eventy i wszystko, co z nimi związane, to nie tylko decyzja architektoniczna, czy wybór wzorca projektowego.
-To decyzja, która wpływa na codzienną pracę z kodem, jego debugowaniem, wsparciem produkcji, potrzebnymi narzędziami i ogólnie - cały projekt!
-I co może nawet ważniejsze – to decyzja, która bezpośrednio determinuje, jak skalujesz system i jak go monitorujesz.
+Brzmi dobrze. Na papierze wszystko się zgadza.
+Problem zaczyna się później — na produkcji.
 
-Papier wszystko przyjmie i na papierze wszystko wygląda super, ale nie wszystko tak samo szybko i sprawnie działa. 
-A haczykiem eventów i kolejek jest to, ze szybko związują one ręcę podczas wsparcia produkcji, zwlaszcza, gdy cos nie dziala i dzwonia do nas klienci. 
+Ostatnio trafiłem na dość ciekawy przypadek, który regularnie odpalał alarmy w godzinach szczytu.
+Dotyczył jednej z kolejek w systemie event-driven.
+
+Alert był prosty: **rośnie liczba wiadomości w kolejce (lag) i system nie nadąża z ich przetwarzaniem**.
+Z pozoru — klasyczny problem.
+
+Tyle że:
+
+•	autoskalowanie oparte o lag dochodziło do limitu… i nic to nie zmieniało
+
+•	zwiększenie limitów również nie pomagało
+
+•	metryki infrastruktury wyglądały zdrowo:
+
+	•	baza danych: ~10 ms (p99)
+
+	•	cache: ~5 ms (p99)
+	
+	•	przetwarzanie pojedynczej wiadomości: ~50 ms (p99)
+
+Czyli wszystko działało „zgodnie z planem”.
+A mimo to system nie był w stanie nadrobić zaległości.
+
+Naturalne pytanie: skoro każdy element działa poprawnie, to dlaczego całość nie skaluje się i nie zachowuje tak, jak powinna?
+Odpowiedź nie leżała ani w infrastrukturze, ani w parametrach systemu.
+
+Trzeba było trochę głębiej pokopać.
+
+
+
+## Opis problemu
+
+
+
+W moim przypadku 
+
+
+Nic więc dziwnego, ze niedawno na produkcji 
+
+I wszystko wygląda pięknie w teorii na papierze, az nagle na produkcji widzisz, jak lag w jednej z kolejek rosnie i utrzymuje się przez dluzszą chwile.
+Ruch spada, a lag dalej nie maleje. System wydaje się działać okay, dostępy do baz i cache'u sa szybkie (5-10ms), przetwarzanie pojedynczej wiadomosci w kolejce zajmuje 100ms, a lag dalej nie maleje.
+I 
+
+Osobiście nie mam przeciwko 
+Problem w tym, że event-driven to nie tylko zestaw wzorców, który pozwalają rozwiązać pewne problemy (stwarzając inne).
+
+To zestaw decyzji, które bezpośrednio wpływają na:
+
+•	sposób pracy z kodem,
+
+•	debugowanie i wsparcie produkcji,
+
+•	narzędzia, których będziesz potrzebować,
+
+•	oraz – co najważniejsze – sposób skalowania i monitorowania systemu.
+
 
 ## Podstawy - kolejki to nie tylko warstwa transportowa 
 
 W sieci jest mnóstwo dokumentacji na temat [event-driven architektury](https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/event-driven) czy
 [event sourcingu](https://learn.microsoft.com/en-us/azure/architecture/patterns/event-sourcing).
+W większości materiałów kolejki przedstawiane są jako prosty mechanizm: **producent → kolejka → konsument**.
+W praktyce to uproszczenie jest bardzo mylące.
+
+Topologia kolejki nie tylko transportuje dane — ona definiuje:
+
+•	jak system się skaluje,
+
+•	co jesteś w stanie zaobserwować,
+
+•	jak reaguje na przeciążenia,
+
+•	i jak wygląda jego operacyjne utrzymanie.
+
+
 Zanim jednak przejdziemy do szczegółów, warto ustalić kilka faktów, abyśmy mieli wspólny obraz sytuacji. Oczywiste oczywistości, ale…
+
+### Typowe podejścia do topologii kolejek
+
+| Podejście | Główne zalety | Główne ograniczenia |
+|----------|---------------|---------------------|
+| **Jedna kolejka (single stream)** | Prosta architektura, łatwy replay, mniej infrastruktury | Brak kontroli nad typami pracy, mieszanie priorytetów, trudniejsze skalowanie i monitoring |
+| **Kolejka na domenę** | Izolacja domenowa, lepsza obserwowalność, sensowne skalowanie | Więcej komponentów, większy narzut operacyjny |
+| **Kolejka na typ eventu/requestu** | Precyzyjne skalowanie, niezależność konsumentów, czyste kontrakty | Eksplozja liczby kolejek, potrzeba governance, większa złożoność |
+
+### Wpływ topologii kolejki na system
+
+| Podejście | Skalowalność | Monitoring | Priorytety / SLA | Złożoność operacyjna |
+|----------|--------------|------------|------------------|----------------------|
+| **Jedna kolejka (single stream)** | Skalowanie na podstawie całego ruchu – brak kontroli nad typami pracy | Zagregowane metryki, trudne rozróżnienie problemów | Trudne do egzekwowania – wszystkie eventy konkurują o zasoby | Niska na start, rośnie wraz ze skalą systemu |
+| **Kolejka na domenę** | Skalowanie per domena – lepsza kontrola nad obciążeniem | Czytelniejsze metryki na poziomie domen | Możliwe częściowe rozdzielenie priorytetów | Średnia – więcej komponentów do utrzymania |
+| **Kolejka na typ eventu/requestu** | Bardzo precyzyjne skalowanie – pełna kontrola nad workloadem | Bardzo dobra obserwowalność per typ eventu | Naturalne wsparcie dla różnych SLA i priorytetów | Wysoka – wymaga governance i zarządzania |
 
 Większość systemów *event-driven* traktuje kolejki jak proste streamy: producent → kolejka → konsument.
 W praktyce jednak topologia kolejki ma duży wpływ na działanie całego systemu. Decyzje te przekładają się na skalowanie, monitoring, stabilność i koszty operacyjne. Projekt kolejki to więc nie drobny szczegół implementacyjny, ale ważna decyzja architektoniczna.

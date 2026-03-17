@@ -4,6 +4,10 @@ Event-driven architecture jest bardzo popularna. Pytanie o CQRS albo event-sourc
 Wiele projektów ochoczo wskakuje w ten nurt od samego początku istnienia. 
 Masz coś związanego z płatnościami? To event sourcing jest niezbędny! 
 Musisz zapewnić, ze requesty będą przetworzone niezaleznie od awarii? Jedziemy z CQRS! 
+
+
+
+
 Problem polega na tym, ze eventy i wszystko, co z nimi związane to nie tylko decyzja architektoniczna. 
 
 Problemem jest tutaj 
