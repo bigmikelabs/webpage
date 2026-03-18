@@ -136,75 +136,157 @@ Z tego doświadczenia wynika kilka ważnych wniosków.
 
 **1) Event-driven nie lubi być wprowadzany zbyt wcześnie.**
 
-Mam wrazenie, ze zbyt chetnie wskakuje sie w popularne trendy bez analizowania, co tak naprawdę potrzebuję - co wchodzi w skład *MVP* (Minimum Viable Product), czyli absolutnego **minimum** potrzebnego do
-realizowania zadan biznesowych na produkcji. 
+Zbyt często wskakujemy w modne rozwiązania, zanim dobrze zrozumiemy, czego naprawdę potrzebujemy.
 
-Rozpoczynamy projekt? Ok, lecimy z mikroserwisami! Jakby uzycie monolitu w poczatkowej fazie godzilo w naszą mądrość, czy poczucie wartości.
+Start projektu? Lecimy z mikroserwisami.
+Płatności? Event sourcing.
+Odporność? CQRS.
 
-Trzeba sobie uzmysłowić, ze *event* to nie request, czy dowolne zdarzenie po stronie serwera, czy uzytkownika. 
-*Event* budują reprezentację modelu biznesowego, procesów w nich zachodzących i stanów, w jakich poszczególne byty i procesy mogą się znajdować. 
-A zeby zrozumiec procesy biznesowe, potrzeba czasu! Jako programiści mało wiemy o problemach pochodzących z innych domen zycia i biznesu.
-Dlatego dajmy sobie czas na zrozumienie i wejscie w ten inny swiat, nim zaczniemy go modelować za pomocą *eventów*.
-Zwłaszcza w dobie, gdzie biznes i wymagania potrafia zmienic sie z dnia na dzień.
+Tylko że…
 
-**A świadectwem prawdziwego zrozumienia jest zawsze prostota - [KISS](https://en.wikipedia.org/wiki/KISS_principle)!**
+event to nie jest request.
 
-**2) Event-driven architektura jest skomplikowana!**
+Eventy modelują procesy biznesowe i ich stany.
+A tych nie da się poprawnie zaprojektować bez zrozumienia domeny.
 
-Architektura *event driven* wymaga duzego doswiadzenia - bardzo duzego doswiadczenia!
-Przemyśl dobrze, czy naprawdę potrzebujesz danego podejścia, aby rozwiązac swój problem.
-Moze nie potrzebujesz *event sourcingu*? Moze samo *CQRS* starczy? Moze sa inne rozwiazania, które pomogą osiągnąć podobny efekt? 
-A przede wszystkim pomyśl o tym, co moze pójść nie tak, gdy wejdziesz w tą uliczkę.
+A zrozumienie domeny:
 
-**Kazda technologia, czy rozwiazanie jest pewnym kompromisem - usprawniamy jedno, komplikujemy inne.**
-Dlatego warto się zastanowić, czy naprawde warto. 
-A jesli idziesz juz ta droge, rob to powoli - `mala zmiana -> produkcja -> obserwacja -> wnioski i dalsze usprawnienia`.
+•	wymaga czasu
 
-**3) Event-driven podejście to nie tylko architektura**
+•	wymaga błędów
 
-Jeśli juz decydujemy się na `event-driven` architektura, pamiętajmy, ze nie podejmujemy tylko decyzji odnośnie architektury. 
+•	wymaga iteracji
 
-To zestaw decyzji, które bezpośrednio wpływają na:
+Dlatego bardzo często lepszym wyborem na start jest prostsze podejście.
 
-•	sposób pracy z kodem
-
-Event driven wymaga odpowiednich wzorców projektowych, to powoduje sporo boilerplatu w kodzie. 
-Repozytoria z kodem zaczynają się mnozyć, powstaje część wspólna (*common*), to później komplikuje zarządzanie zaleznościami...
-Jesli chcemy coś zmienić musimy pamiętać o wszysktich miejscach, które musimy dotknąć.
-A na tym się nie kończy...
-
-•	**debugowanie i analizowania przypadków z produkcji**
-
-Nie ma nic gorszego od debugowania eventów. Serio! Zwłaszcza, gdy próbujemy rozkminić jakiś przypadek z produkcji! 
-Procesy biznesowe ubrane w *eventy* i kod z nim związany robi się naprawdę skomplikowany - duzo skakania między klasami, troche logiki tu, troche tam, 
-potencjalne race conditions, cięzej cos zasymulowac i ogólnie ogarnąć całość!
-
-Mała anegdotka: pracowałem kiedyś dla FinTech. Obsługiwaliśmy miliony transakcji dziennie. 
-I mimo wszystko, kazdy z programistow (nawet paruletnim stazem w firmie), nie był wstanie szybko i bezblednie znalezc rzeczy w kodzie.
-Debugowanie zawsze wiązało się ze skakaniem, szukaniem, przypominaniem sobie, gdzie coś było. 
-A to tylko wierzchołek góry lodowej!
-
-•	narzędzia, których będziesz potrzebować
-
-I nie chodzi tu tylko o narzędzia do minotorowania, czy deploymentu. Co zrobisz na produkcji, kiedy twój proces utknie w połowie? Jak go wznowisz?
-To oznacza, ze pozwolisz deweloperom na dostęp do produkcji, aby mogli cos recznie wrzucic kolejke, aby odblokować proces.
-A to tworzy security risk, wiec to wymaga dotakowych procesów do kontroli i nadzoru. To wymaga dotatkowych narzędzi...
-
-•	oraz – co najważniejsze – sposób monitorowania systemu i jego skalowania
-
-Musisz się zastanowić jak poprawnie monitorować system, aby wiedziec, ze działa i skaluje się jak nalezy.
-A to wymaga zrozumienie biznesu, tego, jak uzytkownicy korzystaja z twojej aplikacji czy API. 
-Znowu, event driven architektura wymaga zrozumienia!
+**Świadectwem prawdziwego zrozumienia jest zawsze prostota - [KISS](https://en.wikipedia.org/wiki/KISS_principle)!**
 
 
-**4) Event to nie request!**
+**2) Event-driven architektura jest trune (i łatwo to niedocenić)!**
 
-Znowu, *event* nie obrazuje request HTTP czy GRPC. 
-Jesli musisz tylko zapewnic, ze zaden request nie zginie i bedzie przetworzony, to pewnie - wpychaj wszystko do kolejki i przetwarzaj.
-Ale zostaw rzeczy związane z *eventami* i skup sie na tym, czego naprawde potrzebujesz.
+Event-driven architecture wygląda dobrze na diagramach.
+W praktyce jest złożona operacyjnie i mentalnie.
 
-tem wpada w pętle lub generuje nadmiarowe eventy. Dzięki temu można wcześniej zoptymalizować topologię kolejek i strategie skalowania.
+Warto zadać sobie kilka pytań:
 
+•	Czy naprawdę potrzebuję event sourcingu?
+
+•	Czy CQRS coś mi daje tu i teraz?
+
+•	Czy prostsze rozwiązanie nie rozwiąże 80% problemu?
+
+Bo każda decyzja architektoniczna to kompromis: **upraszczasz jedno — komplikujesz coś innego**.
+
+Jeśli już wchodzisz w event-driven — rób to iteracyjnie: `mała zmiana → produkcja → obserwacja → wnioski → kolejna zmiana`.
+
+**3) To nie tylko architektura — to sposób pracy**
+
+Decyzja o event-driven zmienia znacznie więcej niż tylko przepływ danych.
+
+Wpływa bezpośrednio na:
+
+---
+
+• kod
+
+Więcej wzorców, więcej boilerplate’u, więcej repozytoriów.
+Pojawia się warstwa „common”, zależności między serwisami rosną.
+Zmiana jednego elementu często oznacza dotknięcie wielu miejsc.
+
+---
+
+• debugowanie (czyli prawdziwy ból)
+
+Debugowanie systemów event-driven potrafi być naprawdę trudne.
+
+•	dużo skakania po kodzie
+
+•	logika rozproszona w wielu miejscach
+
+•	trudność w odtworzeniu scenariuszy
+
+•	potencjalne race conditions
+
+Z życia: pracowałem w FinTechu obsługującym miliony transakcji dziennie.
+I mimo doświadczenia zespołu, debugowanie przypadków produkcyjnych zawsze oznaczało:
+szukanie, przypominanie sobie przepływów i składanie historii z kawałków.
+
+---
+
+• narzędzia i operacje
+
+Co robisz, gdy proces utknie w połowie?
+
+•	restartujesz?
+
+•	dorzucasz event ręcznie?
+
+•	dajesz devom dostęp do produkcji?
+
+To szybko prowadzi do:
+
+•	problemów bezpieczeństwa
+
+•	potrzeby dodatkowych narzędzi
+
+•	dodatkowych procesów kontrolnych
+
+Event-driven wymaga świadomego podejścia do operacji, nie tylko kodu.
+
+---
+
+• monitoring i skalowanie
+
+Tu wracamy do głównego tematu artykułu.
+
+Nie wystarczy patrzeć na:
+
+•	CPU
+
+•	latency
+
+•	lag
+
+Musisz rozumieć:
+
+•	jak eventy przepływają przez system
+
+•	co generuje co
+
+•	gdzie powstają pętle
+
+Bez tego bardzo łatwo przeoczyć:
+
+•	feedback loops
+
+•	event amplification
+
+•	ukryte zależności między kolejkami
+
+**4) Event to nie request**
+
+To jeden z najczęstszych błędów.
+
+Jeśli Twoim celem jest: „żeby request się nie zgubił”
+
+to:
+
+•	wrzuć go do kolejki
+
+•	przetwórz asynchronicznie
+
+•	gotowe
+
+Ale to nie jest event-driven architecture.
+
+Event:
+
+•	reprezentuje zmianę stanu w systemie
+
+•	jest częścią procesu biznesowego
+
+•	niesie znaczenie domenowe
+
+Jeśli tego nie potrzebujesz — nie komplikuj.
 
 ## Podsumowanie
-
