@@ -290,3 +290,25 @@ Event:
 Jeśli tego nie potrzebujesz — nie komplikuj.
 
 ## Podsumowanie
+
+Problemy takie jak *feedback loops* czy *event amplification* nie wynikają z „błędnej konfiguracji”.
+
+One wynikają z:
+
+•	zbyt wczesnych decyzji
+
+•	braku zrozumienia przepływu eventów
+
+•	niedoszacowania złożoności systemu
+
+Event-driven to potężne narzędzie.
+
+Ale tylko wtedy, gdy:
+
+•	jest użyte świadomie
+
+•	w odpowiednim momencie
+
+•	i z pełnym zrozumieniem konsekwencji
+
+W przeciwnym razie system zaczyna… żyć własnym życiem.
