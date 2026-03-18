@@ -187,7 +187,7 @@ Wpływa bezpośrednio na:
 
 ---
 
-• kod
+**a) kod**
 
 Więcej wzorców, więcej boilerplate’u, więcej repozytoriów.
 Pojawia się warstwa „common”, zależności między serwisami rosną.
@@ -195,7 +195,7 @@ Zmiana jednego elementu często oznacza dotknięcie wielu miejsc.
 
 ---
 
-• debugowanie (czyli prawdziwy ból)
+**b) debugowanie (czyli prawdziwy ból)**
 
 Debugowanie systemów event-driven potrafi być naprawdę trudne.
 
@@ -213,7 +213,7 @@ szukanie, przypominanie sobie przepływów i składanie historii z kawałków.
 
 ---
 
-• narzędzia i operacje
+**c) narzędzia i operacje**
 
 Co robisz, gdy proces utknie w połowie?
 
@@ -235,7 +235,7 @@ Event-driven wymaga świadomego podejścia do operacji, nie tylko kodu.
 
 ---
 
-• monitoring i skalowanie
+**d) monitoring i skalowanie**
 
 Tu wracamy do głównego tematu artykułu.
 
@@ -262,6 +262,8 @@ Bez tego bardzo łatwo przeoczyć:
 •	event amplification
 
 •	ukryte zależności między kolejkami
+
+--- 
 
 **4) Event to nie request**
 
