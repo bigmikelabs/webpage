@@ -88,6 +88,10 @@ Podczas analizy odkryłem, że niektóre eventy w kolejce generowały kolejne ev
 
 •	UserOrderPaymentDoneEvent
 
+•   UserOrderWaitingForCollection
+
+•   ... dobre 10 innych eventów związanych z obsługą procesu biznesowego
+
 Nie dziwi fakt, że wszystkie te eventy trafiały do tej samej kolejki — były związane z tą samą domeną.
 
 Efekt był taki, że im bardziej system się skalował, tym więcej eventów przetwarzał, co uruchamiało kolejne transakcje biznesowe i generowało jeszcze więcej eventów. 
@@ -107,24 +111,100 @@ Analiza mojego przypadku ujawniła klasyczny *feedback loop*, ale to tylko jeden
 
 Rozpoznanie tych mechanizmów jest kluczowe dla prawidłowego autoskalowania i monitorowania systemu. 
 
-## Lessons Learned: Jak unikać problemów z feedback loops
+## Wnioski - jak unikać problemów w event-driven architecture?
 
-Doświadczenie z mojej analizy pokazało, że nie zawsze większe zasoby lub agresywne autoskalowanie rozwiążą problem. 
-Kluczowe jest zrozumienie, co w ogóle trafia do kolejki i jak eventy wpływają na siebie nawzajem. Oto kilka lekcji, które warto mieć na uwadze:
-	
-1.	Świadomie projektuj topologię kolejek
-Jedna kolejka dla wszystkich eventów wygląda prosto i elegancko, ale w praktyce może wpaść w pułapkę feedback loop. Rozdzielanie eventów na kolejki wg domeny lub typów eventów pozwala lepiej kontrolować skalowanie i obciążenie. Dzięki temu auto-skalowanie reaguje na rzeczywiste potrzeby, a nie na echo generowane przez inne eventy.
+No, tak - mozna powiedziec -, problem w tym, ze wszystko trafia do tej samej kolejki!
+W moim projekcie to by sie nie stalo, bo my mamy oddzielna kolejke pod kazdy typ requestu/eventu - case closed, next!. 
+Nie do końca. Mam wrazenie, ze problem twki duzo głębiej. 
 
-2.	Identyfikuj event amplification
-Jeśli jedno zdarzenie może wyzwalać kilka kolejnych, warto rozważyć ograniczenia lub dedykowane mechanizmy kontroli. Na przykład: batchowanie generowanych eventów, agregacja lub wprowadzenie throttlingu. Dzięki temu unikniesz lawiny eventów, która może „zalewać” system w godzinach szczytu.
+Mianowicie kazdy projekt w mojej karierze, w którym był uzyta event-driven architektura (w tej formie lub innej), borykał się z jakimiś problemami. 
+Nigdzie nie było to wprowadzone dobrze od początku do końca. I zdecydowana większość tych projektów nie korzystała z zalet płynących z tego podejścia.
 
-3.	Zwracaj uwagę na zależności kolejki od własnego stanu (queue self-dependency)
-Eventy, które trafiają z powrotem do tej samej kolejki lub powiązanej kolejki, mogą prowadzić do sytuacji, w której backlog utrzymuje się nawet przy dostępnych zasobach. W takich przypadkach warto przemyśleć mechanizm priorytetyzacji eventów lub wprowadzić separację krytycznych i mniej istotnych zdarzeń.
+W praktyce oznacza to parę rzeczy.
 
-4.	Monitoruj nie tylko liczby, ale też przepływy
-Metryki typu lag czy długość kolejki to za mało. Obserwuj też połączenia między eventami: które eventy wyzwalają kolejne i w jakim tempie. Wizualizacja przepływu eventów pomaga wychwycić potencjalne feedback loops i zapobiec problemom zanim staną się krytyczne.
+Można powiedzieć: „problem w tym, że wszystko trafiało do jednej kolejki”.
+I ktoś mógłby odpowiedzieć: „u mnie tak nie będzie — mamy osobną kolejkę na każdy typ eventu, case closed”.
 
-5.	Testuj scenariusze „co jeśli” w kontrolowanym środowisku
-Symulacja zwiększonego ruchu lub wprowadzenie testowych eventów pozwala zobaczyć, czy system wpada w pętle lub generuje nadmiarowe eventy. Dzięki temu można wcześniej zoptymalizować topologię kolejek i strategie skalowania.
+Niestety — nie do końca.
 
+Mam wrażenie, że problem leży dużo głębiej.
+
+W praktyce niemal każdy projekt, w którym pracowałem i który wykorzystywał podejście event-driven, borykał się z różnymi problemami.
+Co więcej — rzadko który faktycznie w pełni korzystał z jego zalet.
+
+Z tego doświadczenia wynika kilka ważnych wniosków.
+
+**1) Event-driven nie lubi być wprowadzany zbyt wcześnie.**
+
+Mam wrazenie, ze zbyt chetnie wskakuje sie w popularne trendy bez analizowania, co tak naprawdę potrzebuję - co wchodzi w skład *MVP* (Minimum Viable Product), czyli absolutnego **minimum** potrzebnego do
+realizowania zadan biznesowych na produkcji. 
+
+Rozpoczynamy projekt? Ok, lecimy z mikroserwisami! Jakby uzycie monolitu w poczatkowej fazie godzilo w naszą mądrość, czy poczucie wartości.
+
+Trzeba sobie uzmysłowić, ze *event* to nie request, czy dowolne zdarzenie po stronie serwera, czy uzytkownika. 
+*Event* budują reprezentację modelu biznesowego, procesów w nich zachodzących i stanów, w jakich poszczególne byty i procesy mogą się znajdować. 
+A zeby zrozumiec procesy biznesowe, potrzeba czasu! Jako programiści mało wiemy o problemach pochodzących z innych domen zycia i biznesu.
+Dlatego dajmy sobie czas na zrozumienie i wejscie w ten inny swiat, nim zaczniemy go modelować za pomocą *eventów*.
+Zwłaszcza w dobie, gdzie biznes i wymagania potrafia zmienic sie z dnia na dzień.
+
+**A świadectwem prawdziwego zrozumienia jest zawsze prostota - [KISS](https://en.wikipedia.org/wiki/KISS_principle)!**
+
+**2) Event-driven architektura jest skomplikowana!**
+
+Architektura *event driven* wymaga duzego doswiadzenia - bardzo duzego doswiadczenia!
+Przemyśl dobrze, czy naprawdę potrzebujesz danego podejścia, aby rozwiązac swój problem.
+Moze nie potrzebujesz *event sourcingu*? Moze samo *CQRS* starczy? Moze sa inne rozwiazania, które pomogą osiągnąć podobny efekt? 
+A przede wszystkim pomyśl o tym, co moze pójść nie tak, gdy wejdziesz w tą uliczkę.
+
+**Kazda technologia, czy rozwiazanie jest pewnym kompromisem - usprawniamy jedno, komplikujemy inne.**
+Dlatego warto się zastanowić, czy naprawde warto. 
+A jesli idziesz juz ta droge, rob to powoli - `mala zmiana -> produkcja -> obserwacja -> wnioski i dalsze usprawnienia`.
+
+**3) Event-driven podejście to nie tylko architektura**
+
+Jeśli juz decydujemy się na `event-driven` architektura, pamiętajmy, ze nie podejmujemy tylko decyzji odnośnie architektury. 
+
+To zestaw decyzji, które bezpośrednio wpływają na:
+
+•	sposób pracy z kodem
+
+Event driven wymaga odpowiednich wzorców projektowych, to powoduje sporo boilerplatu w kodzie. 
+Repozytoria z kodem zaczynają się mnozyć, powstaje część wspólna (*common*), to później komplikuje zarządzanie zaleznościami...
+Jesli chcemy coś zmienić musimy pamiętać o wszysktich miejscach, które musimy dotknąć.
+A na tym się nie kończy...
+
+•	**debugowanie i analizowania przypadków z produkcji**
+
+Nie ma nic gorszego od debugowania eventów. Serio! Zwłaszcza, gdy próbujemy rozkminić jakiś przypadek z produkcji! 
+Procesy biznesowe ubrane w *eventy* i kod z nim związany robi się naprawdę skomplikowany - duzo skakania między klasami, troche logiki tu, troche tam, 
+potencjalne race conditions, cięzej cos zasymulowac i ogólnie ogarnąć całość!
+
+Mała anegdotka: pracowałem kiedyś dla FinTech. Obsługiwaliśmy miliony transakcji dziennie. 
+I mimo wszystko, kazdy z programistow (nawet paruletnim stazem w firmie), nie był wstanie szybko i bezblednie znalezc rzeczy w kodzie.
+Debugowanie zawsze wiązało się ze skakaniem, szukaniem, przypominaniem sobie, gdzie coś było. 
+A to tylko wierzchołek góry lodowej!
+
+•	narzędzia, których będziesz potrzebować
+
+I nie chodzi tu tylko o narzędzia do minotorowania, czy deploymentu. Co zrobisz na produkcji, kiedy twój proces utknie w połowie? Jak go wznowisz?
+To oznacza, ze pozwolisz deweloperom na dostęp do produkcji, aby mogli cos recznie wrzucic kolejke, aby odblokować proces.
+A to tworzy security risk, wiec to wymaga dotakowych procesów do kontroli i nadzoru. To wymaga dotatkowych narzędzi...
+
+•	oraz – co najważniejsze – sposób monitorowania systemu i jego skalowania
+
+Musisz się zastanowić jak poprawnie monitorować system, aby wiedziec, ze działa i skaluje się jak nalezy.
+A to wymaga zrozumienie biznesu, tego, jak uzytkownicy korzystaja z twojej aplikacji czy API. 
+Znowu, event driven architektura wymaga zrozumienia!
+
+
+**4) Event to nie request!**
+
+Znowu, *event* nie obrazuje request HTTP czy GRPC. 
+Jesli musisz tylko zapewnic, ze zaden request nie zginie i bedzie przetworzony, to pewnie - wpychaj wszystko do kolejki i przetwarzaj.
+Ale zostaw rzeczy związane z *eventami* i skup sie na tym, czego naprawde potrzebujesz.
+
+tem wpada w pętle lub generuje nadmiarowe eventy. Dzięki temu można wcześniej zoptymalizować topologię kolejek i strategie skalowania.
+
+
+## Podsumowanie
 
