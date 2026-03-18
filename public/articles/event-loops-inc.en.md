@@ -1,393 +1,302 @@
+## Introduction
 
-W moim przypadku 
+Event-driven architecture is incredibly popular these days. Questions about CQRS or event sourcing show up in almost every interview, and many teams jump on the bandwagon right at the start of a project—often before they truly understand the business domain.
 
+Building anything payments-related? *Event sourcing* sounds like the obvious choice.
 
-Nic więc dziwnego, ze niedawno na produkcji 
+Want resilience? *CQRS*.
 
-I wszystko wygląda pięknie w teorii na papierze, az nagle na produkcji widzisz, jak lag w jednej z kolejek rosnie i utrzymuje się przez dluzszą chwile.
-Ruch spada, a lag dalej nie maleje. System wydaje się działać okay, dostępy do baz i cache'u sa szybkie (5-10ms), przetwarzanie pojedynczej wiadomosci w kolejce zajmuje 100ms, a lag dalej nie maleje.
-I 
+Add *DDD* (domain-driven design) and you’ve got a “modern architecture”.
 
-Osobiście nie mam przeciwko 
-Problem w tym, że event-driven to nie tylko zestaw wzorców, który pozwalają rozwiązać pewne problemy (stwarzając inne).
+Sounds great. On paper, everything checks out.
 
-To zestaw decyzji, które bezpośrednio wpływają na:
+---
 
-•	sposób pracy z kodem,
+The problems start later—on production.
 
-•	debugowanie i wsparcie produkcji,
+Recently I ran into an interesting case that kept triggering alarms during peak hours.
 
-•	narzędzia, których będziesz potrzebować,
+It involved one of the queues in an event-driven system.
 
-•	oraz – co najważniejsze – sposób skalowania i monitorowania systemu.
+The alert was simple: **the number of messages in the queue (lag) is growing and the system can’t keep up with processing**.
+At first glance—a classic issue.
 
+Except:
 
-## Podstawy - kolejki to nie tylko warstwa transportowa 
+- lag-based autoscaling was hitting its limits… and it changed nothing
 
-W sieci jest mnóstwo dokumentacji na temat [event-driven architektury](https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/event-driven) czy
-[event sourcingu](https://learn.microsoft.com/en-us/azure/architecture/patterns/event-sourcing).
-W większości materiałów kolejki przedstawiane są jako prosty mechanizm: **producent → kolejka → konsument**.
-W praktyce to uproszczenie jest bardzo mylące.
+- raising limits didn’t help either
 
-Topologia kolejki nie tylko transportuje dane — ona definiuje:
+- infrastructure metrics looked healthy:
 
-•	jak system się skaluje,
+- database: ~10 ms (p99)
 
-•	co jesteś w stanie zaobserwować,
+- cache: ~5 ms (p99)
 
-•	jak reaguje na przeciążenia,
+- processing a single message: ~50 ms (p99)
 
-•	i jak wygląda jego operacyjne utrzymanie.
+---
 
+So everything was working “as designed”.
+And yet the system still couldn’t catch up.
 
-Zanim jednak przejdziemy do szczegółów, warto ustalić kilka faktów, abyśmy mieli wspólny obraz sytuacji. Oczywiste oczywistości, ale…
+The natural question: if every component is behaving correctly, why doesn’t the whole thing scale and behave the way it should?
+The answer wasn’t in the infrastructure or the system parameters.
 
-### Typowe podejścia do topologii kolejek
+We had to dig deeper.
 
-| Podejście | Główne zalety | Główne ograniczenia |
-|----------|---------------|---------------------|
-| **Jedna kolejka (single stream)** | Prosta architektura, łatwy replay, mniej infrastruktury | Brak kontroli nad typami pracy, mieszanie priorytetów, trudniejsze skalowanie i monitoring |
-| **Kolejka na domenę** | Izolacja domenowa, lepsza obserwowalność, sensowne skalowanie | Więcej komponentów, większy narzut operacyjny |
-| **Kolejka na typ eventu/requestu** | Precyzyjne skalowanie, niezależność konsumentów, czyste kontrakty | Eksplozja liczby kolejek, potrzeba governance, większa złożoność |
+## Problem description
 
-### Wpływ topologii kolejki na system
+In practice, the issue looks like this on the queue/lag chart:
 
-| Podejście | Skalowalność | Monitoring | Priorytety / SLA | Złożoność operacyjna |
-|----------|--------------|------------|------------------|----------------------|
-| **Jedna kolejka (single stream)** | Skalowanie na podstawie całego ruchu – brak kontroli nad typami pracy | Zagregowane metryki, trudne rozróżnienie problemów | Trudne do egzekwowania – wszystkie eventy konkurują o zasoby | Niska na start, rośnie wraz ze skalą systemu |
-| **Kolejka na domenę** | Skalowanie per domena – lepsza kontrola nad obciążeniem | Czytelniejsze metryki na poziomie domen | Możliwe częściowe rozdzielenie priorytetów | Średnia – więcej komponentów do utrzymania |
-| **Kolejka na typ eventu/requestu** | Bardzo precyzyjne skalowanie – pełna kontrola nad workloadem | Bardzo dobra obserwowalność per typ eventu | Naturalne wsparcie dla różnych SLA i priorytetów | Wysoka – wymaga governance i zarządzania |
+<figure>
+<img src="/images/event-loops-inc/feedback-loop.jpg" alt="Event queue with feedback loop" />
+<figcaption>Chart 1: An example queue chart showing growing lag caused by a feedback loop in an event-driven system.</figcaption>
+</figure>
 
-Większość systemów *event-driven* traktuje kolejki jak proste streamy: producent → kolejka → konsument.
-W praktyce jednak topologia kolejki ma duży wpływ na działanie całego systemu. Decyzje te przekładają się na skalowanie, monitoring, stabilność i koszty operacyjne. Projekt kolejki to więc nie drobny szczegół implementacyjny, ale ważna decyzja architektoniczna.
+We can distinguish three characteristic phases:
 
-Typowe podejścia do kolejek to:
+1. Spike
 
-1. **Jedna kolejka dla wszystkich eventów**
+This is the moment when traffic ramps up and the volume of events “floods” the system, which can’t process them in real time.
+At this stage, autoscaling starts to kick in, but it still can’t keep up.
 
-Przykładowe eventy:
+2. Saturation
 
-•	user_created
+The phase where the system appears to stabilize—the number of events in the queue stops growing rapidly. On a chart this can look almost like a flat line.
+It can suggest that roughly as many events “enter” the queue as “leave” it.
+In this phase, autoscaling is already fully active and should start reducing lag. In practice, however, the equilibrium often persists longer than you’d expect.
+In my case, I noticed this trend could continue even after peak hours were over.
 
-•	order_paid
+3. Back to operational
 
-•	invoice_sent
+In the final phase, the system finally “unblocks” and starts catching up—events are processed faster and lag gradually decreases.
 
-Zalety:
+## Root cause analysis
 
-•	prosta architektura
+To understand why autoscaling wasn’t working as expected, I had to take a closer look at the system logic and the code handling events.
 
-•	łatwe odtwarzanie zdarzeń
+During the analysis I discovered that some events in the queue were producing more events, which ended up back in the same queue or in related queues. In my case, the events reflected a state machine for a business process. Example events were defined like this:
 
-•	dobrze sprawdza się w pipeline’ach typu [CDC, tj. change-data-capture](https://learn.microsoft.com/en-us/sql/relational-databases/track-changes/about-change-data-capture-sql-server?view=sql-server-ver17)
+- UserOrderRaisedEvent
 
-Wady:
+- UserOrderAcceptedEvent
 
-•	mieszane obciążenia w jednej kolejce
+- UserOrderWaitingForPaymentEvent
 
-•	trudniejszy monitoring
+- UserOrderPaymentDoneEvent
 
-•	trudniejsze autoskalowanie
+- UserOrderWaitingForCollectionEvent
 
-2. **Kolejka na domenę**
+- ...plus a good 10 other events related to the business process
 
-Przykład:
+It’s not surprising that all of these events went to the same queue—they were part of the same domain.
 
-  •	user-events
+The end result was that the more the system scaled, the more events it processed, which triggered more business transactions and generated even more events.
+A FIFO queue could additionally increase the end-to-end time of a single business transaction, because we first had to handle earlier events (UserOrderRaisedEvent) before reaching later stages (UserOrderAcceptedEvent).
 
-  •	order-events
+This phenomenon could lead to an *SLA* (service level agreement) violation. In my case the SLA wasn’t broken, which unfortunately prolonged the investigation—an alert about an overly long business transaction would have pointed me to the core of the problem much faster.
 
-  •	payment-events
+## Hidden mechanisms in event-driven systems
 
-Zalety:
+The analysis of my case revealed a classic *feedback loop*, but it’s only one of many issues that can hide in event-based systems. It’s worth knowing other mechanisms that can affect scaling and stability:
 
-•	izolacja domenowa
+- Feedback loops – events generate more events in the same queue or related queues, sustaining lag and load.
 
-•	łatwiejsze skalowanie
+- Event amplification – a single event triggers an avalanche of subsequent events, leading to a disproportionate increase in load.
 
-•	czytelniejsza obserwowalność
+- Queue self-dependency – dependencies on the queue’s own state cause backlog to persist despite added resources.
 
-Wady:
+Recognizing these mechanisms is key to proper autoscaling and monitoring.
 
-•	więcej infrastruktury
+## Takeaways – how to avoid problems in event-driven architecture?
 
-•	większy narzut operacyjny
+You could say: “the problem was that everything went to one queue”.
+And someone might respond: “that won’t happen to me—we have a separate queue per event type, case closed”.
 
-3. **Kolejka na typ eventu**
+Unfortunately—not quite.
 
-Przykład:
+My impression is the problem runs much deeper.
 
-•	user_created
+In practice, almost every project I’ve worked on that used an event-driven approach struggled with various issues.
+What’s more—few of them truly leveraged its benefits to the fullest.
 
-•	order_paid
+From that experience, a few important takeaways emerge.
 
-•	invoice_sent
+**1) Event-driven doesn’t like being introduced too early.**
 
-Zalety:
+Too often we jump into trendy solutions before we truly understand what we need.
 
-•	czyste kontrakty między producentem a konsumentem
+Project start? Let’s do microservices.
+Payments? Event sourcing.
+Resilience? CQRS.
 
-•	niezależność konsumentów
+But…
 
-•	precyzyjne skalowanie
+an event is not a request.
 
-Wady:
+Events model business processes and their states.
+And you can’t design those correctly without understanding the domain.
 
-•	szybka eksplozja tematów (topic explosion)
+And understanding the domain:
 
-•	bardziej złożone zarządzanie
+- takes time
 
-## Autoskalowanie
+- takes mistakes
 
-W wielu systemach liczba konsumentów jest skalowana dynamicznie w oparciu o takie wskaźniki, jak:
+- takes iteration
 
-• długość kolejki
+That’s why a simpler approach is often the better choice at the start.
 
-• lag, tj. opóźnienia w przetwarzaniu zdarzeń czy zaległy backlog. 
+**True understanding always shows up as simplicity – [KISS](https://en.wikipedia.org/wiki/KISS_principle)!**
 
-Na pierwszy rzut oka wydaje się to proste – im więcej zdarzeń w kolejce, tym więcej zasobów należy uruchomić. Problem pojawia się jednak, gdy w jednej kolejce mieszają się różne typy zdarzeń o bardzo różnym charakterze i wymaganiach. 
+**2) Event-driven architecture is hard (and it’s easy to underestimate)!**
 
-Wyobraźmy sobie kolejkę, w której 90% ruchu to eventy analityczne, a tylko 10% to powiadomienia e-mail. Autoscaler, obserwując rosnącą długość kolejki, może zwiększyć liczbę workerów obsługujących e-maile, mimo że problem stanowi w rzeczywistości obciążenie generowane przez eventy analityczne. W efekcie zasoby są przydzielane nieefektywnie, a poszczególne typy zdarzeń nie otrzymują optymalnej obsługi.
+Event-driven architecture looks great on diagrams.
+In practice, it’s operationally and mentally complex.
 
-Dodatkowo kazdy event moze miec rozny piorytet. Eventy o wypadkach powinny byc dostarczana jak najszybciej (np. do 5 sekund), ale powiadomienia e-mail mogą być wysłane nawet w przeciagu paru godzin.
+It’s worth asking yourself a few questions:
 
-Wniosek jest prosty, ale istotny: mieszane obciążenia w jednej kolejce mogą „złamać” logikę autoskalowania i znacząco wpłynąć na wydajność systemu. 
+- Do I really need event sourcing?
 
-## Koszty operacyjne
+- Does CQRS give me anything here and now?
 
-Topologia kolejki ma realny wpływ na wydatki i wysiłek związany z utrzymaniem systemu. Jedna kolejka dla wszystkich zdarzeń może wydawać się prostym i tanim rozwiązaniem – w końcu mniej komponentów to mniej konfiguracji. W praktyce jednak mieszane obciążenia potrafią „zepsuć” ekonomię: intensywny ruch jednego typu zdarzeń wymusza skalowanie konsumentów dla całej kolejki, nawet jeśli inne typy zadań potrzebują ich minimalnie. Efekt? Płacimy za moc obliczeniową, której tak naprawdę nie potrzebujemy.
+- Would a simpler solution solve 80% of the problem?
 
-Oddzielne kolejki dla domen czy typów eventów pozwalają przypisać zasoby precyzyjnie tam, gdzie są potrzebne. Każda kolejka skaluje się niezależnie, konsumenci uruchamiani są tylko tam, gdzie faktycznie wykonują pracę. To nie tylko ogranicza koszty, ale też upraszcza monitorowanie i utrzymanie – widać dokładnie, który typ zdarzeń generuje obciążenie, a który nie.
+Because every architectural decision is a trade-off: **you simplify one thing—you complicate something else**.
 
-## Monitoring
+If you go event-driven, do it iteratively: `small change → production → observe → learn → next change`.
 
-Topologia kolejki ma też ogromny wpływ na to, jak widzimy i kontrolujemy system. Gdy wszystkie zdarzenia trafiają do jednej kolejki, łatwo przegapić sygnały, które są istotne dla poszczególnych typów eventów. Mieszane obciążenia sprawiają, że metryki stają się „zagregowane” i mniej czytelne – trudno odróżnić, czy opóźnienia wynikają z przetwarzania zdarzeń analitycznych, czy z problemów z wysyłką powiadomień e-mail.
+**3) It’s not just architecture—it’s a way of working**
 
-W przypadku kolejki przypisanej do konkretnej domeny lub typu zdarzenia, monitorowanie staje się znacznie prostsze i bardziej precyzyjne. Możemy łatwo wyłapać opóźnienia, wąskie gardła lub błędy specyficzne dla danego rodzaju eventów, a alerty trafiają do osób, które faktycznie są odpowiedzialne za dany obszar. Dzięki temu obserwowalność systemu rośnie, a operacje stają się bardziej przewidywalne i bezpieczne.
+Choosing event-driven changes far more than data flow.
 
-W praktyce oznacza to, że decyzja o strukturze kolejki nie jest tylko kwestią architektoniczną – decyduje też o tym, jak łatwo utrzymamy system i jak szybko zareagujemy na problemy.
+It directly affects:
 
+---
 
-## Wstęp 
+**a) code**
 
-Event-driven architecture jest bardzo popularna. Pytanie o CQRS albo event-sourcing jest niemal bankowe na większości rozmów o pracę. 
-Wiele projektów ochoczo wskakuje w ten nurt od samego początku istnienia. 
-Masz coś związanego z płatnościami? To event sourcing jest niezbędny! 
-Musisz zapewnić, ze requesty będą przetworzone niezaleznie od awarii? Jedziemy z CQRS! 
+More patterns, more boilerplate, more repositories.
+A “common” layer appears, dependencies between services grow.
+Changing one element often means touching many places.
 
+---
 
+**b) debugging (the real pain)**
 
+Debugging event-driven systems can be genuinely hard.
 
-Problem polega na tym, ze eventy i wszystko, co z nimi związane to nie tylko decyzja architektoniczna. 
+- lots of jumping around the codebase
 
-Problemem jest tutaj 
+- logic scattered across many places
 
-Projekty wdrazają owe podejście od samego początku.
+- difficulty reproducing scenarios
 
+- potential race conditions
 
+From experience: I worked in a FinTech processing millions of transactions per day.
+Even with a seasoned team, debugging production cases always meant digging, recalling flows, and reconstructing the story from fragments.
 
-## Materialy / brudnopis (nie zmieniaj!)
-One Queue or Many? The Hidden Operational Costs of Event Topology
+---
 
-Title
-One Queue or Many? The Hidden Operational Costs of Event Topology
+**c) tools and operations**
 
+What do you do when a process gets stuck halfway through?
 
-1. Introduction – Queues Are Not Just Transport
+- restart it?
 
-Most event-driven systems treat queues as simple pipes:
-producer → queue → consumer.
+- manually inject an event?
 
-In practice, queue topology influences:
-- autoscaling
-- monitoring and observability
-- system stability
-- operational costs
+- give developers production access?
 
-Queue design is therefore an architectural decision, not just an implementation detail.
+That quickly leads to:
 
+- security issues
 
-2. Common Event Queue Topologies
+- a need for additional tooling
 
-2.1 Single Queue (All Events in One Stream)
+- extra control processes
 
-events
-  - user_created
-  - order_paid
-  - invoice_sent
+Event-driven requires an intentional operations approach—not just code.
 
-Pros:
-- simple architecture
-- easy replay
-- good fit for CDC pipelines
+---
 
-Cons:
-- mixed workloads
-- harder monitoring
-- difficult autoscaling
+**d) monitoring and scaling**
 
+This brings us back to the main topic of the article.
 
-2.2 Queue Per Domain
+It’s not enough to look at:
 
-user-events
-order-events
-payment-events
+- CPU
 
-Pros:
-- domain isolation
-- easier scaling
-- clearer observability
+- latency
 
-Cons:
-- more infrastructure
-- more operational overhead
+- lag
 
+You have to understand:
 
-2.3 Queue Per Event Type
+- how events flow through the system
 
-user_created
-order_paid
-invoice_sent
+- what triggers what
 
-Pros:
-- clean contracts
-- consumer independence
-- precise scaling
+- where loops can form
 
-Cons:
-- topic explosion
-- governance complexity
-
-
-3. Consequences for Autoscaling
-
-Many systems scale consumers based on:
-- queue length
-- consumer lag
-- backlog
-
-Mixed workloads in one queue can lead to inefficient scaling.
-
-Example:
-analytics events = 90%
-email events = 10%
-
-Autoscaler scales email workers because analytics traffic fills the queue.
-
-Key insight:
-Mixed workloads break autoscaling assumptions.
-
-
-4. Consequences for Monitoring and Observability
-
-Single queue:
-events backlog = 80k
-
-But what is actually happening?
-
-Multiple queues:
-analytics-events = 79k
-email-events = 1k
-
-Benefits:
-- easier debugging
-- better visibility
-- clearer operational signals
-
-
-5. Hidden Coupling Through Shared Queues
-
-Multiple services sharing one queue:
-
-service A → queue
-service B → queue
-service C → queue
-
-Traffic spike in service A may impact latency of B and C.
-
-Key insight:
-Logical isolation does not guarantee runtime isolation.
-
-
-6. Feedback Loops and Event Amplification
-
-Common pipeline pattern:
-
-queue → consumer → new event → queue
-
-If events return to the same queue, systems may produce:
+Without that, it’s easy to miss:
 
 - feedback loops
+
 - event amplification
-- event storms
 
-Consumers may unintentionally process their own events.
+- hidden dependencies between queues
 
+---
 
-7. Cost Implications
+**4) An event is not a request**
 
-Single queue:
-+ fewer topics
-+ simpler infrastructure
+This is one of the most common mistakes.
 
-But:
-- inefficient scaling
-- wasted compute resources
+If your goal is: “don’t lose the request”
 
-Multiple queues:
-+ more precise scaling
-+ better workload isolation
+then:
 
-But:
-- more infrastructure
-- higher operational complexity
+- put it on a queue
 
+- process it asynchronously
 
-8. When to Choose Each Approach
+- done
 
-Single queue works well when:
-- workloads are homogeneous
-- event volume is moderate
-- CDC pipelines are used
+But that’s not event-driven architecture.
 
-Queue per domain works well when:
-- services scale independently
-- domains are clearly separated
-- different SLAs exist
+An event:
 
-Queue per event type works well when:
-- microservices are highly decoupled
-- consumers are independent
-- workloads differ significantly
+- represents a state change in the system
 
+- is part of a business process
 
-9. Practical Design Guidelines
+- carries domain meaning
 
-Some practical rules:
+If you don’t need that—don’t complicate things.
 
-If consumers scale independently → separate queues
+## Summary
 
-If workloads are very different → separate queues
+Problems like *feedback loops* or *event amplification* don’t come from “bad configuration”.
 
-If autoscaling depends on queue length → avoid mixing workloads
+They come from:
 
-Queues are not just transport.
-They shape the operational behavior of your system.
+- making decisions too early
 
+- not understanding event flows
 
-10. Conclusion
+- underestimating system complexity
 
-Event queue topology directly affects:
+Event-driven is a powerful tool.
+But only when:
 
-- scaling behavior
-- monitoring quality
-- failure modes
-- operational cost
+- used deliberately
 
-Choosing the right topology is an architectural decision that should be made deliberately, not by default.
+- at the right time
 
+- with full awareness of the consequences
 
-To zjawisko można opisać jako:
-	•	feedback loops
-	•	event amplification
-	•	queue self-dependency
+Otherwise, the system starts to… live its own life.
