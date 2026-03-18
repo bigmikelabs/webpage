@@ -65,6 +65,8 @@
     "viewAll": "View All Articles",
     "readMore": "Read more",
     "backToArticles": "Back to Articles",
+    "supportTitle": "Support",
+    "supportDescription": "If you like this article, you can support my work on Patronite.",
     "notFound": "Article Not Found",
     "notFoundDescription": "The article you're looking for doesn't exist or has been removed.",
     "emptyState": "No articles available yet. Check back soon!",
