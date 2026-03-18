@@ -113,15 +113,6 @@ Rozpoznanie tych mechanizmów jest kluczowe dla prawidłowego autoskalowania i m
 
 ## Wnioski - jak unikać problemów w event-driven architecture?
 
-No, tak - mozna powiedziec -, problem w tym, ze wszystko trafia do tej samej kolejki!
-W moim projekcie to by sie nie stalo, bo my mamy oddzielna kolejke pod kazdy typ requestu/eventu - case closed, next!. 
-Nie do końca. Mam wrazenie, ze problem twki duzo głębiej. 
-
-Mianowicie kazdy projekt w mojej karierze, w którym był uzyta event-driven architektura (w tej formie lub innej), borykał się z jakimiś problemami. 
-Nigdzie nie było to wprowadzone dobrze od początku do końca. I zdecydowana większość tych projektów nie korzystała z zalet płynących z tego podejścia.
-
-W praktyce oznacza to parę rzeczy.
-
 Można powiedzieć: „problem w tym, że wszystko trafiało do jednej kolejki”.
 I ktoś mógłby odpowiedzieć: „u mnie tak nie będzie — mamy osobną kolejkę na każdy typ eventu, case closed”.
 
