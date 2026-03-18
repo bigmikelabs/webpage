@@ -35,6 +35,35 @@ export interface ArticleMeta {
 // Article metadata index – add new entries here when you add a new .md file under public/articles/
 export const articles: ArticleMeta[] = [
   {
+    id: 'event-loops-inc',
+    title: {
+      en: 'Event-Driven feedback loops: the silent scalability killer',
+      pl: 'Event-Driven feedback loops: cichy zabójca skalowalności',
+    },
+    date: new Date('2026-03-16'),
+    author: 'Michał Wroński',
+    summary: {
+      en: 'Discover how hidden feedback loops in event-driven systems can silently limit scalability, and learn practical strategies to prevent them.',
+      pl: 'Dowiedz się, jak feedback loops w systemach event-driven mogą potajemnie ograniczać skalowalność i poznaj praktyczne sposoby, by im zapobiegać.',
+    },
+    tags: ['event-driven', 'cqrs', 'event-sourcing', 'post-mortem'],
+    readingDurationMinutes: 5,
+    level: 'advanced',
+    images: [
+      {
+        src: '/images/event-loops-inc/header.jpg',
+        alt: {
+          en: 'queues topology',
+          pl: 'topologia kolejek',
+        },
+        caption: {
+          en: '',
+          pl: '',
+        },
+      },
+    ],
+  },
+  {
     id: 'grpc-takes-load-to-beat-http2',
     title: {
       en: 'gRPC takes load to beat HTTP/2',
