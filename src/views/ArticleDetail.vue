@@ -101,6 +101,28 @@
           v-html="htmlContent"
         />
 
+        <!-- Support / Patronite -->
+        <section v-if="htmlContent" class="mt-12 pt-8 border-t border-gray-200">
+          <h2 class="text-xl font-semibold text-gray-900 mb-4">
+            {{ $t('articles.supportTitle') }}
+          </h2>
+          <p class="text-gray-600 mb-6">
+            {{ $t('articles.supportDescription') }}
+          </p>
+          <div class="flex justify-center">
+            <iframe
+              src="https://patronite.pl/widget/bigmikelabs.pl/1121265/small/light/colorful?description=Dzi%C4%99kuj%C4%99%20za%20Twoje%20wsparcie!"
+              width="360"
+              height="330"
+              frameborder="0"
+              scrolling="no"
+              loading="lazy"
+              title="Patronite"
+              class="w-full max-w-[360px]"
+            ></iframe>
+          </div>
+        </section>
+
         <!-- Back to Articles Link -->
         <div class="mt-12 pt-8 border-t border-gray-200">
           <router-link

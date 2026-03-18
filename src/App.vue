@@ -89,10 +89,10 @@
             </div>
 
             <button
-              @click="navigateToStartIT"
+              @click="openPatronite"
               class="bg-primary-400 text-slate-900 px-6 py-2 rounded-lg font-medium hover:bg-primary-500 transition-colors"
             >
-              {{ $t('nav.getStarted') }}
+              {{ $t('nav.supportMyWork') }}
             </button>
           </div>
           <button class="md:hidden p-2" @click="mobileMenuOpen = !mobileMenuOpen">
@@ -149,10 +149,10 @@
             </button>
           </div>
           <button
-            @click="navigateToStartIT"
+            @click="openPatronite"
             class="w-full mt-2 bg-primary-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-primary-700 transition-colors"
           >
-            {{ $t('nav.getStarted') }}
+            {{ $t('nav.supportMyWork') }}
           </button>
         </div>
       </div>
@@ -224,6 +224,16 @@
                 </router-link>
               </li>
               <li>
+                <a
+                  href="https://patronite.pl/bigmikelabs.pl"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="hover:text-white transition-colors"
+                >
+                  {{ $t('nav.supportMyWork') }}
+                </a>
+              </li>
+              <li>
                 <router-link
                   to="/startit"
                   class="hover:text-white transition-colors flex items-center"
@@ -288,8 +298,8 @@ const changeLanguage = (lang: string) => {
   languageMenuOpen.value = false
 }
 
-const navigateToStartIT = () => {
-  router.push('/startit')
+const openPatronite = () => {
+  window.open('https://patronite.pl/bigmikelabs.pl', '_blank', 'noopener,noreferrer')
 }
 
 // Close language menu when clicking outside
