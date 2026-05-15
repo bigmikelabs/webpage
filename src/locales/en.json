@@ -18,7 +18,7 @@
     "titleHighlight": "technology, AI and programming.",
     "subtitle": "Learn with us — practically, consciously and based on real experience.",
     "startLearning": "Start Learning Today",
-    "viewPublications": "View Publications",
+    "viewPublications": "View resources",
     "students": "500+ Students",
     "instructors": "Expert Instructors",
     "jobReady": "Job-Ready Skills",
@@ -43,26 +43,20 @@
   "publications": {
     "title": "Resources",
     "subtitle": "Start your journey with one of our mini-books.",
-    "status": {
-      "inPreparation": "In Preparation",
-      "comingSoon": "Registration Soon!",
-      "tba": "",
-      "notifyButton": "Notify me when publication is available"
-    },
     "loading": "Loading…",
-    "loadError": "Failed to load publication content.",
-    "backToHome": "Back to publications",
-    "buyPublication": "Buy publication",
+    "loadError": "Failed to load resource content.",
+    "backToHome": "Back to resources",
+    "buyPublication": "Buy",
     "lang": {
       "en": "English",
       "pl": "Polish"
     },
-    "notFound": "Publication Not Found",
-    "notFoundDescription": "The publication you're looking for doesn't exist or has been removed."
+    "notFound": "Resource Not Found",
+    "notFoundDescription": "The resource you're looking for doesn't exist or has been removed."
   },
   "articles": {
     "title": "Articles",
-    "subtitle": "Read latest news and publications",
+    "subtitle": "Read latest news and articles",
     "viewAll": "View All Articles",
     "readMore": "Read more",
     "backToArticles": "Back to Articles",

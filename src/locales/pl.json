@@ -18,7 +18,7 @@
     "titleHighlight": "technologii, AI i programowaniu.",
     "subtitle": "Ucz się z nami — praktycznie, świadomie i na bazie realnego doświadczenia.",
     "startLearning": "Rozpocznij Naukę Dziś",
-    "viewPublications": "Zobacz Publikacje",
+    "viewPublications": "Zobacz materiały",
     "students": "500+ Uczniów",
     "instructors": "Doświadczeni Instruktorzy",
     "jobReady": "Umiejętności Gotowe do Pracy",
@@ -43,22 +43,16 @@
   "publications": {
     "title": "Materiały",
     "subtitle": "Rozpocznij swoją podróż z jedną z naszych mini-książek.",
-    "status": {
-      "inPreparation": "W przygotowaniu",
-      "comingSoon": "Zapisy wkrótce!",
-      "tba": "",
-      "notifyButton": "Informuj mnie kiedy publikacja będzie dostępna"
-    },
     "loading": "Ładowanie…",
-    "loadError": "Nie udało się załadować treści publikacji.",
-    "backToHome": "Powrót do publikacji",
-    "buyPublication": "Kup publikację",
+    "loadError": "Nie udało się załadować treści materiału.",
+    "backToHome": "Powrót do materiałów",
+    "buyPublication": "Kup",
     "lang": {
       "en": "Angielski",
       "pl": "Polski"
     },
-    "notFound": "Publikacja nie znaleziona",
-    "notFoundDescription": "Publikacja, której szukasz, nie istnieje lub została usunięta."
+    "notFound": "Nie znaleziono materiału",
+    "notFoundDescription": "Materiał, którego szukasz, nie istnieje lub został usunięty."
   },
   "articles": {
     "title": "Artykuły",
