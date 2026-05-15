@@ -198,20 +198,15 @@
             </div>
           </div>
           <div>
-            <h3 class="font-semibold mb-4">{{ $t('footer.courses') }}</h3>
+            <h3 class="font-semibold mb-4">{{ $t('footer.publications') }}</h3>
             <ul class="space-y-2 text-gray-400">
-              <li>
-                <!-- <router-link
-                  to="/courses/ai-fundamentals"
+              <li v-for="pub in publications" :key="pub.id">
+                <router-link
+                  :to="`/publications/${pub.id}`"
                   class="hover:text-white transition-colors"
-                  > -->
-                {{ $t('courses.aiFundamentals.title') }}
-                <!-- </router-link -->
-              </li>
-              <li>
-                <!-- <a href="#" class="hover:text-white transition-colors"> -->
-                {{ $t('courses.codingBasics.title') }}
-                <!-- </a> -->
+                >
+                  {{ getPublicationTitle(pub) }}
+                </router-link>
               </li>
             </ul>
           </div>
@@ -282,6 +277,9 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import config from './config'
+import { publications } from './data/publications'
+import type { PublicationMeta } from './data/publications'
+import { getTranslatedText } from './utils/articleTranslations'
 
 const { locale, t } = useI18n()
 const router = useRouter()
@@ -291,6 +289,9 @@ const languageMenuOpen = ref(false)
 const languageMenu = ref<HTMLElement | null>(null)
 
 const currentLocale = computed(() => locale.value)
+
+const getPublicationTitle = (pub: PublicationMeta): string =>
+  getTranslatedText(pub.title, locale.value)
 
 const changeLanguage = (lang: string) => {
   locale.value = lang

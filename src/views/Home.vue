@@ -26,10 +26,10 @@
                 {{ $t('hero.startLearning') }}
               </button>
               <button
-                @click="scrollToElement('courses')"
+                @click="scrollToElement('publications')"
                 class="border border-gray-300 text-gray-700 px-8 py-4 rounded-lg font-semibold hover:border-primary-500 hover:text-primary-500 transition-colors"
               >
-                {{ $t('hero.viewCourses') }}
+                {{ $t('hero.viewPublications') }}
               </button>
             </div>
             <div class="mt-8 flex items-center space-x-6 text-sm text-gray-500">
@@ -148,7 +148,7 @@
     </section>
 
     <!-- Features Section -->
-    <section id="courses" class="py-16 bg-gray-50">
+    <section class="py-16 bg-gray-50">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
           <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
@@ -213,163 +213,27 @@
       </div>
     </section>
 
-    <!-- Courses Section -->
-    <section class="py-16">
+    <!-- Publications Section -->
+    <section id="publications" class="py-16">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
           <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-            {{ $t('courses.title') }}
+            {{ $t('publications.title') }}
           </h2>
           <p class="text-xl text-gray-600">
-            {{ $t('courses.subtitle') }}
+            {{ $t('publications.subtitle') }}
           </p>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-8">
-          <!-- <router-link
-            to="/courses/ai-fundamentals"
-            class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow group block"
-          > 
-            <div
-              class="h-48 bg-gradient-to-br from-primary-300 to-primary-500 flex items-center justify-center"
-            >
-              <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <div class="p-6">
-              <h3 class="text-xl font-semibold text-gray-900 mb-2">
-                {{ $t('courses.aiFundamentals.title') }}
-              </h3>
-              <p class="text-gray-600 mb-4">{{ $t('courses.aiFundamentals.description') }}</p>
-              <div class="flex items-center justify-between">
-                <span class="text-2xl font-bold text-primary-500"></span>
-                <span class="text-sm text-gray-500">{{
-                  $t('courses.aiFundamentals.duration')
-                }}</span>
-              </div>
-            </div>
-          </router-link> -->
-
-          <div
-            class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow group relative"
-          >
-            <!-- Preparation Badge -->
-            <div class="absolute top-4 right-4 z-10">
-              <span
-                class="bg-orange-100 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full"
-              >
-                {{ $t('courses.status.inPreparation') }}
-              </span>
-            </div>
-            <div
-              class="h-48 bg-gradient-to-br from-primary-300 to-primary-500 flex items-center justify-center relative"
-            >
-              <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  fill-rule="evenodd"
-                  d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-              <!-- Overlay for preparation status -->
-              <div class="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center">
-                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path
-                    fill-rule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-              </div>
-            </div>
-            <div class="p-6">
-              <h3 class="text-xl font-semibold text-gray-900 mb-2">
-                {{ $t('courses.aiFundamentals.title') }}
-              </h3>
-              <p class="text-gray-600 mb-4">{{ $t('courses.aiFundamentals.description') }}</p>
-              <div class="mb-4">
-                <p class="text-sm text-orange-600 font-medium">
-                  {{ $t('courses.status.comingSoon') }}
-                </p>
-              </div>
-              <div class="flex items-center justify-between mb-4">
-                <span class="text-2xl font-bold text-gray-400">{{ $t('courses.status.tba') }}</span>
-                <span class="text-sm text-gray-500">{{
-                  $t('courses.aiFundamentals.duration')
-                }}</span>
-              </div>
-              <button
-                class="w-full bg-primary-400 text-slate-900 px-4 py-2 rounded-lg font-medium hover:bg-primary-500 transition-colors flex items-center justify-center gap-2"
-              >
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                  <path
-                    d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"
-                  />
-                </svg>
-                {{ $t('courses.status.notifyButton') }}
-              </button>
-            </div>
-          </div>
-
-          <div
-            class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow group relative"
-          >
-            <!-- Preparation Badge -->
-            <div class="absolute top-4 right-4 z-10">
-              <span
-                class="bg-orange-100 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full"
-              >
-                {{ $t('courses.status.inPreparation') }}
-              </span>
-            </div>
-            <div
-              class="h-48 bg-gradient-to-br from-primary-300 to-primary-500 flex items-center justify-center relative"
-            >
-              <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  fill-rule="evenodd"
-                  d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-              <!-- Overlay for preparation status -->
-              <div class="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center">
-                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path
-                    fill-rule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-              </div>
-            </div>
-            <div class="p-6">
-              <h3 class="text-xl font-semibold text-gray-900 mb-2">
-                {{ $t('courses.codingBasics.title') }}
-              </h3>
-              <p class="text-gray-600 mb-4">{{ $t('courses.codingBasics.description') }}</p>
-              <div class="mb-4">
-                <p class="text-sm text-orange-600 font-medium">
-                  {{ $t('courses.status.comingSoon') }}
-                </p>
-              </div>
-              <div class="flex items-center justify-between mb-4">
-                <span class="text-2xl font-bold text-gray-400">{{ $t('courses.status.tba') }}</span>
-                <span class="text-sm text-gray-500">{{ $t('courses.codingBasics.duration') }}</span>
-              </div>
-              <button
-                class="w-full bg-primary-400 text-slate-900 px-4 py-2 rounded-lg font-medium hover:bg-primary-500 transition-colors flex items-center justify-center gap-2"
-              >
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                  <path
-                    d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"
-                  />
-                </svg>
-                {{ $t('courses.status.notifyButton') }}
-              </button>
-            </div>
-          </div>
+        <div
+          class="gap-8"
+          :class="publications.length > 1 ? 'grid md:grid-cols-2' : 'max-w-xl mx-auto'"
+        >
+          <PublicationCard
+            v-for="pub in publications"
+            :key="pub.id"
+            :publication="pub"
+          />
         </div>
       </div>
     </section>
@@ -525,6 +389,8 @@ import { useI18n } from 'vue-i18n'
 import en from '../locales/en.json'
 import pl from '../locales/pl.json'
 import { articles, type ArticleMeta } from '../data/articles'
+import { publications } from '../data/publications'
+import PublicationCard from '../components/PublicationCard.vue'
 import { formatDate } from '../utils/dateFormatter'
 import ArticleLevelBar from '../components/ArticleLevelBar.vue'
 import { getTranslatedText } from '../utils/articleTranslations'

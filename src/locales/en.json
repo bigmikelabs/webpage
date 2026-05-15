@@ -5,7 +5,7 @@
     "backHome": "Back to Home"
   },
   "nav": {
-    "courses": "Courses",
+    "publications": "Publications",
     "startit": "StartIT",
     "about": "About",
     "articles": "Articles",
@@ -18,7 +18,7 @@
     "titleHighlight": "technology, AI and programming.",
     "subtitle": "Learn with us — practically, consciously and based on real experience.",
     "startLearning": "Start Learning Today",
-    "viewCourses": "View Courses",
+    "viewPublications": "View Publications",
     "students": "500+ Students",
     "instructors": "Expert Instructors",
     "jobReady": "Job-Ready Skills",
@@ -40,25 +40,21 @@
       "description": "Get guidance from industry professionals with years of experience in AI, programming, and IT."
     }
   },
-  "courses": {
-    "title": "Popular Courses",
-    "subtitle": "Start your journey with our top-rated courses",
-    "aiFundamentals": {
-      "title": "AI Fundamentals",
-      "description": "Learn the basics of artificial intelligence, machine learning concepts, and practical applications.",
-      "duration": "8 weeks"
-    },
-    "codingBasics": {
-      "title": "Programming in Practice",
-      "description": "Build your first applications, learning the basics of backend and frontend, using AI-powered tools.",
-      "duration": "12 weeks"
-    },
+  "publications": {
+    "title": "Publications",
+    "subtitle": "Start your journey with one of our publications",
     "status": {
       "inPreparation": "In Preparation",
       "comingSoon": "Registration Soon!",
       "tba": "",
-      "notifyButton": "Notify me when course is available"
-    }
+      "notifyButton": "Notify me when publication is available"
+    },
+    "loading": "Loading…",
+    "loadError": "Failed to load publication content.",
+    "backToHome": "Back to publications",
+    "buyPublication": "Buy publication",
+    "notFound": "Publication Not Found",
+    "notFoundDescription": "The publication you're looking for doesn't exist or has been removed."
   },
   "articles": {
     "title": "Articles",
@@ -111,12 +107,12 @@
   "cta": {
     "title": "Ready to Start Your Tech Journey?",
     "subtitle": "Join hundreds of students who have already transformed their careers with BigMikeLabs.",
-    "browseAll": "Browse All Courses",
+    "browseAll": "Browse All Publications",
     "talkAdvisor": "Talk to an Advisor"
   },
   "footer": {
     "description": "Empowering beginners to master AI and the necessary knowledge to work in IT through expert-led training and hands-on learning experiences.",
-    "courses": "Courses",
+    "publications": "Publications",
     "company": "Company",
     "aboutUs": "About Us",
     "instructors": "Instructors",
@@ -268,7 +264,7 @@
     "cta": {
       "title": "Ready to Start Your Journey?",
       "subtitle": "Join our community of learners and take the first step towards your tech career.",
-      "viewCourses": "View Our Courses",
+      "viewPublications": "View Our Publications",
       "meetInstructors": "Meet Our Instructors"
     }
   },
@@ -310,7 +306,7 @@
     "joinTeam": {
       "title": "Ready to Learn from the Best?",
       "subtitle": "Join our community and start learning from experienced professionals who care about your success.",
-      "viewCourses": "View Our Courses",
+      "viewPublications": "View Our Publications",
       "joinWebinar": "Join Free Webinar"
     }
   },

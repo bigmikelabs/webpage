@@ -5,7 +5,7 @@
     "backHome": "Powrót na stronę główną"
   },
   "nav": {
-    "courses": "Kursy",
+    "publications": "Publikacje",
     "startit": "StartIT",
     "about": "O nas",
     "articles": "Artykuły",
@@ -18,7 +18,7 @@
     "titleHighlight": "technologii, AI i programowaniu.",
     "subtitle": "Ucz się z nami — praktycznie, świadomie i na bazie realnego doświadczenia.",
     "startLearning": "Rozpocznij Naukę Dziś",
-    "viewCourses": "Zobacz Kursy",
+    "viewPublications": "Zobacz Publikacje",
     "students": "500+ Uczniów",
     "instructors": "Doświadczeni Instruktorzy",
     "jobReady": "Umiejętności Gotowe do Pracy",
@@ -40,25 +40,21 @@
       "description": "Otrzymaj wskazówki od profesjonalistów z branży z wieloletnim doświadczeniem w AI, programowaniu i IT."
     }
   },
-  "courses": {
-    "title": "Popularne Kursy",
-    "subtitle": "Rozpocznij swoją podróż od naszych najlepiej ocenianych kursów",
-    "aiFundamentals": {
-      "title": "Podstawy AI",
-      "description": "Poznaj podstawy sztucznej inteligencji, koncepcje uczenia maszynowego i praktyczne zastosowania.",
-      "duration": "8 tygodni"
-    },
-    "codingBasics": {
-      "title": "Programowanie w praktyce",
-      "description": "Twórz swoje pierwsze aplikacje, poznając podstawy backendu i frontendu, z wykorzystaniem narzędzi wspierających AI.",
-      "duration": "12 tygodni"
-    },
+  "publications": {
+    "title": "Publikacje",
+    "subtitle": "Rozpocznij swoją podróż z jedną z naszych publikacji",
     "status": {
       "inPreparation": "W przygotowaniu",
       "comingSoon": "Zapisy wkrótce!",
       "tba": "",
-      "notifyButton": "Informuj mnie kiedy kurs będzie dostępny"
-    }
+      "notifyButton": "Informuj mnie kiedy publikacja będzie dostępna"
+    },
+    "loading": "Ładowanie…",
+    "loadError": "Nie udało się załadować treści publikacji.",
+    "backToHome": "Powrót do publikacji",
+    "buyPublication": "Kup publikację",
+    "notFound": "Publikacja nie znaleziona",
+    "notFoundDescription": "Publikacja, której szukasz, nie istnieje lub została usunięta."
   },
   "articles": {
     "title": "Artykuły",
@@ -111,12 +107,12 @@
   "cta": {
     "title": "Gotowy na Rozpoczęcie Swojej Przygody z Technologią?",
     "subtitle": "Dołącz do setek uczniów, którzy już przekształcili swoje kariery dzięki BigMikeLabs.",
-    "browseAll": "Przeglądaj Wszystkie Kursy",
+    "browseAll": "Przeglądaj Wszystkie Publikacje",
     "talkAdvisor": "Porozmawiaj z Doradcą"
   },
   "footer": {
     "description": "Wspieramy początkujących w opanowaniu AI i wiedzy niezbędnej do pracy w IT poprzez szkolenia prowadzone przez ekspertów i praktyczne doświadczenia edukacyjne.",
-    "courses": "Kursy",
+    "publications": "Publikacje",
     "company": "Firma",
     "aboutUs": "O nas",
     "instructors": "Instruktorzy",
@@ -268,7 +264,7 @@
     "cta": {
       "title": "Gotowy na Rozpoczęcie Swojej Podróży?",
       "subtitle": "Dołącz do naszej społeczności uczących się i zrób pierwszy krok w kierunku swojej kariery w technologii.",
-      "viewCourses": "Zobacz Nasze Kursy",
+      "viewPublications": "Zobacz Nasze Publikacje",
       "meetInstructors": "Poznaj Naszych Instruktorów"
     }
   },
@@ -310,14 +306,14 @@
     "joinTeam": {
       "title": "Gotowy Uczyć się od Najlepszych?",
       "subtitle": "Dołącz do naszej społeczności i zacznij uczyć się od doświadczonych profesjonalistów, którym zależy na Twoim sukcesie.",
-      "viewCourses": "Zobacz Nasze Kursy",
+      "viewPublications": "Zobacz Nasze Publikacje",
       "joinWebinar": "Dołącz do Darmowego Webinaru"
     }
   },
   "aiFundamentals": {
     "badge": "8-Tygodniowy Kurs",
     "hero": {
-      "title": "Podstawy AI",
+      "title": "Matematyka dla AI i Machine Learning",
       "subtitle": "Opanuj podstawy Sztucznej Inteligencji i Uczenia Maszynowego. Idealny dla początkujących, którzy chcą zrozumieć AI i zacząć budować swoje pierwsze projekty AI.",
       "enrollButton": "Zapisz się Teraz",
       "learnMoreButton": "Pobierz Program"
