@@ -26,6 +26,7 @@ export interface ResourceMeta {
   url: string
 }
 
+// Resource metadata index – add new entries here when you add .md files under public/resources/
 export const resources: ResourceMeta[] = [
   {
     id: 'math-for-ai-ml',
@@ -42,7 +43,7 @@ export const resources: ResourceMeta[] = [
     url: 'https://bigmikesolutions.gumroad.com/l/math4ai',
     images: [
       {
-        src: '/images/math4ai.jpg',
+        src: '/resources/images/math4ai.jpg',
         alt: {
           en: 'Mathematics for AI and Machine Learning',
           pl: 'Matematyka dla AI i Machine Learning',

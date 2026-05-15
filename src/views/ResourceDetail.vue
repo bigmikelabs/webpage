@@ -119,9 +119,9 @@
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { marked } from 'marked'
 import { getResourceById, type ResourceMeta } from '../data/resources'
 import { getTranslatedText } from '../utils/articleTranslations'
+import { fetchLocaleMarkdownHtml } from '../utils/loadLocaleMarkdown'
 
 const route = useRoute()
 const { locale } = useI18n()
@@ -152,15 +152,7 @@ async function loadMarkdown(id: string, lang: string) {
   loadError.value = false
   loading.value = true
   try {
-    let res = await fetch(`/resources/${id}.${lang}.md`)
-    if (!res.ok && lang !== 'en') {
-      res = await fetch(`/resources/${id}.en.md`)
-    }
-    if (!res.ok) {
-      return
-    }
-    const text = await res.text()
-    htmlContent.value = marked.parse(text) as string
+    htmlContent.value = await fetchLocaleMarkdownHtml('resources', id, lang)
   } catch {
     loadError.value = true
   } finally {
