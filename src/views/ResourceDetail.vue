@@ -55,10 +55,6 @@
           </div>
         </div>
 
-        <p v-else class="text-xl text-gray-600 mb-8">
-          {{ description }}
-        </p>
-
         <div v-if="loading" class="prose prose-lg max-w-none text-gray-500">
           {{ $t('resources.loading') }}
         </div>

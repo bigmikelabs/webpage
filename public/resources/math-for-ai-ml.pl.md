@@ -1,22 +1,58 @@
-## O czym jest ten materiał?
+# Matematyka dla Machine Learning i AI — szybki przewodnik
 
-Praktyczny, szybki przewodnik po matematycznych fundamentach AI i machine learning. Zamiast abstrakcyjnej teorii dostajesz zrozumienie tego, co naprawdę napędza nowoczesne modele — wektory, embeddingi i self-attention — wyjaśnione w intuicyjny sposób na przykładach.
+---
 
-## Dla kogo?
+To nie jest akademicki podręcznik. To jest krótka książka, która buduje **intuicję przez przykłady** i pomaga zrozumieć, *co dokładnie robi AI na liczbach*.
 
-- Dla osób, które korzystają z AI na co dzień i chcą w końcu zrozumieć, co dzieje się „pod maską”.
-- Dla programistów i inżynierów, którzy potrzebują solidnych podstaw bez studiowania podręcznika z analizy.
-- Dla początkujących w ML, którzy wolą zacząć od sensu, a nie od suchych wzorów.
+Jeśli kiedykolwiek miałeś wrażenie, że:
 
-## Czego się nauczysz
+- „prawdopodobieństwo i statystyka są niby proste, ale w praktyce ciągle coś nie gra”,
+- „embeddingi i attention brzmią jak magia”,
+- „modele mówią mądrze, ale nie wiadomo skąd biorą się decyzje”,
 
-- Jak reprezentować dane jako wektory i dlaczego to fundament embeddingów.
-- Jak modele zamieniają tekst na liczby i co z tego wynika w praktyce.
-- Jak działa mechanizm attention i dlaczego transformer zmienił NLP.
-- Jak te pojęcia łączą się z realnymi narzędziami (chat, RAG, klasyfikacja).
+to ta pozycja jest po to, żeby Ci to uporządkować.
 
-## Format
+## Co dostajesz
 
-Mini-książka w języku polskim — zwięzłe rozdziały, przykłady i skupienie na zastosowaniach, nie na dowodach.
+- **PDF** z przewodnikiem
+- podejście: **przykład -> poprawka myślenia -> minimalna matematyka**
+- dużo przykładów (z życia i z AI)
 
-Pełną wersję możesz kupić na Gumroad — przycisk **Kup** na tej stronie przeniesie Cię do sklepu.
+## Dla kogo
+
+- dla osób wchodzących w ML/AI (studenci, analitycy, PM, inżynierowie, data science)
+- dla tych, którzy chcą rozumieć LLM bez „czarnej skrzynki”
+- dla tych, którzy wolą **konkrety i mentalne modele** niż formalne definicje
+
+Nie potrzebujesz zaawansowanej matematyki. Wzory są tylko tam, gdzie realnie pomagają.
+
+## Co jest w środku 
+
+- **Prawdopodobieństwo**: decyzje w niepewności, progi, koszt błędów, „co znaczy 80% pewności” w praktyce.
+- **Statystyka**: kiedy wynik jest „stabilny”, a kiedy to przypadek, jak myśleć o danych bez złudzeń.
+- **Algebra liniowa**: dlaczego modele „myślą wektorami”, co znaczy podobieństwo (geometria), i czemu macierze są sercem sieci.
+- **Embeddings & (self-)attention**: tokenizacja, embeddings jako „znaczenie w przestrzeni”, self-attention jako mieszanie informacji między tokenami, softmax bez magii, multi-head, i co się dzieje w generowaniu.
+
+W rozdziale o attention znajdziesz też policzone mini-przykłady „krok po kroku” (skąd biorą się liczby, jak powstają wagi i jak miesza się wektory).
+
+## Najważniejsza myśl, którą wyniesiesz
+
+> AI nie „rozumie świata” tak jak człowiek.  
+> Opisuje świat liczbami, uczy się wag i podejmuje decyzje w warunkach niepewności.
+
+## Co dalej po tej książce
+
+Po książce masz solidny fundament, żeby wejść w:
+
+- praktyczny ML (klasyfikacja, metryki, walidacja, kalibracja prawdopodobieństw)
+- NLP/LLM (RAG, embeddings, ograniczenia kontekstu, dlaczego modele halucynują)
+- rekomendacje i ranking (embeddingi użytkownik–produkt, podobieństwo, cold start)
+- ryzyko i decyzje (progi, polityki, koszty błędów, „kiedy nie decydować”)
+- A/B testy i eksperymenty (jak mierzyć zmiany bez samooszukiwania)
+
+## Aktualizacje
+
+- **v1.0** — pierwsze wydanie (maj 2026)
+
+Jeśli kupiłeś ten materiał, sprawdź czy masz najnowszą wersję.
+
