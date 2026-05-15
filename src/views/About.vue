@@ -235,10 +235,10 @@
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
           <router-link
-            to="/#publications"
+            to="/#resources"
             class="bg-white text-primary-500 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg"
           >
-            {{ $t('about.cta.viewPublications') }}
+            {{ $t('about.cta.viewResources') }}
           </router-link>
           <router-link
             to="/instructors"

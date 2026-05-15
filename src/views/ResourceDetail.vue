@@ -1,12 +1,12 @@
 <template>
   <div class="min-h-screen bg-white">
-    <article v-if="publication" class="pt-20 pb-16">
+    <article v-if="resource" class="pt-20 pb-16">
       <div
-        v-if="publication.images && publication.images.length > 0"
+        v-if="resource.images && resource.images.length > 0"
         class="relative h-96 overflow-hidden"
       >
         <img
-          :src="publication.images[0].src"
+          :src="resource.images[0].src"
           :alt="imageAlt"
           class="w-full h-full object-cover"
         />
@@ -18,10 +18,10 @@
               <span
                 class="inline-block px-2.5 py-0.5 rounded-full text-xs font-medium bg-white/30 text-white"
               >
-                {{ $t(`publications.lang.${publication.lang}`) }}
+                {{ $t(`resources.lang.${resource.lang}`) }}
               </span>
               <span
-                v-for="tag in publication.tags"
+                v-for="tag in resource.tags"
                 :key="tag"
                 class="inline-block px-2.5 py-0.5 rounded-full text-xs font-medium bg-white/20 text-white"
               >
@@ -34,19 +34,19 @@
 
       <div
         class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8"
-        :class="publication.images?.length ? 'mt-12' : ''"
+        :class="resource.images?.length ? 'mt-12' : ''"
       >
-        <div v-if="!publication.images?.length" class="mb-8">
+        <div v-if="!resource.images?.length" class="mb-8">
           <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">{{ title }}</h1>
           <p class="text-xl text-gray-600 mb-4">{{ description }}</p>
           <div class="flex flex-wrap gap-2 mt-3">
             <span
               class="inline-block px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-300 text-gray-800"
             >
-              {{ $t(`publications.lang.${publication.lang}`) }}
+              {{ $t(`resources.lang.${resource.lang}`) }}
             </span>
             <span
-              v-for="tag in publication.tags"
+              v-for="tag in resource.tags"
               :key="tag"
               class="inline-block px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-200 text-gray-700"
             >
@@ -60,21 +60,21 @@
         </p>
 
         <div v-if="loading" class="prose prose-lg max-w-none text-gray-500">
-          {{ $t('publications.loading') }}
+          {{ $t('resources.loading') }}
         </div>
         <div v-else-if="loadError" class="prose prose-lg max-w-none text-red-600">
-          {{ $t('publications.loadError') }}
+          {{ $t('resources.loadError') }}
         </div>
         <div v-else-if="htmlContent" class="prose prose-lg max-w-none" v-html="htmlContent" />
 
         <div class="mt-8">
           <a
-            :href="publication.url"
+            :href="resource.url"
             target="_blank"
             rel="noopener noreferrer"
             class="inline-flex items-center gap-2 bg-primary-400 text-slate-900 px-8 py-4 rounded-lg font-semibold hover:bg-primary-500 transition-colors shadow-lg hover:shadow-xl"
           >
-            {{ $t('publications.buyPublication') }}
+            {{ $t('resources.buyResource') }}
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 stroke-linecap="round"
@@ -88,13 +88,13 @@
 
         <div class="mt-12 pt-8 border-t border-gray-200">
           <router-link
-            to="/#publications"
+            to="/#resources"
             class="inline-flex items-center text-primary-500 hover:text-primary-600 font-medium"
           >
             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
             </svg>
-            {{ $t('publications.backToHome') }}
+            {{ $t('resources.backToHome') }}
           </router-link>
         </div>
       </div>
@@ -102,13 +102,13 @@
 
     <div v-else class="pt-20 pb-16">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 class="text-4xl font-bold text-gray-900 mb-4">{{ $t('publications.notFound') }}</h1>
-        <p class="text-gray-600 mb-8">{{ $t('publications.notFoundDescription') }}</p>
+        <h1 class="text-4xl font-bold text-gray-900 mb-4">{{ $t('resources.notFound') }}</h1>
+        <p class="text-gray-600 mb-8">{{ $t('resources.notFoundDescription') }}</p>
         <router-link
           to="/"
           class="inline-flex items-center bg-primary-400 text-slate-900 px-6 py-3 rounded-lg font-medium hover:bg-primary-500 transition-colors"
         >
-          {{ $t('publications.backToHome') }}
+          {{ $t('resources.backToHome') }}
         </router-link>
       </div>
     </div>
@@ -120,7 +120,7 @@ import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { marked } from 'marked'
-import { getPublicationById, type PublicationMeta } from '../data/publications'
+import { getResourceById, type ResourceMeta } from '../data/resources'
 import { getTranslatedText } from '../utils/articleTranslations'
 
 const route = useRoute()
@@ -130,19 +130,19 @@ const htmlContent = ref<string | null>(null)
 const loading = ref(false)
 const loadError = ref(false)
 
-const publication = computed<PublicationMeta | undefined>(() => {
+const resource = computed<ResourceMeta | undefined>(() => {
   const id = route.params.id as string
-  return getPublicationById(id)
+  return getResourceById(id)
 })
 
 const title = computed(() =>
-  publication.value ? getTranslatedText(publication.value.title, locale.value) : ''
+  resource.value ? getTranslatedText(resource.value.title, locale.value) : ''
 )
 const description = computed(() =>
-  publication.value ? getTranslatedText(publication.value.description, locale.value) : ''
+  resource.value ? getTranslatedText(resource.value.description, locale.value) : ''
 )
 const imageAlt = computed(() => {
-  const image = publication.value?.images?.[0]
+  const image = resource.value?.images?.[0]
   if (!image?.alt) return title.value
   return getTranslatedText(image.alt, locale.value)
 })
@@ -152,9 +152,9 @@ async function loadMarkdown(id: string, lang: string) {
   loadError.value = false
   loading.value = true
   try {
-    let res = await fetch(`/publications/${id}.${lang}.md`)
+    let res = await fetch(`/resources/${id}.${lang}.md`)
     if (!res.ok && lang !== 'en') {
-      res = await fetch(`/publications/${id}.en.md`)
+      res = await fetch(`/resources/${id}.en.md`)
     }
     if (!res.ok) {
       return
@@ -169,9 +169,9 @@ async function loadMarkdown(id: string, lang: string) {
 }
 
 watch(
-  [() => route.params.id, () => locale.value, publication],
+  [() => route.params.id, () => locale.value, resource],
   ([id, lang]) => {
-    if (id && publication.value && typeof lang === 'string') {
+    if (id && resource.value && typeof lang === 'string') {
       loadMarkdown(id as string, lang)
     } else {
       htmlContent.value = null

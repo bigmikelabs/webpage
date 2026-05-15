@@ -26,10 +26,10 @@
                 {{ $t('hero.startLearning') }}
               </button>
               <button
-                @click="scrollToElement('publications')"
+                @click="scrollToElement('resources')"
                 class="border border-gray-300 text-gray-700 px-8 py-4 rounded-lg font-semibold hover:border-primary-500 hover:text-primary-500 transition-colors"
               >
-                {{ $t('hero.viewPublications') }}
+                {{ $t('hero.viewResources') }}
               </button>
             </div>
             <div class="mt-8 flex items-center space-x-6 text-sm text-gray-500">
@@ -213,26 +213,26 @@
       </div>
     </section>
 
-    <!-- Publications Section -->
-    <section id="publications" class="py-16">
+    <!-- Resources Section -->
+    <section id="resources" class="py-16">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
           <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-            {{ $t('publications.title') }}
+            {{ $t('resources.title') }}
           </h2>
           <p class="text-xl text-gray-600">
-            {{ $t('publications.subtitle') }}
+            {{ $t('resources.subtitle') }}
           </p>
         </div>
 
         <div
           class="gap-8"
-          :class="publications.length > 1 ? 'grid md:grid-cols-2' : 'max-w-xl mx-auto'"
+          :class="resources.length > 1 ? 'grid md:grid-cols-2' : 'max-w-xl mx-auto'"
         >
-          <PublicationCard
-            v-for="pub in publications"
-            :key="pub.id"
-            :publication="pub"
+          <ResourceCard
+            v-for="item in resources"
+            :key="item.id"
+            :resource="item"
           />
         </div>
       </div>
@@ -389,8 +389,8 @@ import { useI18n } from 'vue-i18n'
 import en from '../locales/en.json'
 import pl from '../locales/pl.json'
 import { articles, type ArticleMeta } from '../data/articles'
-import { publications } from '../data/publications'
-import PublicationCard from '../components/PublicationCard.vue'
+import { resources } from '../data/resources'
+import ResourceCard from '../components/ResourceCard.vue'
 import { formatDate } from '../utils/dateFormatter'
 import ArticleLevelBar from '../components/ArticleLevelBar.vue'
 import { getTranslatedText } from '../utils/articleTranslations'

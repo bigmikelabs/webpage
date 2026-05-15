@@ -205,10 +205,10 @@
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
           <router-link
-            to="/#publications"
+            to="/#resources"
             class="bg-primary-400 text-slate-900 px-8 py-4 rounded-lg font-semibold hover:bg-primary-500 transition-colors shadow-lg"
           >
-            {{ $t('instructors.joinTeam.viewPublications') }}
+            {{ $t('instructors.joinTeam.viewResources') }}
           </router-link>
           <router-link
             to="/startit"

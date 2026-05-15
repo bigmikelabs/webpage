@@ -6,7 +6,7 @@ import Instructors from '../views/Instructors.vue'
 import AIFundamentals from '../views/AIFundamentals.vue'
 import Articles from '../views/Articles.vue'
 import ArticleDetail from '../views/ArticleDetail.vue'
-import PublicationDetail from '../views/PublicationDetail.vue'
+import ResourceDetail from '../views/ResourceDetail.vue'
 import NotFound from '../views/NotFound.vue'
 
 const routes = [
@@ -41,9 +41,9 @@ const routes = [
     component: ArticleDetail,
   },
   {
-    path: '/publications/:id',
-    name: 'PublicationDetail',
-    component: PublicationDetail,
+    path: '/resources/:id',
+    name: 'ResourceDetail',
+    component: ResourceDetail,
   },
   {
     path: '/:pathMatch(.*)*',

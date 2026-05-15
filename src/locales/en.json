@@ -5,7 +5,7 @@
     "backHome": "Back to Home"
   },
   "nav": {
-    "publications": "Publications",
+    "resources": "Resources",
     "startit": "StartIT",
     "about": "About",
     "articles": "Articles",
@@ -18,7 +18,7 @@
     "titleHighlight": "technology, AI and programming.",
     "subtitle": "Learn with us — practically, consciously and based on real experience.",
     "startLearning": "Start Learning Today",
-    "viewPublications": "View resources",
+    "viewResources": "View resources",
     "students": "500+ Students",
     "instructors": "Expert Instructors",
     "jobReady": "Job-Ready Skills",
@@ -40,13 +40,13 @@
       "description": "Get guidance from industry professionals with years of experience in AI, programming, and IT."
     }
   },
-  "publications": {
+  "resources": {
     "title": "Resources",
     "subtitle": "Start your journey with one of our mini-books.",
     "loading": "Loading…",
     "loadError": "Failed to load resource content.",
     "backToHome": "Back to resources",
-    "buyPublication": "Buy",
+    "buyResource": "Buy",
     "lang": {
       "en": "English",
       "pl": "Polish"
@@ -110,7 +110,7 @@
   },
   "footer": {
     "description": "Empowering beginners to master AI and the necessary knowledge to work in IT through expert-led training and hands-on learning experiences.",
-    "publications": "Publications",
+    "resources": "Resources",
     "company": "Company",
     "aboutUs": "About Us",
     "instructors": "Instructors",
@@ -262,7 +262,7 @@
     "cta": {
       "title": "Ready to Start Your Journey?",
       "subtitle": "Join our community of learners and take the first step towards your tech career.",
-      "viewPublications": "View Our Publications",
+      "viewResources": "View Our Resources",
       "meetInstructors": "Meet Our Instructors"
     }
   },
@@ -304,7 +304,7 @@
     "joinTeam": {
       "title": "Ready to Learn from the Best?",
       "subtitle": "Join our community and start learning from experienced professionals who care about your success.",
-      "viewPublications": "View Our Publications",
+      "viewResources": "View Our Resources",
       "joinWebinar": "Join Free Webinar"
     }
   },

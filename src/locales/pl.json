@@ -5,7 +5,7 @@
     "backHome": "Powrót na stronę główną"
   },
   "nav": {
-    "publications": "Publikacje",
+    "resources": "Materiały",
     "startit": "StartIT",
     "about": "O nas",
     "articles": "Artykuły",
@@ -18,7 +18,7 @@
     "titleHighlight": "technologii, AI i programowaniu.",
     "subtitle": "Ucz się z nami — praktycznie, świadomie i na bazie realnego doświadczenia.",
     "startLearning": "Rozpocznij Naukę Dziś",
-    "viewPublications": "Zobacz materiały",
+    "viewResources": "Zobacz materiały",
     "students": "500+ Uczniów",
     "instructors": "Doświadczeni Instruktorzy",
     "jobReady": "Umiejętności Gotowe do Pracy",
@@ -40,13 +40,13 @@
       "description": "Otrzymaj wskazówki od profesjonalistów z branży z wieloletnim doświadczeniem w AI, programowaniu i IT."
     }
   },
-  "publications": {
+  "resources": {
     "title": "Materiały",
     "subtitle": "Rozpocznij swoją podróż z jedną z naszych mini-książek.",
     "loading": "Ładowanie…",
     "loadError": "Nie udało się załadować treści materiału.",
     "backToHome": "Powrót do materiałów",
-    "buyPublication": "Kup",
+    "buyResource": "Kup",
     "lang": {
       "en": "Angielski",
       "pl": "Polski"
@@ -110,7 +110,7 @@
   },
   "footer": {
     "description": "Wspieramy początkujących w opanowaniu AI i wiedzy niezbędnej do pracy w IT poprzez szkolenia prowadzone przez ekspertów i praktyczne doświadczenia edukacyjne.",
-    "publications": "Publikacje",
+    "resources": "Materiały",
     "company": "Firma",
     "aboutUs": "O nas",
     "instructors": "Instruktorzy",
@@ -262,7 +262,7 @@
     "cta": {
       "title": "Gotowy na Rozpoczęcie Swojej Podróży?",
       "subtitle": "Dołącz do naszej społeczności uczących się i zrób pierwszy krok w kierunku swojej kariery w technologii.",
-      "viewPublications": "Zobacz Nasze Publikacje",
+      "viewResources": "Zobacz nasze materiały",
       "meetInstructors": "Poznaj Naszych Instruktorów"
     }
   },
@@ -304,7 +304,7 @@
     "joinTeam": {
       "title": "Gotowy Uczyć się od Najlepszych?",
       "subtitle": "Dołącz do naszej społeczności i zacznij uczyć się od doświadczonych profesjonalistów, którym zależy na Twoim sukcesie.",
-      "viewPublications": "Zobacz Nasze Publikacje",
+      "viewResources": "Zobacz nasze materiały",
       "joinWebinar": "Dołącz do Darmowego Webinaru"
     }
   },

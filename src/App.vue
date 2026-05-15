@@ -198,14 +198,14 @@
             </div>
           </div>
           <div>
-            <h3 class="font-semibold mb-4">{{ $t('footer.publications') }}</h3>
+            <h3 class="font-semibold mb-4">{{ $t('footer.resources') }}</h3>
             <ul class="space-y-2 text-gray-400">
-              <li v-for="pub in publications" :key="pub.id">
+              <li v-for="item in resources" :key="item.id">
                 <router-link
-                  :to="`/publications/${pub.id}`"
+                  :to="`/resources/${item.id}`"
                   class="hover:text-white transition-colors"
                 >
-                  {{ getPublicationTitle(pub) }}
+                  {{ getResourceTitle(item) }}
                 </router-link>
               </li>
             </ul>
@@ -277,8 +277,8 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import config from './config'
-import { publications } from './data/publications'
-import type { PublicationMeta } from './data/publications'
+import { resources } from './data/resources'
+import type { ResourceMeta } from './data/resources'
 import { getTranslatedText } from './utils/articleTranslations'
 
 const { locale, t } = useI18n()
@@ -290,8 +290,8 @@ const languageMenu = ref<HTMLElement | null>(null)
 
 const currentLocale = computed(() => locale.value)
 
-const getPublicationTitle = (pub: PublicationMeta): string =>
-  getTranslatedText(pub.title, locale.value)
+const getResourceTitle = (item: ResourceMeta): string =>
+  getTranslatedText(item.title, locale.value)
 
 const changeLanguage = (lang: string) => {
   locale.value = lang

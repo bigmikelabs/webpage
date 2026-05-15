@@ -1,14 +1,14 @@
 <template>
   <router-link
-    :to="`/publications/${publication.id}`"
+    :to="`/resources/${resource.id}`"
     class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow group relative block"
   >
     <div
-      v-if="publication.images && publication.images.length > 0"
+      v-if="resource.images && resource.images.length > 0"
       class="h-48 relative overflow-hidden"
     >
       <img
-        :src="publication.images[0].src"
+        :src="resource.images[0].src"
         :alt="imageAlt"
         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
       />
@@ -35,10 +35,10 @@
         <span
           class="inline-block px-2 py-0.5 rounded text-xs font-medium bg-gray-200 text-gray-800"
         >
-          {{ $t(`publications.lang.${publication.lang}`) }}
+          {{ $t(`resources.lang.${resource.lang}`) }}
         </span>
         <span
-          v-for="tag in publication.tags"
+          v-for="tag in resource.tags"
           :key="tag"
           class="inline-block px-2 py-0.5 rounded text-xs font-medium bg-primary-100 text-primary-800"
         >
@@ -46,13 +46,13 @@
         </span>
       </div>
       <a
-        :href="publication.url"
+        :href="resource.url"
         target="_blank"
         rel="noopener noreferrer"
         class="w-full bg-primary-400 text-slate-900 px-4 py-2 rounded-lg font-medium hover:bg-primary-500 transition-colors flex items-center justify-center gap-2"
         @click.stop
       >
-        {{ $t('publications.buyPublication') }}
+        {{ $t('resources.buyResource') }}
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
             stroke-linecap="round"
@@ -68,22 +68,22 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { PublicationMeta } from '../data/publications'
-import { getTranslatedText } from '../utils/articleTranslations'
 import { useI18n } from 'vue-i18n'
+import type { ResourceMeta } from '../data/resources'
+import { getTranslatedText } from '../utils/articleTranslations'
 
 const props = defineProps<{
-  publication: PublicationMeta
+  resource: ResourceMeta
 }>()
 
 const { locale } = useI18n()
 
-const title = computed(() => getTranslatedText(props.publication.title, locale.value))
+const title = computed(() => getTranslatedText(props.resource.title, locale.value))
 const description = computed(() =>
-  getTranslatedText(props.publication.description, locale.value)
+  getTranslatedText(props.resource.description, locale.value)
 )
 const imageAlt = computed(() => {
-  const image = props.publication.images?.[0]
+  const image = props.resource.images?.[0]
   if (!image?.alt) return title.value
   return getTranslatedText(image.alt, locale.value)
 })
