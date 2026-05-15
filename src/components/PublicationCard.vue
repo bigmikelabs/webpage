@@ -31,7 +31,12 @@
         {{ title }}
       </h3>
       <p class="text-gray-600 mb-4">{{ description }}</p>
-      <div v-if="publication.tags?.length" class="flex flex-wrap gap-2 mb-4">
+      <div class="flex flex-wrap gap-2 mb-4">
+        <span
+          class="inline-block px-2 py-0.5 rounded text-xs font-medium bg-gray-200 text-gray-800"
+        >
+          {{ $t(`publications.lang.${publication.lang}`) }}
+        </span>
         <span
           v-for="tag in publication.tags"
           :key="tag"

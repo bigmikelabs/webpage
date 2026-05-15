@@ -41,8 +41,8 @@
     }
   },
   "publications": {
-    "title": "Publikacje",
-    "subtitle": "Rozpocznij swoją podróż z jedną z naszych publikacji",
+    "title": "Materiały",
+    "subtitle": "Rozpocznij swoją podróż z jedną z naszych mini-książek.",
     "status": {
       "inPreparation": "W przygotowaniu",
       "comingSoon": "Zapisy wkrótce!",
@@ -53,6 +53,10 @@
     "loadError": "Nie udało się załadować treści publikacji.",
     "backToHome": "Powrót do publikacji",
     "buyPublication": "Kup publikację",
+    "lang": {
+      "en": "Angielski",
+      "pl": "Polski"
+    },
     "notFound": "Publikacja nie znaleziona",
     "notFoundDescription": "Publikacja, której szukasz, nie istnieje lub została usunięta."
   },

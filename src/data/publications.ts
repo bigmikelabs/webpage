@@ -5,6 +5,9 @@ export interface PublicationImage {
   alt?: TranslatedText
 }
 
+/** Publication content language (matches site locales) */
+export type PublicationLang = 'en' | 'pl'
+
 /**
  * Publication metadata for list/cards. Body content is loaded from Markdown when opened.
  */
@@ -15,7 +18,9 @@ export interface PublicationMeta {
   description: TranslatedText
   /** Hero/card image */
   images?: PublicationImage[]
-  /** Tags for filtering/display (e.g. pl, ai) */
+  /** Publication content language */
+  lang: PublicationLang
+  /** Tags for filtering/display (e.g. ai, ml) */
   tags?: string[]
   /** External URL where the publication can be purchased */
   url: string
@@ -32,7 +37,8 @@ export const publications: PublicationMeta[] = [
       en: 'A practical, fast-track guide to the core mathematics behind AI and machine learning. Instead of abstract theory, you learn the ideas that actually power modern models — vectors, embeddings, and self-attention — explained in an intuitive way. Perfect if you want to finally understand what is happening under the hood and start using AI more effectively in practice.',
       pl: 'Praktyczny, szybki przewodnik po matematycznych fundamentach AI i machine learning. Zamiast abstrakcyjnej teorii dostajesz zrozumienie tego, co naprawdę napędza nowoczesne modele — wektory, embeddingi i self-attention — wyjaśnione w intuicyjny sposób. Idealne, jeśli chcesz w końcu zrozumieć co dzieje się „pod maską” i zacząć świadomie używać AI w praktyce.',
     },
-    tags: ['pl', 'ai', 'ml', 'math'],
+    lang: 'pl',
+    tags: ['ai', 'ml', 'math'],
     url: 'https://bigmikesolutions.gumroad.com/l/math4ai',
     images: [
       {

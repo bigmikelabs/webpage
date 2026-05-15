@@ -14,7 +14,12 @@
         <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
           <div class="max-w-4xl mx-auto">
             <h1 class="text-4xl sm:text-5xl font-bold mb-4">{{ title }}</h1>
-            <div v-if="publication.tags?.length" class="flex flex-wrap gap-2 mt-3">
+            <div class="flex flex-wrap gap-2 mt-3">
+              <span
+                class="inline-block px-2.5 py-0.5 rounded-full text-xs font-medium bg-white/30 text-white"
+              >
+                {{ $t(`publications.lang.${publication.lang}`) }}
+              </span>
               <span
                 v-for="tag in publication.tags"
                 :key="tag"
@@ -34,7 +39,12 @@
         <div v-if="!publication.images?.length" class="mb-8">
           <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">{{ title }}</h1>
           <p class="text-xl text-gray-600 mb-4">{{ description }}</p>
-          <div v-if="publication.tags?.length" class="flex flex-wrap gap-2 mt-3">
+          <div class="flex flex-wrap gap-2 mt-3">
+            <span
+              class="inline-block px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-300 text-gray-800"
+            >
+              {{ $t(`publications.lang.${publication.lang}`) }}
+            </span>
             <span
               v-for="tag in publication.tags"
               :key="tag"

@@ -41,8 +41,8 @@
     }
   },
   "publications": {
-    "title": "Publications",
-    "subtitle": "Start your journey with one of our publications",
+    "title": "Resources",
+    "subtitle": "Start your journey with one of our mini-books.",
     "status": {
       "inPreparation": "In Preparation",
       "comingSoon": "Registration Soon!",
@@ -53,6 +53,10 @@
     "loadError": "Failed to load publication content.",
     "backToHome": "Back to publications",
     "buyPublication": "Buy publication",
+    "lang": {
+      "en": "English",
+      "pl": "Polish"
+    },
     "notFound": "Publication Not Found",
     "notFoundDescription": "The publication you're looking for doesn't exist or has been removed."
   },
