@@ -158,8 +158,8 @@
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { marked } from 'marked'
 import { articles, type ArticleMeta } from '../data/articles'
+import { fetchLocaleMarkdownHtml } from '../utils/loadLocaleMarkdown'
 import { formatDate } from '../utils/dateFormatter'
 import ArticleLevelBar from '../components/ArticleLevelBar.vue'
 import { getTranslatedText } from '../utils/articleTranslations'
@@ -188,15 +188,7 @@ async function loadMarkdown(id: string, lang: string) {
   loadError.value = false
   loading.value = true
   try {
-    // Try locale-specific file first (e.g. grpc-takes-load-to-beat-http2.pl.md)
-    let res = await fetch(`/articles/${id}.${lang}.md`)
-    if (!res.ok && lang !== 'en') {
-      // Fallback to English
-      res = await fetch(`/articles/${id}.en.md`)
-    }
-    if (!res.ok) throw new Error('Failed to load')
-    const text = await res.text()
-    htmlContent.value = marked.parse(text) as string
+    htmlContent.value = await fetchLocaleMarkdownHtml('articles', id, lang)
   } catch {
     loadError.value = true
   } finally {

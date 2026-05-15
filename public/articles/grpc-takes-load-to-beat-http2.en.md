@@ -78,19 +78,19 @@ Switching FCM from *HTTP* to *gRPC* only requires adding a few options to the cl
 And that’s it! In theory, release to production, switch traffic and… Same results. Okay, slightly better—*p99* for *send_multicast* dropped from *500ms* to *400ms*/*450ms*—but still too slow! The product sends millions of notifications at peak times that need to be delivered as fast as possible. I kept digging; I must have done something wrong or forgotten something. Then the first peak hit and… eureka! *p99* latencies started to drop from *400ms* to *250ms*.
 
 <figure>
-<img src="/images/grpc-vs-http2/fcm-send-multicast.jpg" alt="FCM send multicast chart" />
+<img src="/articles/images/grpc-vs-http2/fcm-send-multicast.jpg" alt="FCM send multicast chart" />
 <figcaption>Chart 1: FCM - sendmulticast</figcaption>
 </figure>
 
 Or if you prefer a heatmap…
 
 <figure>
-<img src="/images/grpc-vs-http2/fcm-send-multicast-heat.jpg" alt="FCM send multicast heatmap chart" />
+<img src="/articles/images/grpc-vs-http2/fcm-send-multicast-heat.jpg" alt="FCM send multicast heatmap chart" />
 <figcaption>Chart 2: FCM - sendmulticast heatmap</figcaption>
 </figure>
 
 <figure>
-<img src="/images/grpc-vs-http2/fcm-load.jpg" alt="FCM - send notifications by status" />
+<img src="/articles/images/grpc-vs-http2/fcm-load.jpg" alt="FCM - send notifications by status" />
 <figcaption>Chart 3: FCM - send notifications by status</figcaption>
 </figure>
 

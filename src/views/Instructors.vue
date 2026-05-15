@@ -29,7 +29,7 @@
                     class="w-48 h-48 rounded-full mx-auto mb-6 overflow-hidden bg-white/20 shadow-2xl"
                   >
                     <img
-                      src="/images/michal-wronski.jpg"
+                      src="/articles/images/michal-wronski.jpg"
                       alt="Michał Wroński"
                       class="w-full h-full object-cover object-center"
                       @error="handleImageError"
@@ -205,10 +205,10 @@
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
           <router-link
-            to="/#courses"
+            to="/#resources"
             class="bg-primary-400 text-slate-900 px-8 py-4 rounded-lg font-semibold hover:bg-primary-500 transition-colors shadow-lg"
           >
-            {{ $t('instructors.joinTeam.viewCourses') }}
+            {{ $t('instructors.joinTeam.viewResources') }}
           </router-link>
           <router-link
             to="/startit"

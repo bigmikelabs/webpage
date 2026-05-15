@@ -52,7 +52,7 @@ Trzeba było trochę głębiej pokopać.
 W praktyce problem na wykresie kolejki i jej lagu wygląda w następujący sposób:
 
 <figure>
-<img src="/images/event-loops-inc/feedback-loop.jpg" alt="Event queue with feedback loop" />
+<img src="/articles/images/event-loops-inc/feedback-loop.jpg" alt="Event queue with feedback loop" />
 <figcaption>Wykres 1: Przykładowy wykres kolejki pokazujący narastający lag spowodowany feedback loop w systemie event-driven.</figcaption>
 </figure>
 

@@ -333,7 +333,7 @@
               <div class="text-center lg:text-left">
                 <div class="w-32 h-32 rounded-full mx-auto lg:mx-0 mb-4 overflow-hidden">
                   <img
-                    src="/images/michal-wronski.jpg"
+                    src="/articles/images/michal-wronski.jpg"
                     alt="Michał Wroński"
                     class="w-full h-full object-cover object-center"
                   />
