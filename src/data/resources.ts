@@ -35,8 +35,8 @@ export const resources: ResourceMeta[] = [
       pl: 'Matematyka dla AI i Machine Learning',
     },
     description: {
-      en: 'A practical, fast-track guide to the core mathematics behind AI and machine learning. Instead of abstract theory, you learn the ideas that actually power modern models — vectors, embeddings, and self-attention — explained in an intuitive way with examples. Perfect if you want to finally understand what is happening under the hood and start using AI more effectively in practice.',
-      pl: 'Praktyczny, szybki przewodnik po matematycznych fundamentach AI i machine learning. Zamiast abstrakcyjnej teorii dostajesz zrozumienie tego, co naprawdę napędza nowoczesne modele — wektory, embeddingi i self-attention — wyjaśnione w intuicyjny sposób na przykładach. Idealne, jeśli chcesz w końcu zrozumieć co dzieje się „pod maską” i zacząć świadomie używać AI w praktyce.',
+      en: 'AI stops being magic when you understand the fundamentals. This material shows you step by step how modern AI models work — from embeddings to self-attention — using simple math, intuition, and practical examples instead of complex theory.',
+      pl: 'AI przestaje być magią, gdy rozumiesz fundamenty. Ten materiał pokazuje krok po kroku, jak działają nowoczesne modele AI — od embeddingów po self-attention — używając prostej matematyki, intuicji i praktycznych przykładów zamiast skomplikowanej teorii.',
     },
     lang: 'pl',
     tags: ['ai', 'ml', 'math'],
