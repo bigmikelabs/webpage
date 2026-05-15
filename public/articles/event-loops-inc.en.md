@@ -50,7 +50,7 @@ We had to dig deeper.
 In practice, the issue looks like this on the queue/lag chart:
 
 <figure>
-<img src="/images/event-loops-inc/feedback-loop.jpg" alt="Event queue with feedback loop" />
+<img src="/articles/images/event-loops-inc/feedback-loop.jpg" alt="Event queue with feedback loop" />
 <figcaption>Chart 1: An example queue chart showing growing lag caused by a feedback loop in an event-driven system.</figcaption>
 </figure>
 

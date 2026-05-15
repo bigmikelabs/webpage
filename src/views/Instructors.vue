@@ -29,7 +29,7 @@
                     class="w-48 h-48 rounded-full mx-auto mb-6 overflow-hidden bg-white/20 shadow-2xl"
                   >
                     <img
-                      src="/images/michal-wronski.jpg"
+                      src="/articles/images/michal-wronski.jpg"
                       alt="Michał Wroński"
                       class="w-full h-full object-cover object-center"
                       @error="handleImageError"

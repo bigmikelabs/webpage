@@ -87,19 +87,19 @@ Produkt wysyła miliony notyfikacji w godzinach szczytowych, które muszą być 
 Aż przychodzi pierwszy peak i.... eureka! Czasy *p99* zaczęły spadać z *400ms* -> *250ms*.
 
 <figure>
-<img src="/images/grpc-vs-http2/fcm-send-multicast.jpg" alt="FCM send multicast chart" />
+<img src="/articles/images/grpc-vs-http2/fcm-send-multicast.jpg" alt="FCM send multicast chart" />
 <figcaption>Wykres 1: FCM - sendmulticast</figcaption>
 </figure>
 
 Albo jeśli ktoś woli operować na heatmapie...
 
 <figure>
-<img src="/images/grpc-vs-http2/fcm-send-multicast-heat.jpg" alt="FCM send multicast heatmap chart" />
+<img src="/articles/images/grpc-vs-http2/fcm-send-multicast-heat.jpg" alt="FCM send multicast heatmap chart" />
 <figcaption>Wykres 2: FCM - sendmulticast heatmap</figcaption>
 </figure>
 
 <figure>
-<img src="/images/grpc-vs-http2/fcm-load.jpg" alt="FCM - send notifications by status" />
+<img src="/articles/images/grpc-vs-http2/fcm-load.jpg" alt="FCM - send notifications by status" />
 <figcaption>Wykres 3: FCM - send notifications by status</figcaption>
 </figure>
 

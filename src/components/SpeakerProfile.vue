@@ -16,7 +16,7 @@
           <div class="relative">
             <div class="w-64 h-64 rounded-full mx-auto shadow-2xl overflow-hidden bg-gray-100">
               <img
-                src="/images/michal-wronski.jpg"
+                src="/articles/images/michal-wronski.jpg"
                 :alt="$t(`${translationPrefix}.name`)"
                 class="w-full h-full object-cover object-center"
                 @error="handleImageError"

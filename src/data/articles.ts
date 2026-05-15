@@ -51,7 +51,7 @@ export const articles: ArticleMeta[] = [
     level: 'advanced',
     images: [
       {
-        src: '/images/event-loops-inc/header.jpg',
+        src: '/articles/images/event-loops-inc/header.jpg',
         alt: {
           en: 'queues topology',
           pl: 'topologia kolejek',
@@ -80,7 +80,7 @@ export const articles: ArticleMeta[] = [
     level: 'advanced',
     images: [
       {
-        src: '/images/grpc-vs-http2/header.jpg',
+        src: '/articles/images/grpc-vs-http2/header.jpg',
         alt: {
           en: 'gRPC vs HTTP/2',
           pl: 'gRPC a HTTP/2',
