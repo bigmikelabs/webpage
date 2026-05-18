@@ -76,6 +76,11 @@
     "subtitle": "Bezpłatne wykłady i porady od naszych ekspertów",
     "movies": [
       {
+        "videoTitle": "Co wzmacniasz, żeby uratować bombowce?",
+        "videoDescription": "Podczas II wojny światowej analizowano uszkodzenia bombowców wracających z misji. Na pierwszy rzut oka rozwiązanie wydawało się oczywiste — aż do momentu, gdy Abraham Wald pokazał, że dane, które widzimy, mogą prowadzić do błędnych wniosków. Klasyczny przykład błędu przeżywalności (survivorship bias).",
+        "videoLink": "https://youtu.be/7_CbSKbLJ7o?si=TujPKYeR23zmdGDR"
+      },
+      {
         "videoTitle": "Dlaczego procesory Apple M są tak szybkie?",
         "videoDescription": "W tym filmie zaglądamy do środka układów z rodziny Apple Silicon i sprawdzamy, co naprawdę kryje się w procesorach Apple M (Pro i Max).",
         "videoLink": "https://youtu.be/unz9yZUFAYU?si=Az4LBQvKRcpBsqcQ"

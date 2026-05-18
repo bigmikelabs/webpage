@@ -76,6 +76,11 @@
     "subtitle": "Free lectures and tips from our expert instructors",
     "movies": [
       {
+        "videoTitle": "What do you strengthen to save bombers?",
+        "videoDescription": "During World War II, damage to returning bombers was analyzed. At first glance, the solution seemed obvious — until Abraham Wald showed that the data we see can lead to incorrect conclusions. The classic example of survivorship bias.",
+        "videoLink": "https://youtu.be/7_CbSKbLJ7o?si=TujPKYeR23zmdGDR"
+      },
+      {
         "videoTitle": "Why are Apple M processors so fast?",
         "videoDescription": "In this video we look inside Apple Silicon chips and see what really lies inside Apple M processors (Pro and Max).",
         "videoLink": "https://youtu.be/unz9yZUFAYU?si=Az4LBQvKRcpBsqcQ"
